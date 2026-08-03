@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShankarAgriMart.Application\ShankarAgriMart.Application.csproj" />
+    <ProjectReference Include="..\ShankarAgriMart.Domain\ShankarAgriMart.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Configurations\" />
+    <Folder Include="DependencyInjection\" />
+    <Folder Include="Migration\" />
+    <Folder Include="Seed\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+</Project>
