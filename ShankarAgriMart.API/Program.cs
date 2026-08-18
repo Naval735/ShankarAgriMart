@@ -9,6 +9,8 @@ using ShankarAgriMart.Infrastructure.Data;
 using ShankarAgriMart.Infrastructure.Repositories;
 using ShankarAgriMart.Infrastructure.Services;
 using System.Text;
+using ShankarAgriMart.Infrastructure.Seed;
+using ShankarAgriMart.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,18 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<
+    IInventoryTransactionRepository, InventoryTransactionRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductImageRepository, ProductImageRepository>();
+builder.Services.AddScoped<IProductImageService, ProductImageService>();
+builder.Services.AddScoped<IInventoryService, InventoryService>();
 // =====================================================
 // Database
 // =====================================================
@@ -93,6 +107,14 @@ builder.Services.AddSwaggerGen(options =>
 // =====================================================
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionMiddleware>();
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider
+        .GetRequiredService<AppDbContext>();
+
+    await DbSeeder.SeedAsync(context);
+}
 
 // =====================================================
 // HTTP Request Pipeline

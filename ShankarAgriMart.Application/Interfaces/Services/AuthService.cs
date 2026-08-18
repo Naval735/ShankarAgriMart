@@ -1,4 +1,5 @@
 ﻿using BCrypt.Net;
+using ShankarAgriMart.Application.Common.Exceptions;
 using ShankarAgriMart.Application.DTOs.Request;
 using ShankarAgriMart.Application.DTOs.Response;
 using ShankarAgriMart.Application.Interfaces.Repositories;
@@ -28,13 +29,13 @@ public class AuthService : IAuthService
         // 1. Check whether email already exists
         if (await _userRepository.EmailExistsAsync(request.Email))
         {
-            throw new Exception("Email is already registered.");
+            throw new ConflictException("Email is already registered.");
         }
 
         // 2. Check whether phone already exists
         if (await _userRepository.PhoneExistsAsync(request.Phone))
         {
-            throw new Exception("Phone number is already registered.");
+            throw new ConflictException("Phone number is already registered.");
         }
 
         // 3. Find Customer role
@@ -43,7 +44,7 @@ public class AuthService : IAuthService
 
         if (customerRole == null)
         {
-            throw new Exception("Customer role was not found.");
+            throw new NotFoundException("Customer role was not found.");
         }
 
         // 4. Hash password
@@ -98,13 +99,13 @@ public class AuthService : IAuthService
         var user = await _userRepository.GetByEmailAsync(request.Email);
 
         if (user == null || !user.IsActive)
-            throw new Exception("Invalid email or password.");
+            throw new UnauthorizedException("Invalid email or password.");
 
         if (!BCrypt.Net.BCrypt.Verify(
             request.Password,
             user.PasswordHash))
         {
-            throw new Exception("Invalid email or password.");
+            throw new UnauthorizedException("Invalid email or password.");
         }
 
         var (token, expiresAt) =

@@ -79,17 +79,19 @@ public class AppDbContext : DbContext
                 .IsUnique();
 
             entity.HasData(
-                new Role
-                {
-                    Id = 1,
-                    RoleName = "Admin"
-                },
-                new Role
-                {
-                    Id = 2,
-                    RoleName = "Customer"
-                }
-            );
+     new Role
+     {
+         Id = 1,
+         RoleName = "Admin",
+         CreatedAt = new DateTime(2026, 8, 14, 0, 0, 0, DateTimeKind.Utc)
+     },
+     new Role
+     {
+         Id = 2,
+         RoleName = "Customer",
+         CreatedAt = new DateTime(2026, 8, 14, 0, 0, 0, DateTimeKind.Utc)
+     }
+ );
         });
 
         // =========================================================
@@ -301,6 +303,8 @@ public class AppDbContext : DbContext
                 .WithMany(x => x.Users)
                 .HasForeignKey(x => x.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+    
         });
 
         // =========================================================
@@ -528,6 +532,10 @@ public class AppDbContext : DbContext
             entity.Property(x => x.IsActive)
                 .HasDefaultValue(true);
 
+            // Unique Category Name
+            entity.HasIndex(x => x.Name)
+                .IsUnique();
+
             // Unique Slug
             entity.HasIndex(x => x.Slug)
                 .IsUnique();
@@ -556,22 +564,20 @@ public class AppDbContext : DbContext
                 .HasMaxLength(500);
 
             entity.Property(x => x.Description)
-                .HasColumnType("nvarchar(max)");
+                .HasMaxLength(1000);
+
+            entity.HasIndex(x => x.Name)
+                .IsUnique();
 
             entity.Property(x => x.IsActive)
-                .HasDefaultValue(true);
-
-            // Brand → Products
-            entity.HasMany(x => x.Products)
-                .WithOne(x => x.Brand)
-                .HasForeignKey(x => x.BrandId)
-                .OnDelete(DeleteBehavior.Restrict);
+                 .HasDefaultValue(true);
         });
 
 
-        // =========================================================
-        // PRODUCT
-        // =========================================================
+
+        //product entity configuration
+        // =========================
+        // ================
 
         modelBuilder.Entity<Product>(entity =>
         {
@@ -592,10 +598,6 @@ public class AppDbContext : DbContext
             entity.Property(x => x.ShortDescription)
                 .HasMaxLength(500);
 
-            entity.Property(x => x.Description)
-                .HasColumnType("nvarchar(max)");
-
-            // Price
             entity.Property(x => x.MRP)
                 .HasPrecision(18, 2);
 
@@ -606,35 +608,32 @@ public class AppDbContext : DbContext
                 .HasPrecision(5, 2)
                 .HasDefaultValue(18);
 
-            // Stock
             entity.Property(x => x.Stock)
                 .HasDefaultValue(0);
 
-            // Weight
             entity.Property(x => x.Weight)
                 .HasPrecision(10, 2);
 
             entity.Property(x => x.Unit)
                 .HasMaxLength(20);
 
-            // Agricultural Information
             entity.Property(x => x.ActiveIngredient)
-                .HasMaxLength(200);
-
-            entity.Property(x => x.Dosage)
                 .HasMaxLength(500);
 
+            entity.Property(x => x.Dosage)
+                .HasMaxLength(1000);
+
             entity.Property(x => x.ApplicationMethod)
-                .HasColumnType("nvarchar(max)");
+                .HasMaxLength(1000);
 
             entity.Property(x => x.Benefits)
-                .HasColumnType("nvarchar(max)");
+                .HasMaxLength(2000);
 
             entity.Property(x => x.UsageInstructions)
-                .HasColumnType("nvarchar(max)");
+                .HasMaxLength(3000);
 
             entity.Property(x => x.SafetyPrecautions)
-                .HasColumnType("nvarchar(max)");
+                .HasMaxLength(3000);
 
             entity.Property(x => x.Manufacturer)
                 .HasMaxLength(200);
@@ -642,30 +641,24 @@ public class AppDbContext : DbContext
             entity.Property(x => x.CountryOfOrigin)
                 .HasMaxLength(100);
 
-            // Unique Slug
-            entity.HasIndex(x => x.Slug)
-                .IsUnique();
+            entity.HasIndex(x => x.Name);
 
-            // Unique SKU
             entity.HasIndex(x => x.SKU)
                 .IsUnique();
 
-            // Search optimization
-            entity.HasIndex(x => x.Name);
+            entity.HasIndex(x => x.Slug)
+                .IsUnique();
 
-            // Product → Images
-            entity.HasMany(x => x.ProductImages)
-                .WithOne(x => x.Product)
-                .HasForeignKey(x => x.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(x => x.Category)
+                .WithMany(x => x.Products)
+                .HasForeignKey(x => x.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Product → Inventory Transactions
-            entity.HasMany(x => x.InventoryTransactions)
-                .WithOne(x => x.Product)
-                .HasForeignKey(x => x.ProductId)
+            entity.HasOne(x => x.Brand)
+                .WithMany(x => x.Products)
+                .HasForeignKey(x => x.BrandId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
-
 
         // =========================================================
         // PRODUCT IMAGE
@@ -684,6 +677,12 @@ public class AppDbContext : DbContext
 
             entity.Property(x => x.IsPrimary)
                 .HasDefaultValue(false);
+
+            // Product → Product Images
+            entity.HasOne(x => x.Product)
+                .WithMany(x => x.ProductImages)
+                .HasForeignKey(x => x.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
 
