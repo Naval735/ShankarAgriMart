@@ -11,6 +11,9 @@ namespace ShankarAgriMart.Application.Interfaces.Services;
 
 public interface IProductService
 {
+    Task<PagedResponse<ProductResponse>> GetFilteredAsync(
+    ProductFilterRequest request);
+
     Task<List<ProductResponse>> GetAllAsync();
 
     Task<ProductResponse> GetByIdAsync(int id);

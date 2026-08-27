@@ -1,32 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.EntityFrameworkCore;
-using ShankarAgriMart.Application.Common.Exceptions;
+﻿using ShankarAgriMart.Application.Common.Exceptions;
 using ShankarAgriMart.Application.DTOs.Request;
 using ShankarAgriMart.Application.DTOs.Response;
 using ShankarAgriMart.Application.Interfaces.Repositories;
 using ShankarAgriMart.Application.Interfaces.Services;
 using ShankarAgriMart.Domain.Entities;
-using ShankarAgriMart.Infrastructure.Data;
 
 namespace ShankarAgriMart.Application.Services;
 
 public class InventoryService : IInventoryService
 {
-    private readonly AppDbContext _context;
     private readonly IProductRepository _productRepository;
     private readonly IInventoryTransactionRepository _transactionRepository;
 
     public InventoryService(
-        AppDbContext context,
         IProductRepository productRepository,
         IInventoryTransactionRepository transactionRepository)
     {
-        _context = context;
         _productRepository = productRepository;
         _transactionRepository = transactionRepository;
     }
@@ -42,7 +31,9 @@ public class InventoryService : IInventoryService
         var transactions = await _transactionRepository
             .GetByProductIdAsync(productId);
 
-        return transactions.Select(Map).ToList();
+        return transactions
+            .Select(Map)
+            .ToList();
     }
 
     public async Task<InventoryTransactionResponse> AddTransactionAsync(
@@ -108,47 +99,32 @@ public class InventoryService : IInventoryService
             throw new ArgumentException(
                 "Insufficient stock. Stock cannot become negative.");
 
-        await using var transaction =
-            await _context.Database.BeginTransactionAsync();
+        product.Stock = newStock;
+        product.UpdatedAt = DateTime.UtcNow;
 
-        try
+        var inventoryTransaction = new InventoryTransaction
         {
-            product.Stock = newStock;
-            product.UpdatedAt = DateTime.UtcNow;
+            ProductId = productId,
+            TransactionType = transactionType,
+            Quantity = request.Quantity,
+            Remarks = request.Remarks?.Trim()
+        };
 
-            _context.Products.Update(product);
+        await _productRepository.UpdateAsync(product);
 
-            var inventoryTransaction = new InventoryTransaction
-            {
-                ProductId = productId,
-                TransactionType = transactionType,
-                Quantity = request.Quantity,
-                Remarks = request.Remarks?.Trim()
-            };
+        var created = await _transactionRepository
+            .AddAsync(inventoryTransaction);
 
-            await _context.InventoryTransactions
-                .AddAsync(inventoryTransaction);
-
-            await _context.SaveChangesAsync();
-
-            await transaction.CommitAsync();
-
-            return new InventoryTransactionResponse
-            {
-                Id = inventoryTransaction.Id,
-                ProductId = productId,
-                ProductName = product.Name,
-                TransactionType = transactionType,
-                Quantity = request.Quantity,
-                Remarks = inventoryTransaction.Remarks,
-                CreatedAt = inventoryTransaction.CreatedAt
-            };
-        }
-        catch
+        return new InventoryTransactionResponse
         {
-            await transaction.RollbackAsync();
-            throw;
-        }
+            Id = created.Id,
+            ProductId = productId,
+            ProductName = product.Name,
+            TransactionType = created.TransactionType,
+            Quantity = created.Quantity,
+            Remarks = created.Remarks,
+            CreatedAt = created.CreatedAt
+        };
     }
 
     private static InventoryTransactionResponse Map(

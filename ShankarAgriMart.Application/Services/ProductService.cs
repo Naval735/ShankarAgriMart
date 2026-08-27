@@ -35,7 +35,20 @@ public class ProductService : IProductService
 
         return products.Select(Map).ToList();
     }
+    public async Task<PagedResponse<ProductResponse>> GetFilteredAsync(
+    ProductFilterRequest request)
+    {
+        var result = await _productRepository.GetFilteredAsync(request);
 
+        return new PagedResponse<ProductResponse>
+        {
+            Items = result.Items.Select(Map).ToList(),
+            Page = result.Page,
+            PageSize = result.PageSize,
+            TotalItems = result.TotalItems,
+            TotalPages = result.TotalPages
+        };
+    }
     public async Task<ProductResponse> GetByIdAsync(int id)
     {
         var product = await _productRepository.GetByIdAsync(id);

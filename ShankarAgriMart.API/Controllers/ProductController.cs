@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using ShankarAgriMart.Application.DTOs.Request;
 using ShankarAgriMart.Application.Interfaces.Services;
 
@@ -25,6 +23,17 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var products = await _productService.GetAllAsync();
+
+        return Ok(products);
+    }
+
+    // GET: api/Product/filter
+    [HttpGet("filter")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetFiltered(
+        [FromQuery] ProductFilterRequest request)
+    {
+        var products = await _productService.GetFilteredAsync(request);
 
         return Ok(products);
     }
