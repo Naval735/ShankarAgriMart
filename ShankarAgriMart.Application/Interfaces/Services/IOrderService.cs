@@ -23,7 +23,11 @@ public interface IOrderService
 
     Task<List<OrderResponse>> GetAllOrdersAsync();
 
+    Task<OrderResponse> GetOrderByIdForAdminAsync(
+    int orderId);
+
     Task<OrderResponse> UpdateOrderStatusAsync(
         int orderId,
         OrderStatus status);
+
 }

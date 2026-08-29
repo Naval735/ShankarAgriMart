@@ -208,6 +208,19 @@ public class OrderService : IOrderService
         return Map(order);
     }
 
+    public async Task<OrderResponse> GetOrderByIdForAdminAsync(
+    int orderId)
+    {
+        var order = await _orderRepository
+            .GetByIdAsync(orderId);
+
+        if (order == null)
+            throw new NotFoundException(
+                "Order not found.");
+
+        return Map(order);
+    }
+
     public async Task<List<OrderResponse>> GetMyOrdersAsync(
         int userId)
     {

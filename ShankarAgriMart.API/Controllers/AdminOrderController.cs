@@ -31,21 +31,13 @@ public class AdminOrderController : ControllerBase
         });
     }
 
+
     // GET: api/admin/orders/5
     [HttpGet("{orderId:int}")]
     public async Task<IActionResult> GetOrder(int orderId)
     {
-        var order = await _orderService
-            .GetAllOrdersAsync();
-
-        var result = order.FirstOrDefault(x => x.Id == orderId);
-
-        if (result == null)
-            return NotFound(new
-            {
-                Success = false,
-                Message = "Order not found."
-            });
+        var result = await _orderService
+            .GetOrderByIdForAdminAsync(orderId);
 
         return Ok(new
         {
