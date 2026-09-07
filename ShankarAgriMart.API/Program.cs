@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
 using ShankarAgriMart.Application.Interfaces.Repositories;
 using ShankarAgriMart.Application.Interfaces.Services;
 using ShankarAgriMart.Application.Services;
@@ -11,13 +10,14 @@ using ShankarAgriMart.Infrastructure.Services;
 using System.Text;
 using ShankarAgriMart.Infrastructure.Seed;
 using ShankarAgriMart.API.Middleware;
-
+using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // =====================================================
 // Dependency Injection
 // =====================================================
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
@@ -98,17 +98,26 @@ builder.Services.AddSwaggerGen(options =>
     {
         Name = "Authorization",
         Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
+        Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Enter your JWT token."
+        Description = "Enter JWT token like: Bearer {your token}"
     });
 
-    options.AddSecurityRequirement(document =>
-        new OpenApiSecurityRequirement
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
-            [new OpenApiSecuritySchemeReference("Bearer", document)] = []
-        });
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
 
 // =====================================================
