@@ -1,0 +1,403 @@
+<main class="cart-page">
+
+  <!-- Loading -->
+  @if (isLoading) {
+
+    <section class="py-5">
+      <div class="container">
+
+        <div class="placeholder-glow">
+          <span class="placeholder col-4 mb-4"></span>
+        </div>
+
+        <div class="row g-4">
+
+          <div class="col-lg-8">
+
+            @for (item of [1, 2, 3]; track item) {
+
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+
+                  <div class="placeholder-glow">
+
+                    <div class="row align-items-center">
+
+                      <div class="col-3">
+                        <div
+                          class="placeholder rounded"
+                          style="height: 100px;"
+                        ></div>
+                      </div>
+
+                      <div class="col-6">
+                        <span class="placeholder col-8"></span>
+                        <span class="placeholder col-5 mt-2"></span>
+                      </div>
+
+                      <div class="col-3">
+                        <span class="placeholder col-8"></span>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+            }
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  }
+
+  <!-- Error -->
+  @else if (errorMessage) {
+
+    <section class="py-5">
+      <div class="container">
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{ errorMessage }}
+        </div>
+
+        <a
+          routerLink="/products"
+          class="btn btn-success"
+        >
+          Continue Shopping
+        </a>
+
+      </div>
+    </section>
+
+  }
+
+  <!-- Cart -->
+  @else if (cart) {
+
+    <section class="py-5">
+
+      <div class="container">
+
+        <!-- Header -->
+        <div class="mb-4">
+
+          <span class="text-success fw-semibold text-uppercase small">
+            Shopping Cart
+          </span>
+
+          <h1 class="display-6 fw-bold mb-2">
+            Your Cart
+          </h1>
+
+          <p class="text-muted mb-0">
+            Review your selected agricultural products.
+          </p>
+
+        </div>
+
+
+        <!-- Empty Cart -->
+        @if (cart.items.length === 0) {
+
+          <div class="text-center py-5">
+
+            <div class="display-1 mb-3">
+              🛒
+            </div>
+
+            <h2 class="fw-bold">
+              Your cart is empty
+            </h2>
+
+            <p class="text-muted mb-4">
+              Add some products to your cart to get started.
+            </p>
+
+            <a
+              routerLink="/products"
+              class="btn btn-success btn-lg px-4"
+            >
+              Browse Products
+            </a>
+
+          </div>
+
+        }
+
+        <!-- Cart Items -->
+        @else {
+
+          <div class="row g-4">
+
+            <!-- Items -->
+            <div class="col-lg-8">
+
+              @for (item of cart.items; track item.id) {
+
+                <div class="card border-0 shadow-sm mb-3">
+
+                  <div class="card-body">
+
+                    <div class="row align-items-center g-3">
+
+                      <!-- Product Image -->
+                      <div class="col-4 col-sm-3 col-md-2">
+
+                        <div class="cart-item-image-wrapper">
+
+                          @if (item.productImage) {
+
+                            <img
+                              [src]="item.productImage"
+                              [alt]="item.productName"
+                              class="cart-item-image"
+                            />
+
+                          } @else {
+
+                            <div class="cart-item-placeholder">
+                              🌱
+                            </div>
+
+                          }
+
+                        </div>
+
+                      </div>
+
+
+                      <!-- Product Information -->
+                      <div class="col-8 col-sm-5 col-md-5">
+
+                        <h5 class="fw-semibold mb-1">
+                          {{ item.productName }}
+                        </h5>
+
+                        <p class="text-muted small mb-1">
+                          ₹{{ item.unitPrice }} per item
+                        </p>
+
+
+                        <!-- Quantity Controls -->
+                        <div class="d-flex align-items-center gap-2 mt-3">
+
+                          <button
+                            type="button"
+                            class="btn btn-outline-secondary btn-sm"
+                            [disabled]="
+                              item.quantity <= 1 ||
+                              updatingItemId === item.id ||
+                              removingItemId === item.id
+                            "
+                            (click)="
+                              decreaseQuantity(
+                                item.id,
+                                item.quantity
+                              )
+                            "
+                            aria-label="Decrease quantity"
+                          >
+                            −
+                          </button>
+
+
+                          <span
+                            class="fw-semibold px-2"
+                            style="min-width: 30px; text-align: center;"
+                          >
+                            @if (updatingItemId === item.id) {
+
+                              <span
+                                class="spinner-border spinner-border-sm"
+                                aria-hidden="true"
+                              ></span>
+
+                            } @else {
+
+                              {{ item.quantity }}
+
+                            }
+                          </span>
+
+
+                          <button
+                            type="button"
+                            class="btn btn-outline-secondary btn-sm"
+                            [disabled]="
+                              updatingItemId === item.id ||
+                              removingItemId === item.id
+                            "
+                            (click)="
+                              increaseQuantity(
+                                item.id,
+                                item.quantity
+                              )
+                            "
+                            aria-label="Increase quantity"
+                          >
+                            +
+                          </button>
+
+                        </div>
+
+
+                        <!-- Remove -->
+                        <button
+                          type="button"
+                          class="btn btn-link text-danger btn-sm p-0 mt-2"
+                          [disabled]="
+                            removingItemId === item.id ||
+                            updatingItemId === item.id
+                          "
+                          (click)="removeItem(item.id)"
+                        >
+
+                          @if (removingItemId === item.id) {
+
+                            <span
+                              class="spinner-border spinner-border-sm me-1"
+                              aria-hidden="true"
+                            ></span>
+
+                            Removing...
+
+                          } @else {
+
+                            Remove
+
+                          }
+
+                        </button>
+
+                      </div>
+
+
+                      <!-- Item Total -->
+                      <div
+                        class="col-12 col-sm-4 col-md-5 text-sm-end"
+                      >
+
+                        <div class="fw-bold fs-5">
+                          ₹{{ item.totalPrice }}
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+
+
+            <!-- Order Summary -->
+            <div class="col-lg-4">
+
+              <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                  <h4 class="fw-bold mb-4">
+                    Order Summary
+                  </h4>
+
+
+                  <!-- Items -->
+                  <div
+                    class="d-flex justify-content-between mb-3"
+                  >
+
+                    <span class="text-muted">
+                      Items
+                    </span>
+
+                    <span>
+                      {{ cart.items.length }}
+                    </span>
+
+                  </div>
+
+
+                  <!-- Total Quantity -->
+                  <div
+                    class="d-flex justify-content-between mb-3"
+                  >
+
+                    <span class="text-muted">
+                      Total Quantity
+                    </span>
+
+                    <span>
+                      {{ getTotalQuantity() }}
+                    </span>
+
+                  </div>
+
+
+                  <hr />
+
+
+                  <!-- Total -->
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-4"
+                  >
+
+                    <span class="fw-semibold">
+                      Total
+                    </span>
+
+                    <span class="fs-4 fw-bold text-success">
+                      ₹{{ cart.totalAmount }}
+                    </span>
+
+                  </div>
+
+
+                  <!-- Checkout -->
+                 <a
+  routerLink="/checkout"
+  class="btn btn-success w-100 btn-lg"
+>
+  Proceed to Checkout
+</a>
+
+                  <!-- Continue Shopping -->
+                  <a
+                    routerLink="/products"
+                    class="btn btn-outline-success w-100 mt-3"
+                  >
+                    Continue Shopping
+                  </a>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    </section>
+
+  }
+
+</main>

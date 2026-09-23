@@ -1,0 +1,106 @@
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+
+  <div class="container">
+
+    <!-- Brand -->
+    <a
+      class="navbar-brand d-flex align-items-center gap-2"
+      routerLink="/home"
+    >
+      <span class="brand-icon">🌾</span>
+      <span class="brand-name">ShankarAgriMart</span>
+    </a>
+
+
+    <!-- Mobile Toggle -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavbar"
+      aria-controls="mainNavbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <!-- Navigation -->
+    <div
+      class="collapse navbar-collapse"
+      id="mainNavbar"
+    >
+
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/home"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/products"
+            routerLinkActive="active"
+          >
+            Products
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/orders"
+            routerLinkActive="active"
+          >
+            My Orders
+          </a>
+        </li>
+
+      </ul>
+
+
+      <!-- Right Actions -->
+      <div class="d-flex align-items-center gap-3">
+
+        <a
+          routerLink="/cart"
+          class="cart-link"
+          aria-label="Shopping cart"
+        >
+          🛒
+          <span class="cart-text">Cart</span>
+        </a>
+
+        <button
+          type="button"
+          class="btn btn-outline-danger btn-sm"
+          [disabled]="isLoggingOut"
+          (click)="logout()"
+        >
+          @if (isLoggingOut) {
+            <span
+              class="spinner-border spinner-border-sm me-1"
+              aria-hidden="true">
+            </span>
+            Logging out...
+          } @else {
+            Logout
+          }
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</nav>

@@ -1,0 +1,401 @@
+.login-page {
+  min-height: 100vh;
+  background: #f7f9f5;
+}
+
+/* =========================
+   LEFT BRANDING SECTION
+   ========================= */
+
+.login-brand {
+  position: relative;
+  align-items: center;
+  padding: 5rem 7%;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(20, 83, 45, 0.96),
+      rgba(22, 101, 52, 0.90)
+    ),
+    url('/assets/images/agriculture-bg.jpg') center/cover;
+  color: #ffffff;
+}
+
+.brand-content {
+  max-width: 560px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 4rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  font-size: 1.5rem;
+}
+
+.brand-content h1 {
+  margin-bottom: 1.4rem;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.brand-content h1 span {
+  display: block;
+  color: #d7f5c8;
+}
+
+.brand-content > p {
+  max-width: 500px;
+  margin-bottom: 2.5rem;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.brand-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.feature-item > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #d7f5c8;
+  font-weight: 700;
+}
+
+.feature-item strong {
+  display: block;
+  margin-bottom: 0.15rem;
+  font-size: 0.95rem;
+}
+
+.feature-item small {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+
+/* =========================
+   LOGIN SECTION
+   ========================= */
+
+.login-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 5%;
+  background: #ffffff;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 460px;
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.login-header {
+  margin-bottom: 2rem;
+}
+
+.login-header h2 {
+  margin-bottom: 0.5rem;
+  color: #172b1d;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.login-header p {
+  margin: 0;
+  color: #6b756e;
+  font-size: 0.95rem;
+}
+
+
+/* =========================
+   FORM
+   ========================= */
+
+.form-group {
+  margin-bottom: 1.4rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.55rem;
+  color: #27342b;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.password-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.password-label label {
+  margin-bottom: 0.55rem;
+}
+
+.forgot-password {
+  margin-bottom: 0.55rem;
+  color: #198754;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  z-index: 2;
+  transform: translateY(-50%);
+  color: #7a857d;
+  font-size: 0.95rem;
+}
+
+.form-control {
+  min-height: 52px;
+  padding: 0.75rem 1rem 0.75rem 2.9rem;
+  border: 1px solid #dce3dd;
+  border-radius: 10px;
+  color: #26352b;
+  background: #ffffff;
+  box-shadow: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-control::placeholder {
+  color: #a0aaa3;
+}
+
+.form-control:focus {
+  border-color: #198754;
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.12);
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545;
+  background-image: none;
+}
+
+.validation-message {
+  margin-top: 0.4rem;
+  color: #dc3545;
+  font-size: 0.78rem;
+}
+
+
+/* =========================
+   LOGIN BUTTON
+   ========================= */
+
+.login-button {
+  min-height: 52px;
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 10px;
+  background: #198754;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.login-button:hover:not(:disabled) {
+  background: #157347;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(25, 135, 84, 0.2);
+}
+
+.login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+
+/* =========================
+   ERROR
+   ========================= */
+
+.login-error {
+  margin-bottom: 1.5rem;
+  border: none;
+  border-radius: 9px;
+  font-size: 0.85rem;
+}
+
+
+/* =========================
+   REGISTER
+   ========================= */
+
+.register-section {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 1.8rem;
+  color: #6b756e;
+  font-size: 0.88rem;
+}
+
+.register-section a {
+  color: #198754;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-section a:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================
+   SECURITY NOTICE
+   ========================= */
+
+.security-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #edf0ed;
+}
+
+.security-notice span {
+  font-size: 0.9rem;
+}
+
+.security-notice p {
+  margin: 0;
+  color: #89928c;
+  font-size: 0.75rem;
+}
+
+
+/* =========================
+   MOBILE LOGO
+   ========================= */
+
+.mobile-logo {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.mobile-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  margin: 0 auto 0.8rem;
+  border-radius: 14px;
+  background: #e9f7ef;
+  font-size: 1.7rem;
+}
+
+.mobile-logo h2 {
+  margin-bottom: 0.25rem;
+  color: #172b1d;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.mobile-logo p {
+  margin: 0;
+  color: #7b857e;
+  font-size: 0.78rem;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 991.98px) {
+
+  .login-section {
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .login-card {
+    max-width: 480px;
+  }
+
+}
+
+
+@media (max-width: 575.98px) {
+
+  .login-section {
+    padding: 2rem 1.25rem;
+  }
+
+  .login-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .form-control,
+  .login-button {
+    min-height: 50px;
+  }
+
+  .register-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+  }
+
+}

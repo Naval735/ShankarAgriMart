@@ -40,7 +40,15 @@ public class OrderService : IOrderService
         int userId,
         CreateOrderRequest request)
     {
-        // 1. Validate customer's address
+        // 1. Validate payment method
+        if (request.PaymentMethod != "ONLINE" &&
+            request.PaymentMethod != "COD")
+        {
+            throw new ArgumentException(
+                "Invalid payment method.");
+        }
+
+        // 2. Validate customer's address
         var address = await _addressRepository.GetByIdForUserAsync(
             request.AddressId,
             userId);
@@ -49,7 +57,7 @@ public class OrderService : IOrderService
             throw new NotFoundException(
                 "Address not found.");
 
-        // 2. Get customer's cart
+        // 3. Get customer's cart
         var cart = await _cartRepository.GetByUserIdAsync(userId);
 
         if (cart == null || !cart.CartItems.Any(x => !x.IsDeleted))
@@ -60,7 +68,7 @@ public class OrderService : IOrderService
             .Where(x => !x.IsDeleted)
             .ToList();
 
-        // 3. Validate stock and calculate subtotal
+        // 4. Validate stock and calculate subtotal
         decimal subTotal = 0;
 
         foreach (var cartItem in cartItems)
@@ -83,7 +91,7 @@ public class OrderService : IOrderService
                 product.SellingPrice * cartItem.Quantity;
         }
 
-        // 4. Calculate GST
+        // 5. Calculate GST
         decimal gst = 0;
 
         foreach (var cartItem in cartItems)
@@ -100,21 +108,21 @@ public class OrderService : IOrderService
             }
         }
 
-        // 5. Delivery charge
+        // 6. Delivery charge
         decimal deliveryCharge =
             subTotal >= 1000 ? 0 : 50;
 
-        // 6. Discount
+        // 7. Discount
         decimal discount = 0;
 
-        // 7. Grand total
+        // 8. Grand total
         decimal grandTotal =
             subTotal +
             gst +
             deliveryCharge -
             discount;
 
-        // 8. Create order
+        // 9. Create order
         var order = new Order
         {
             OrderNumber = GenerateOrderNumber(),
@@ -129,13 +137,19 @@ public class OrderService : IOrderService
 
             PaymentStatus = PaymentStatus.Pending,
             OrderStatus = OrderStatus.Placed,
-            PaymentMethod = null,
+
+            // Store selected payment method
+            PaymentMethod = Enum.Parse<PaymentMethod>(
+    request.PaymentMethod,
+    true
+),
+
             OrderDate = DateTime.UtcNow,
 
             OrderItems = new List<OrderItem>()
         };
 
-        // 9. Create order items
+        // 10. Create order items
         foreach (var cartItem in cartItems)
         {
             var product = await _productRepository
@@ -181,16 +195,16 @@ public class OrderService : IOrderService
                 .AddAsync(inventoryTransaction);
         }
 
-        // 10. Save order
+        // 11. Save order
         await _orderRepository.CreateAsync(order);
 
-        // 11. Clear cart
+        // 12. Clear cart
         foreach (var cartItem in cartItems)
         {
             await _cartRepository.RemoveItemAsync(cartItem);
         }
 
-        // 12. Return created order
+        // 13. Return created order
         return Map(order);
     }
 
@@ -209,7 +223,7 @@ public class OrderService : IOrderService
     }
 
     public async Task<OrderResponse> GetOrderByIdForAdminAsync(
-    int orderId)
+        int orderId)
     {
         var order = await _orderRepository
             .GetByIdAsync(orderId);

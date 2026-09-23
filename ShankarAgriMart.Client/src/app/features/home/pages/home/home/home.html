@@ -1,0 +1,260 @@
+<app-navbar></app-navbar>
+
+<main>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+
+    <div class="container">
+
+      <div class="row align-items-center g-5">
+
+        <!-- Hero Content -->
+        <div class="col-lg-6">
+
+          <span class="hero-badge">
+            🌱 Trusted Agricultural Marketplace
+          </span>
+
+          <h1 class="hero-title">
+            Everything You Need
+            <span>For Better Farming.</span>
+          </h1>
+
+          <p class="hero-description">
+            Discover quality pesticides, fertilizers and agricultural
+            products from trusted brands — all in one convenient place.
+          </p>
+
+          <div class="hero-actions">
+
+            <a
+              routerLink="/products"
+              class="btn btn-success hero-primary-btn"
+            >
+              Shop Products
+              <span>→</span>
+            </a>
+
+            <a
+              routerLink="/products"
+              class="btn hero-secondary-btn"
+            >
+              Explore Categories
+            </a>
+
+          </div>
+
+          <!-- Trust Indicators -->
+          <div class="trust-indicators">
+
+            <div class="trust-item">
+              <strong>500+</strong>
+              <span>Products</span>
+            </div>
+
+            <div class="trust-divider"></div>
+
+            <div class="trust-item">
+              <strong>50+</strong>
+              <span>Trusted Brands</span>
+            </div>
+
+            <div class="trust-divider"></div>
+
+            <div class="trust-item">
+              <strong>100%</strong>
+              <span>Quality Assured</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Hero Visual -->
+        <div class="col-lg-6">
+
+          <div class="hero-visual">
+
+            <div class="hero-circle"></div>
+
+            <div class="hero-card hero-card-main">
+
+              <div class="hero-product-icon">
+                🌾
+              </div>
+
+              <div>
+                <small>Featured</small>
+                <strong>Crop Protection</strong>
+              </div>
+
+            </div>
+
+            <div class="floating-card floating-card-top">
+
+              <span>✓</span>
+
+              <div>
+                <strong>Quality Products</strong>
+                <small>Trusted brands</small>
+              </div>
+
+            </div>
+
+            <div class="floating-card floating-card-bottom">
+
+              <span>🚚</span>
+
+              <div>
+                <strong>Fast Delivery</strong>
+                <small>To your doorstep</small>
+              </div>
+
+            </div>
+
+            <div class="hero-plant">
+              🌱
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Categories Section -->
+  <section class="categories-section">
+
+    <div class="container">
+
+      <div class="section-heading">
+
+        <div>
+          <span class="section-label">
+            SHOP BY CATEGORY
+          </span>
+
+          <h2>
+            Everything for your farm
+          </h2>
+        </div>
+
+        <a
+          routerLink="/products"
+          class="view-all-link"
+        >
+          View all →
+        </a>
+
+      </div>
+
+
+      <!-- Loading -->
+      @if (isCategoriesLoading) {
+
+        <div class="row g-4">
+
+          @for (item of [1, 2, 3, 4]; track item) {
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+              <div class="category-card category-skeleton">
+
+                <div class="placeholder-glow">
+
+                  <div
+                    class="placeholder category-placeholder-icon"
+                  ></div>
+
+                  <h3 class="placeholder col-8"></h3>
+
+                  <p class="placeholder col-10"></p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      }
+
+
+      <!-- Error -->
+      @else if (categoriesError) {
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{ categoriesError }}
+        </div>
+
+      }
+
+
+      <!-- Categories -->
+      @else if (categories.length > 0) {
+
+        <div class="row g-4">
+
+          @for (category of categories; track category.id) {
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+             <a
+  [routerLink]="['/products']"
+  [queryParams]="{ categoryId: category.id }"
+  class="category-card text-decoration-none"
+>
+
+                <div class="category-icon">
+                  🌱
+                </div>
+
+                <h3>
+                  {{ category.name }}
+                </h3>
+
+                <p>
+                  {{ category.description }}
+                </p>
+
+              </a>
+
+            </div>
+
+          }
+
+        </div>
+
+      }
+
+
+      <!-- No Categories -->
+      @else {
+
+        <div
+          class="alert alert-info"
+          role="alert"
+        >
+          No categories are available at the moment.
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+</main>

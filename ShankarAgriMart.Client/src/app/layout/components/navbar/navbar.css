@@ -1,0 +1,63 @@
+.navbar {
+  min-height: 72px;
+}
+
+.navbar-brand {
+  color: #17351f;
+  text-decoration: none;
+}
+
+.brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #e9f7ef;
+  font-size: 1.3rem;
+}
+
+.brand-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.nav-link {
+  margin: 0 0.35rem;
+  color: #526158;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #198754;
+}
+
+.cart-link {
+  color: #37463d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.cart-link:hover {
+  color: #198754;
+}
+
+@media (max-width: 991.98px) {
+
+  .navbar-collapse {
+    padding: 1rem 0;
+  }
+
+  .nav-link {
+    margin: 0.25rem 0;
+  }
+
+  .navbar-collapse .d-flex {
+    padding-top: 0.75rem;
+  }
+
+}

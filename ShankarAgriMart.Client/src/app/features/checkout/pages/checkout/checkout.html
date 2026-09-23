@@ -1,0 +1,668 @@
+<main class="checkout-page">
+
+  <!-- Loading -->
+  @if (isLoading) {
+
+    <section class="py-5">
+      <div class="container">
+
+        <div class="placeholder-glow mb-4">
+          <span class="placeholder col-4"></span>
+        </div>
+
+        <div class="row g-4">
+
+          <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm mb-4">
+              <div class="card-body p-4 placeholder-glow">
+
+                <span class="placeholder col-5 mb-4"></span>
+
+                <div class="placeholder col-12 mb-2"></div>
+                <div class="placeholder col-10 mb-2"></div>
+                <div class="placeholder col-8"></div>
+
+              </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+              <div class="card-body p-4 placeholder-glow">
+
+                <span class="placeholder col-5 mb-4"></span>
+
+                <div class="placeholder col-12 mb-2"></div>
+                <div class="placeholder col-12 mb-2"></div>
+                <div class="placeholder col-8"></div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm">
+              <div class="card-body p-4 placeholder-glow">
+
+                <span class="placeholder col-7 mb-4"></span>
+
+                <div class="placeholder col-12 mb-3"></div>
+                <div class="placeholder col-8 mb-3"></div>
+                <div class="placeholder col-10 mb-4"></div>
+
+                <div
+                  class="placeholder col-12"
+                  style="height: 48px;"
+                ></div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  }
+
+  <!-- Error -->
+  @else if (errorMessage) {
+
+    <section class="py-5">
+      <div class="container">
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{ errorMessage }}
+        </div>
+
+        <a
+          routerLink="/cart"
+          class="btn btn-success"
+        >
+          ← Back to Cart
+        </a>
+
+      </div>
+    </section>
+
+  }
+
+  <!-- Checkout -->
+  @else if (cart) {
+
+    <section class="py-5">
+
+      <div class="container">
+
+        <!-- Header -->
+        <div class="mb-4">
+
+          <span class="text-success fw-semibold text-uppercase small">
+            Checkout
+          </span>
+
+          <h1 class="display-6 fw-bold mb-2">
+            Complete Your Order
+          </h1>
+
+          <p class="text-muted mb-0">
+            Select your delivery address, payment method and review your order.
+          </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+          <!-- Left -->
+          <div class="col-lg-8">
+
+            <!-- Delivery Address -->
+            <div class="card border-0 shadow-sm mb-4">
+
+              <div class="card-body p-4">
+
+                <div
+                  class="d-flex justify-content-between align-items-center mb-4"
+                >
+
+                  <div>
+
+                    <h4 class="fw-bold mb-1">
+                      Delivery Address
+                    </h4>
+
+                    <p class="text-muted small mb-0">
+                      Select where you want your order delivered.
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                <!-- Addresses -->
+                @if (addresses.length > 0) {
+
+                  <div class="row g-3">
+
+                    @for (address of addresses; track address.id) {
+
+                      <div class="col-md-6">
+
+                        <button
+                          type="button"
+                          class="address-card w-100 text-start"
+                          [class.selected]="
+                            selectedAddressId === address.id
+                          "
+                          (click)="selectAddress(address.id)"
+                        >
+
+                          <div
+                            class="d-flex justify-content-between align-items-start gap-3"
+                          >
+
+                            <div>
+
+                              <div class="fw-bold mb-2">
+                                {{ address.fullName }}
+                              </div>
+
+                              <div class="text-muted small">
+                                {{ address.addressLine1 }}
+                              </div>
+
+                              @if (address.addressLine2) {
+
+                                <div class="text-muted small">
+                                  {{ address.addressLine2 }}
+                                </div>
+
+                              }
+
+                              <div class="text-muted small">
+                                {{ address.city }},
+                                {{ address.state }}
+                                - {{ address.pincode }}
+                              </div>
+
+                              <div class="text-muted small mt-2">
+                                Phone: {{ address.phone }}
+                              </div>
+
+                            </div>
+
+                            <div>
+
+                              @if (selectedAddressId === address.id) {
+
+                                <span class="address-selected">
+                                  ✓
+                                </span>
+
+                              }
+
+                            </div>
+
+                          </div>
+
+                          @if (address.isDefault) {
+
+                            <span class="badge bg-success mt-3">
+                              Default
+                            </span>
+
+                          }
+
+                        </button>
+
+                      </div>
+
+                    }
+
+                  </div>
+
+                } @else {
+
+                  <div class="text-center py-4">
+
+                    <div class="fs-1 mb-3">
+                      📍
+                    </div>
+
+                    <h5 class="fw-bold">
+                      No delivery address found
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                      Please add a delivery address to continue.
+                    </p>
+
+                  </div>
+
+                }
+
+              </div>
+
+            </div>
+
+
+            <!-- Selected Address -->
+            @if (selectedAddressId) {
+
+              <div class="card border-0 shadow-sm mb-4">
+
+                <div class="card-body p-4">
+
+                  <h4 class="fw-bold mb-3">
+                    Delivery Information
+                  </h4>
+
+                  @for (
+                    address of addresses;
+                    track address.id
+                  ) {
+
+                    @if (address.id === selectedAddressId) {
+
+                      <div class="selected-address-summary">
+
+                        <div class="fw-bold">
+                          {{ address.fullName }}
+                        </div>
+
+                        <div class="text-muted">
+                          {{ address.addressLine1 }}
+                        </div>
+
+                        @if (address.addressLine2) {
+
+                          <div class="text-muted">
+                            {{ address.addressLine2 }}
+                          </div>
+
+                        }
+
+                        <div class="text-muted">
+                          {{ address.city }},
+                          {{ address.state }}
+                          - {{ address.pincode }}
+                        </div>
+
+                        <div class="text-muted mt-2">
+                          Phone: {{ address.phone }}
+                        </div>
+
+                      </div>
+
+                    }
+
+                  }
+
+                </div>
+
+              </div>
+
+            }
+
+
+            <!-- Payment Method -->
+            <div class="card border-0 shadow-sm mb-4">
+
+              <div class="card-body p-4">
+
+                <div class="mb-4">
+
+                  <h4 class="fw-bold mb-1">
+                    Payment Method
+                  </h4>
+
+                  <p class="text-muted small mb-0">
+                    Choose how you want to pay for your order.
+                  </p>
+
+                </div>
+
+
+                <div class="row g-3">
+
+                  <!-- Online Payment -->
+                  <div class="col-md-6">
+
+                    <button
+                      type="button"
+                      class="payment-method-card w-100 text-start"
+                      [class.selected]="
+                        selectedPaymentMethod === 'ONLINE'
+                      "
+                      (click)="selectPaymentMethod('ONLINE')"
+                    >
+
+                      <div
+                        class="d-flex align-items-start gap-3"
+                      >
+
+                        <div class="payment-method-icon">
+                          💳
+                        </div>
+
+                        <div class="flex-grow-1">
+
+                          <div class="fw-bold mb-1">
+                            Online Payment
+                          </div>
+
+                          <div class="text-muted small">
+                            Pay securely using Razorpay.
+                          </div>
+
+                        </div>
+
+                        @if (
+                          selectedPaymentMethod === 'ONLINE'
+                        ) {
+
+                          <span class="payment-selected">
+                            ✓
+                          </span>
+
+                        }
+
+                      </div>
+
+                    </button>
+
+                  </div>
+
+
+                  <!-- Cash on Delivery -->
+                  <div class="col-md-6">
+
+                    <button
+                      type="button"
+                      class="payment-method-card w-100 text-start"
+                      [class.selected]="
+                        selectedPaymentMethod === 'COD'
+                      "
+                      (click)="selectPaymentMethod('COD')"
+                    >
+
+                      <div
+                        class="d-flex align-items-start gap-3"
+                      >
+
+                        <div class="payment-method-icon">
+                          💵
+                        </div>
+
+                        <div class="flex-grow-1">
+
+                          <div class="fw-bold mb-1">
+                            Cash on Delivery
+                          </div>
+
+                          <div class="text-muted small">
+                            Pay when your order is delivered.
+                          </div>
+
+                        </div>
+
+                        @if (
+                          selectedPaymentMethod === 'COD'
+                        ) {
+
+                          <span class="payment-selected">
+                            ✓
+                          </span>
+
+                        }
+
+                      </div>
+
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- Cart Items -->
+            <div class="card border-0 shadow-sm">
+
+              <div class="card-body p-4">
+
+                <h4 class="fw-bold mb-4">
+                  Order Items
+                </h4>
+
+                @for (item of cart.items; track item.id) {
+
+                  <div
+                    class="checkout-item d-flex align-items-center gap-3"
+                  >
+
+                    <div class="checkout-item-image-wrapper">
+
+                      @if (item.productImage) {
+
+                        <img
+                          [src]="item.productImage"
+                          [alt]="item.productName"
+                          class="checkout-item-image"
+                        />
+
+                      } @else {
+
+                        <div class="checkout-item-placeholder">
+                          🌱
+                        </div>
+
+                      }
+
+                    </div>
+
+                    <div class="flex-grow-1">
+
+                      <h6 class="fw-semibold mb-1">
+                        {{ item.productName }}
+                      </h6>
+
+                      <small class="text-muted">
+                        ₹{{ item.unitPrice }} × {{ item.quantity }}
+                      </small>
+
+                    </div>
+
+                    <div class="fw-semibold">
+                      ₹{{ item.totalPrice }}
+                    </div>
+
+                  </div>
+
+                }
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Right: Order Summary -->
+          <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm checkout-summary">
+
+              <div class="card-body p-4">
+
+                <h4 class="fw-bold mb-4">
+                  Order Summary
+                </h4>
+
+
+                <div
+                  class="d-flex justify-content-between mb-3"
+                >
+
+                  <span class="text-muted">
+                    Items
+                  </span>
+
+                  <span>
+                    {{ cart.items.length }}
+                  </span>
+
+                </div>
+
+
+                <div
+                  class="d-flex justify-content-between mb-3"
+                >
+
+                  <span class="text-muted">
+                    Total Quantity
+                  </span>
+
+                  <span>
+                    {{ getTotalQuantity() }}
+                  </span>
+
+                </div>
+
+
+                <div
+                  class="d-flex justify-content-between mb-3"
+                >
+
+                  <span class="text-muted">
+                    Subtotal
+                  </span>
+
+                  <span>
+                    ₹{{ cart.totalAmount }}
+                  </span>
+
+                </div>
+
+
+                <div
+                  class="d-flex justify-content-between mb-3"
+                >
+
+                  <span class="text-muted">
+                    Delivery
+                  </span>
+
+                  <span class="text-success">
+                    Free
+                  </span>
+
+                </div>
+
+
+                <!-- Selected Payment Method -->
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+
+                  <span class="text-muted">
+                    Payment
+                  </span>
+
+                  <span class="fw-semibold">
+
+                    @if (selectedPaymentMethod === 'COD') {
+                      Cash on Delivery
+                    } @else {
+                      Online Payment
+                    }
+
+                  </span>
+
+                </div>
+
+
+                <hr />
+
+
+                <div
+                  class="d-flex justify-content-between align-items-center mb-4"
+                >
+
+                  <span class="fw-semibold">
+                    Total
+                  </span>
+
+                  <span class="fs-4 fw-bold text-success">
+                    ₹{{ cart.totalAmount }}
+                  </span>
+
+                </div>
+
+
+                <button
+                  type="button"
+                  class="btn btn-success btn-lg w-100"
+                  [disabled]="
+                    !selectedAddressId ||
+                    !selectedPaymentMethod ||
+                    isPlacingOrder
+                  "
+                  (click)="placeOrder()"
+                >
+
+                  @if (isPlacingOrder) {
+
+                    <span
+                      class="spinner-border spinner-border-sm me-2"
+                      aria-hidden="true"
+                    ></span>
+
+                    Placing Order...
+
+                  } @else if (selectedPaymentMethod === 'COD') {
+
+                    Place COD Order
+
+                  } @else {
+
+                    Continue to Payment
+
+                  }
+
+                </button>
+
+
+                <a
+                  routerLink="/cart"
+                  class="btn btn-outline-secondary w-100 mt-3"
+                >
+                  ← Back to Cart
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  }
+
+</main>

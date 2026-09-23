@@ -1,0 +1,510 @@
+<main class="order-details-page">
+
+  <!-- Loading -->
+  @if (isLoading) {
+
+    <section class="py-5">
+
+      <div class="container">
+
+        <div class="placeholder-glow mb-4">
+          <span class="placeholder col-5"></span>
+        </div>
+
+        <div class="row g-4">
+
+          <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm mb-4">
+              <div class="card-body p-4 placeholder-glow">
+
+                <span class="placeholder col-6 mb-3"></span>
+                <span class="placeholder col-10 mb-2"></span>
+                <span class="placeholder col-8"></span>
+
+              </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+              <div class="card-body p-4 placeholder-glow">
+
+                <span class="placeholder col-5 mb-4"></span>
+
+                <div class="placeholder col-12 mb-3"></div>
+                <div class="placeholder col-10 mb-3"></div>
+                <div class="placeholder col-8"></div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm">
+              <div class="card-body p-4 placeholder-glow">
+
+                <span class="placeholder col-7 mb-4"></span>
+                <span class="placeholder col-12 mb-3"></span>
+                <span class="placeholder col-10 mb-3"></span>
+                <span class="placeholder col-8"></span>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  }
+
+
+  <!-- Error -->
+  @else if (errorMessage) {
+
+    <section class="py-5">
+
+      <div class="container">
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{ errorMessage }}
+        </div>
+
+        <a
+          routerLink="/orders"
+          class="btn btn-success"
+        >
+          View My Orders
+        </a>
+
+      </div>
+
+    </section>
+
+  }
+
+
+  <!-- Order -->
+  @else if (order) {
+
+    <section class="py-5">
+
+      <div class="container">
+
+        <!-- Header -->
+        <div class="mb-4">
+
+          <span
+            class="text-success fw-semibold text-uppercase small"
+          >
+            Order Confirmation
+          </span>
+
+          <h1 class="display-6 fw-bold mb-2">
+            Order Details
+          </h1>
+
+          <p class="text-muted mb-0">
+            Thank you for your order.
+          </p>
+
+        </div>
+
+
+        <!-- Order Header -->
+        <div class="card border-0 shadow-sm mb-4">
+
+          <div class="card-body p-4">
+
+            <div class="row g-4 align-items-center">
+
+              <div class="col-md-6">
+
+                <small class="text-muted d-block mb-1">
+                  Order Number
+                </small>
+
+                <h4 class="fw-bold mb-0">
+                  {{ order.orderNumber }}
+                </h4>
+
+              </div>
+
+
+              <div class="col-md-3">
+
+                <small class="text-muted d-block mb-1">
+                  Order Date
+                </small>
+
+                <div class="fw-semibold">
+                  {{ order.orderDate | date:'dd MMM yyyy, hh:mm a' }}
+                </div>
+
+              </div>
+
+
+              <div class="col-md-3">
+
+                <small class="text-muted d-block mb-1">
+                  Order Status
+                </small>
+
+                <span class="badge bg-success">
+                  {{ getOrderStatus() }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+          <!-- Left -->
+          <div class="col-lg-8">
+
+            <!-- Delivery Address -->
+            @if (address) {
+
+              <div class="card border-0 shadow-sm mb-4">
+
+                <div class="card-body p-4">
+
+                  <h4 class="fw-bold mb-4">
+                    Delivery Address
+                  </h4>
+
+                  <div class="address-box">
+
+                    <div class="fw-bold mb-2">
+                      {{ address.fullName }}
+                    </div>
+
+                    <div class="text-muted">
+                      {{ address.addressLine1 }}
+                    </div>
+
+                    @if (address.addressLine2) {
+
+                      <div class="text-muted">
+                        {{ address.addressLine2 }}
+                      </div>
+
+                    }
+
+                    <div class="text-muted">
+                      {{ address.city }},
+                      {{ address.state }}
+                      - {{ address.pincode }}
+                    </div>
+
+                    <div class="text-muted mt-2">
+                      Phone: {{ address.phone }}
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            }
+
+
+            <!-- Order Items -->
+            <div class="card border-0 shadow-sm">
+
+              <div class="card-body p-4">
+
+                <h4 class="fw-bold mb-4">
+                  Order Items
+                </h4>
+
+                @for (item of order.items; track item.id) {
+
+                  <div class="order-item">
+
+                    <div>
+
+                      <h6 class="fw-semibold mb-1">
+                        {{ item.productName }}
+                      </h6>
+
+                      <div class="text-muted small">
+                        ₹{{ item.unitPrice }}
+                        × {{ item.quantity }}
+                      </div>
+
+                    </div>
+
+                    <div class="fw-bold">
+                      ₹{{ item.total }}
+                    </div>
+
+                  </div>
+
+                }
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Right -->
+          <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm order-summary">
+
+              <div class="card-body p-4">
+
+                <h4 class="fw-bold mb-4">
+                  Order Summary
+                </h4>
+
+
+                <!-- Subtotal -->
+                <div class="d-flex justify-content-between mb-3">
+
+                  <span class="text-muted">
+                    Subtotal
+                  </span>
+
+                  <span>
+                    ₹{{ order.subTotal }}
+                  </span>
+
+                </div>
+
+
+                <!-- GST -->
+                <div class="d-flex justify-content-between mb-3">
+
+                  <span class="text-muted">
+                    GST
+                  </span>
+
+                  <span>
+                    ₹{{ order.gst }}
+                  </span>
+
+                </div>
+
+
+                <!-- Delivery -->
+                <div class="d-flex justify-content-between mb-3">
+
+                  <span class="text-muted">
+                    Delivery
+                  </span>
+
+                  <span class="text-success">
+
+                    @if (order.deliveryCharge === 0) {
+                      Free
+                    }
+                    @else {
+                      ₹{{ order.deliveryCharge }}
+                    }
+
+                  </span>
+
+                </div>
+
+
+                <!-- Discount -->
+                @if (order.discount > 0) {
+
+                  <div class="d-flex justify-content-between mb-3">
+
+                    <span class="text-muted">
+                      Discount
+                    </span>
+
+                    <span class="text-success">
+                      -₹{{ order.discount }}
+                    </span>
+
+                  </div>
+
+                }
+
+
+                <hr />
+
+
+                <!-- Grand Total -->
+                <div
+                  class="d-flex justify-content-between align-items-center mb-4"
+                >
+
+                  <span class="fw-semibold">
+                    Grand Total
+                  </span>
+
+                  <span class="fs-4 fw-bold text-success">
+                    ₹{{ order.grandTotal }}
+                  </span>
+
+                </div>
+
+
+                <!-- Payment Information -->
+                <div class="mb-4">
+
+                  <!-- Payment Method -->
+                  <small class="text-muted d-block mb-1">
+                    Payment Method
+                  </small>
+
+                  <div class="fw-semibold mb-3">
+                    {{ getPaymentMethod() }}
+                  </div>
+
+
+                  <!-- Payment Status -->
+                  <small class="text-muted d-block mb-1">
+                    Payment Status
+                  </small>
+
+                  @if (getPaymentStatus() === 'Pending') {
+
+                    <span class="badge bg-warning text-dark">
+                      Payment Pending
+                    </span>
+
+                  }
+                  @else {
+
+                    <span class="badge bg-success">
+                      Paid
+                    </span>
+
+                  }
+
+                </div>
+
+
+                <!-- Payment Error -->
+                @if (paymentError) {
+
+                  <div
+                    class="alert alert-danger mb-3"
+                    role="alert"
+                  >
+                    {{ paymentError }}
+                  </div>
+
+                }
+
+
+                <!-- Online Payment -->
+                @if (
+                  isOnlinePayment() &&
+                  getPaymentStatus() === 'Pending'
+                ) {
+
+                  <button
+                    type="button"
+                    class="btn btn-success btn-lg w-100"
+                    [disabled]="isCreatingPayment"
+                    (click)="proceedToPayment()"
+                  >
+
+                    @if (isCreatingPayment) {
+
+                      <span
+                        class="spinner-border spinner-border-sm me-2"
+                        aria-hidden="true"
+                      ></span>
+
+                      Opening Payment...
+
+                    }
+                    @else {
+
+                      Proceed to Payment
+
+                    }
+
+                  </button>
+
+                }
+
+
+                <!-- COD Information -->
+                @if (
+                  !isOnlinePayment() &&
+                  getPaymentStatus() === 'Pending'
+                ) {
+
+                  <div class="alert alert-success mb-0">
+
+                    <div class="fw-semibold mb-1">
+                      Cash on Delivery
+                    </div>
+
+                    <div class="small">
+                      Please pay the order amount when your order
+                      is delivered.
+                    </div>
+
+                  </div>
+
+                }
+
+
+                <!-- Payment Completed -->
+                @if (getPaymentStatus() !== 'Pending') {
+
+                  <div class="alert alert-success mb-0">
+
+                    <div class="fw-semibold">
+                      Payment Completed
+                    </div>
+
+                    <div class="small">
+                      Your payment has been successfully completed.
+                    </div>
+
+                  </div>
+
+                }
+
+
+                <!-- Continue Shopping -->
+                <a
+                  routerLink="/products"
+                  class="btn btn-outline-success w-100 mt-3"
+                >
+                  Continue Shopping
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  }
+
+</main>
