@@ -1,0 +1,236 @@
+.services-page {
+  color: #17351f;
+}
+
+
+/* =========================================
+   Hero
+   ========================================= */
+
+.services-hero {
+  background: linear-gradient(
+    135deg,
+    #f3faf5 0%,
+    #e7f5eb 100%
+  );
+  padding: 6rem 0;
+}
+
+.section-label {
+  display: inline-block;
+  color: #198754;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+}
+
+.services-hero h1 {
+  max-width: 700px;
+  font-size: clamp(2.5rem, 5vw, 4.2rem);
+  line-height: 1.08;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+.services-hero h1 span {
+  display: block;
+  color: #198754;
+}
+
+.services-hero > .container p {
+  max-width: 620px;
+  color: #607067;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.hero-service-card {
+  background: #ffffff;
+  border: 1px solid #dceee1;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 15px 40px rgba(23, 53, 31, 0.08);
+}
+
+.hero-service-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8f7ed;
+  border-radius: 16px;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-service-card h4 {
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.hero-service-card p {
+  color: #68766e;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+
+/* =========================================
+   Section
+   ========================================= */
+
+.section-title {
+  color: #17351f;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 750;
+  line-height: 1.2;
+  margin-bottom: 0.8rem;
+}
+
+.section-description {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #68766e;
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   Service Cards
+   ========================================= */
+
+.services-list {
+  background: #ffffff;
+}
+
+.service-card {
+  height: 100%;
+  padding: 2rem;
+  background: #ffffff;
+  border: 1px solid #e3ece6;
+  border-radius: 16px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  border-color: #c7dfce;
+  box-shadow: 0 15px 35px rgba(23, 53, 31, 0.08);
+}
+
+.service-icon {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eaf7ee;
+  border-radius: 13px;
+  font-size: 1.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.service-card h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.service-card p {
+  color: #68766e;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.service-link {
+  color: #198754;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.service-link:hover {
+  color: #146c43;
+}
+
+
+/* =========================================
+   How It Works
+   ========================================= */
+
+.how-it-works {
+  background: #f7faf8;
+}
+
+.step-card {
+  position: relative;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid #e3ece6;
+}
+
+.step-number {
+  color: #198754;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.25rem;
+}
+
+.step-card h5 {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.step-card p {
+  color: #68766e;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+
+/* =========================================
+   CTA
+   ========================================= */
+
+.services-cta {
+  background: #17351f;
+  color: #ffffff;
+  padding: 4rem 0;
+}
+
+.services-cta h2 {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.services-cta p {
+  color: #bfd0c4;
+  margin-bottom: 1.5rem;
+}
+
+
+/* =========================================
+   Responsive
+   ========================================= */
+
+@media (max-width: 767.98px) {
+
+  .services-hero {
+    padding: 4rem 0;
+  }
+
+  .hero-service-card {
+    padding: 2rem;
+  }
+
+}

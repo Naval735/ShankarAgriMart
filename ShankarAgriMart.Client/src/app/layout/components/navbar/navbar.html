@@ -1,101 +1,268 @@
-<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+<nav class="site-navbar">
 
-  <div class="container">
+  <!-- =========================
+       TOP NAVBAR
+  ========================== -->
+  <div class="navbar-main">
+    <div class="container">
 
-    <!-- Brand -->
-    <a
-      class="navbar-brand d-flex align-items-center gap-2"
-      routerLink="/home"
-    >
-      <span class="brand-icon">🌾</span>
-      <span class="brand-name">ShankarAgriMart</span>
-    </a>
+      <div class="navbar-top">
 
-
-    <!-- Mobile Toggle -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#mainNavbar"
-      aria-controls="mainNavbar"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-
-    <!-- Navigation -->
-    <div
-      class="collapse navbar-collapse"
-      id="mainNavbar"
-    >
-
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/home"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            Home
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/products"
-            routerLinkActive="active"
-          >
-            Products
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/orders"
-            routerLinkActive="active"
-          >
-            My Orders
-          </a>
-        </li>
-
-      </ul>
-
-
-      <!-- Right Actions -->
-      <div class="d-flex align-items-center gap-3">
-
+        <!-- Brand -->
         <a
-          routerLink="/cart"
-          class="cart-link"
-          aria-label="Shopping cart"
+          class="brand"
+          routerLink="/home"
+          (click)="closeMenu()"
         >
-          🛒
-          <span class="cart-text">Cart</span>
+          <span class="brand-icon">
+            🌾
+          </span>
+
+          <span class="brand-text">
+            ShankarAgriMart
+          </span>
         </a>
 
+
+        <!-- Search -->
+        <form
+          class="search-wrapper"
+          (submit)="searchProducts($event)"
+        >
+          <input
+            type="search"
+            class="search-input"
+            placeholder="Search products, pesticides, fertilizers..."
+            [(ngModel)]="searchTerm"
+            name="search"
+          />
+
+          <button
+            type="submit"
+            class="search-button"
+            aria-label="Search"
+          >
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+
+
+        <!-- Right Actions -->
+        <div class="navbar-actions">
+
+          <!-- Language -->
+          <button
+            type="button"
+            class="language-button"
+          >
+            <i class="bi bi-globe2"></i>
+
+            <span>
+              English
+            </span>
+
+            <i class="bi bi-chevron-down small"></i>
+          </button>
+
+
+          <!-- Login -->
+          @if (isAuthChecked && !isAuthenticated) {
+
+            <a
+              routerLink="/login"
+              class="account-link"
+            >
+              <i class="bi bi-person"></i>
+
+              <span>
+                Login
+              </span>
+            </a>
+
+          }
+
+
+          <!-- Logged-in user -->
+          @if (isAuthChecked && isAuthenticated) {
+
+            <a
+              routerLink="/orders"
+              class="account-link"
+            >
+              <i class="bi bi-person-circle"></i>
+
+              <span>
+                My Account
+              </span>
+            </a>
+
+          }
+
+
+          <!-- Cart -->
+          @if (isAuthChecked && isAuthenticated) {
+
+            <a
+              routerLink="/cart"
+              class="cart-link"
+              aria-label="Shopping cart"
+            >
+              <span class="cart-icon-wrapper">
+                <i class="bi bi-cart3"></i>
+
+                <span class="cart-badge">
+                  0
+                </span>
+              </span>
+
+              <span class="cart-label">
+                Cart
+              </span>
+            </a>
+
+          }
+
+        </div>
+
+
+        <!-- Mobile Toggle -->
         <button
           type="button"
-          class="btn btn-outline-danger btn-sm"
-          [disabled]="isLoggingOut"
-          (click)="logout()"
+          class="mobile-toggle"
+          [class.open]="isMenuOpen"
+          (click)="toggleMenu()"
+          aria-label="Toggle navigation"
         >
-          @if (isLoggingOut) {
-            <span
-              class="spinner-border spinner-border-sm me-1"
-              aria-hidden="true">
-            </span>
-            Logging out...
-          } @else {
-            Logout
-          }
+          <i
+            class="bi"
+            [class.bi-list]="!isMenuOpen"
+            [class.bi-x-lg]="isMenuOpen"
+          ></i>
         </button>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- =========================
+       CATEGORY NAVIGATION
+  ========================== -->
+  <div
+    class="category-navbar"
+    [class.mobile-open]="isMenuOpen"
+  >
+
+    <div class="container">
+
+      <div class="category-nav">
+
+        <a
+          routerLink="/products"
+          class="category-link"
+          (click)="closeMenu()"
+        >
+          Seeds
+          <i class="bi bi-chevron-down"></i>
+        </a>
+
+        <a
+          routerLink="/products"
+          class="category-link"
+          (click)="closeMenu()"
+        >
+          Fertilizers
+        </a>
+
+        <a
+          routerLink="/products"
+          class="category-link"
+          (click)="closeMenu()"
+        >
+          Pesticides
+        </a>
+
+        <a
+          routerLink="/products"
+          class="category-link"
+          (click)="closeMenu()"
+        >
+          Crop Protection
+        </a>
+
+        <a
+          routerLink="/products"
+          class="category-link"
+          (click)="closeMenu()"
+        >
+          Plant Nutrition
+        </a>
+
+        <a
+          routerLink="/products"
+          class="category-link"
+          (click)="closeMenu()"
+        >
+          Farm Accessories
+        </a>
+
+        <a
+          routerLink="/products"
+          class="category-link"
+          (click)="closeMenu()"
+        >
+          Gardening
+        </a>
+
+        <a
+          routerLink="/products"
+          class="category-link"
+          (click)="closeMenu()"
+        >
+          All Products
+        </a>
+
+        @if (isAuthChecked && isAuthenticated && isAdmin) {
+
+          <a
+            routerLink="/admin/dashboard"
+            class="admin-link"
+            (click)="closeMenu()"
+          >
+            <i class="bi bi-speedometer2"></i>
+            Admin Panel
+          </a>
+
+        }
+
+        @if (isAuthChecked && isAuthenticated) {
+
+          <button
+            type="button"
+            class="logout-link"
+            [disabled]="isLoggingOut"
+            (click)="logout()"
+          >
+
+            @if (isLoggingOut) {
+
+              <span
+                class="spinner-border spinner-border-sm me-1"
+              ></span>
+
+              Logging out...
+
+            } @else {
+
+              <i class="bi bi-box-arrow-right"></i>
+              Logout
+
+            }
+
+          </button>
+
+        }
 
       </div>
 

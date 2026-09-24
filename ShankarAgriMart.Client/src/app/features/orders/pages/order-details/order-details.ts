@@ -81,70 +81,69 @@ export class OrderDetailsComponent implements OnInit {
 
   proceedToPayment(): void {
 
-    if (
-      !this.order ||
-      this.isCreatingPayment ||
-      this.order.paymentMethod !== 'ONLINE'
-    ) {
-      return;
-    }
+  if (
+    !this.order ||
+    this.isCreatingPayment ||
+    !this.isOnlinePayment()
+  ) {
+    return;
+  }
 
-    this.isCreatingPayment = true;
-    this.paymentError = '';
+  this.isCreatingPayment = true;
+  this.paymentError = '';
 
-    this.changeDetector.detectChanges();
+  this.changeDetector.detectChanges();
 
-    this.paymentService
-      .createPayment(this.order.id)
-      .subscribe({
+  this.paymentService
+    .createPayment(this.order.id)
+    .subscribe({
 
-        next: (response) => {
+      next: (response) => {
 
-          console.log(
-            'Razorpay order created:',
-            response
-          );
+        console.log(
+          'Razorpay order created:',
+          response
+        );
 
-          if (
-            !response.success ||
-            !response.data
-          ) {
-
-            this.isCreatingPayment = false;
-
-            this.paymentError =
-              response.message ||
-              'Unable to create payment.';
-
-            this.changeDetector.detectChanges();
-
-            return;
-          }
-
-          this.openRazorpayCheckout(
-            response.data
-          );
-        },
-
-        error: (error) => {
-
-          console.error(
-            'Create payment error:',
-            error
-          );
+        if (
+          !response.success ||
+          !response.data
+        ) {
 
           this.isCreatingPayment = false;
 
           this.paymentError =
-            error?.error?.message ||
-            'Unable to start payment. Please try again.';
+            response.message ||
+            'Unable to create payment.';
 
           this.changeDetector.detectChanges();
+
+          return;
         }
 
-      });
-  }
+        this.openRazorpayCheckout(
+          response.data
+        );
+      },
 
+      error: (error) => {
+
+        console.error(
+          'Create payment error:',
+          error
+        );
+
+        this.isCreatingPayment = false;
+
+        this.paymentError =
+          error?.error?.message ||
+          'Unable to start payment. Please try again.';
+
+        this.changeDetector.detectChanges();
+      }
+
+    });
+}
   // ==========================================
   // OPEN RAZORPAY CHECKOUT
   // ==========================================
@@ -404,24 +403,37 @@ export class OrderDetailsComponent implements OnInit {
 
   getPaymentMethod(): string {
 
-    if (!this.order) {
-      return '';
-    }
-
-    return this.order.paymentMethod === 'COD'
-      ? 'Cash on Delivery'
-      : 'Online Payment';
+  if (!this.order) {
+    return '';
   }
+
+  if (
+    this.order.paymentMethod === 2 ||
+    this.order.paymentMethod === 'CashOnDelivery' ||
+    this.order.paymentMethod === 'COD'
+  ) {
+    return 'Cash on Delivery';
+  }
+
+  return 'Online Payment';
+}
 
   // ==========================================
   // CHECK IF ONLINE PAYMENT
   // ==========================================
 
-  isOnlinePayment(): boolean {
+ isOnlinePayment(): boolean {
 
-    return this.order?.paymentMethod === 'ONLINE';
+  if (!this.order) {
+    return false;
   }
 
+  return !(
+    this.order.paymentMethod === 2 ||
+    this.order.paymentMethod === 'CashOnDelivery' ||
+    this.order.paymentMethod === 'COD'
+  );
+}
   // ==========================================
   // ORDER STATUS
   // ==========================================

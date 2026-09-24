@@ -1,0 +1,205 @@
+.about-page {
+  color: #17351f;
+}
+
+.about-hero {
+  background: linear-gradient(
+    135deg,
+    #f3faf5 0%,
+    #e8f6ec 100%
+  );
+  padding: 6rem 0;
+}
+
+.section-label {
+  display: inline-block;
+  color: #198754;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+}
+
+.about-hero h1 {
+  max-width: 650px;
+  font-size: clamp(2.5rem, 5vw, 4.2rem);
+  line-height: 1.08;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+.about-hero h1 span {
+  color: #198754;
+}
+
+.hero-description {
+  max-width: 580px;
+  color: #607067;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.about-visual {
+  position: relative;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visual-circle {
+  width: 280px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d9efdf;
+  border: 1px dashed #9bc9a8;
+  border-radius: 50%;
+  font-size: 6rem;
+}
+
+.floating-card {
+  position: absolute;
+  background: #ffffff;
+  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(23, 53, 31, 0.1);
+}
+
+.floating-card strong,
+.floating-card span {
+  display: block;
+}
+
+.floating-card strong {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.floating-card span {
+  color: #718078;
+  font-size: 0.78rem;
+}
+
+.card-one {
+  top: 35px;
+  right: 0;
+}
+
+.card-two {
+  bottom: 35px;
+  left: 0;
+}
+
+.section-title {
+  color: #17351f;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 750;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+
+.mission-card {
+  background: #f3faf5;
+  border: 1px solid #dceee1;
+  border-radius: 18px;
+  padding: 2.5rem;
+}
+
+.mission-icon,
+.value-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e2f4e7;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  margin-bottom: 1.25rem;
+}
+
+.mission-card h4 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.mission-card p,
+.value-card p {
+  color: #68766e;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.values-section {
+  background: #fafcfb;
+}
+
+.value-card {
+  height: 100%;
+  background: #ffffff;
+  border: 1px solid #e5eee8;
+  border-radius: 16px;
+  padding: 2rem;
+  transition: transform 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(23, 53, 31, 0.08);
+}
+
+.value-icon {
+  margin-bottom: 1rem;
+}
+
+.value-card h5 {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.about-cta {
+  background: #17351f;
+  color: #ffffff;
+  padding: 4rem 0;
+}
+
+.about-cta h2 {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.about-cta p {
+  color: #bfd0c4;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 767.98px) {
+
+  .about-hero {
+    padding: 4rem 0;
+  }
+
+  .about-visual {
+    min-height: 300px;
+  }
+
+  .visual-circle {
+    width: 220px;
+    height: 220px;
+    font-size: 4.5rem;
+  }
+
+  .card-one {
+    right: 0;
+    top: 10px;
+  }
+
+  .card-two {
+    left: 0;
+    bottom: 10px;
+  }
+
+}

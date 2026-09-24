@@ -1,0 +1,360 @@
+<div class="register-page">
+
+  <div class="container">
+
+    <div class="row justify-content-center">
+
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+
+        <div class="register-card">
+
+          <!-- Header -->
+          <div class="text-center mb-4">
+
+            <div class="register-icon">
+              🌾
+            </div>
+
+            <h1 class="register-title">
+              Create Your Account
+            </h1>
+
+            <p class="register-subtitle">
+              Join ShankarAgriMart and shop quality
+              agricultural products.
+            </p>
+
+          </div>
+
+
+          <!-- Error -->
+          @if (errorMessage) {
+
+            <div
+              class="alert alert-danger"
+              role="alert"
+            >
+              {{ errorMessage }}
+            </div>
+
+          }
+
+
+          <!-- Success -->
+          @if (successMessage) {
+
+            <div
+              class="alert alert-success"
+              role="alert"
+            >
+              {{ successMessage }}
+            </div>
+
+          }
+
+
+          <!-- Registration Form -->
+          <form
+            [formGroup]="registerForm"
+            (ngSubmit)="submit()"
+            novalidate
+          >
+
+            <!-- Name -->
+            <div class="row">
+
+              <!-- First Name -->
+              <div class="col-md-6 mb-3">
+
+                <label
+                  for="firstName"
+                  class="form-label"
+                >
+                  First Name
+                </label>
+
+                <input
+                  id="firstName"
+                  type="text"
+                  class="form-control"
+                  formControlName="firstName"
+                  placeholder="Enter first name"
+                  [class.is-invalid]="
+                    firstName.invalid &&
+                    firstName.touched
+                  "
+                >
+
+                @if (
+                  firstName.invalid &&
+                  firstName.touched
+                ) {
+
+                  <div class="invalid-feedback">
+
+                    @if (firstName.errors?.['required']) {
+                      First name is required.
+                    }
+
+                    @else if (
+                      firstName.errors?.['minlength']
+                    ) {
+                      First name must contain at least
+                      2 characters.
+                    }
+
+                  </div>
+
+                }
+
+              </div>
+
+
+              <!-- Last Name -->
+              <div class="col-md-6 mb-3">
+
+                <label
+                  for="lastName"
+                  class="form-label"
+                >
+                  Last Name
+                </label>
+
+                <input
+                  id="lastName"
+                  type="text"
+                  class="form-control"
+                  formControlName="lastName"
+                  placeholder="Enter last name"
+                >
+
+              </div>
+
+            </div>
+
+
+            <!-- Email -->
+            <div class="mb-3">
+
+              <label
+                for="email"
+                class="form-label"
+              >
+                Email Address
+              </label>
+
+              <input
+                id="email"
+                type="email"
+                class="form-control"
+                formControlName="email"
+                placeholder="you@example.com"
+                [class.is-invalid]="
+                  email.invalid &&
+                  email.touched
+                "
+              >
+
+              @if (
+                email.invalid &&
+                email.touched
+              ) {
+
+                <div class="invalid-feedback">
+
+                  @if (email.errors?.['required']) {
+                    Email is required.
+                  }
+
+                  @else if (email.errors?.['email']) {
+                    Please enter a valid email address.
+                  }
+
+                </div>
+
+              }
+
+            </div>
+
+
+            <!-- Phone -->
+            <div class="mb-3">
+
+              <label
+                for="phone"
+                class="form-label"
+              >
+                Phone Number
+              </label>
+
+              <input
+                id="phone"
+                type="tel"
+                class="form-control"
+                formControlName="phone"
+                placeholder="10-digit mobile number"
+                maxlength="10"
+                [class.is-invalid]="
+                  phone.invalid &&
+                  phone.touched
+                "
+              >
+
+              @if (
+                phone.invalid &&
+                phone.touched
+              ) {
+
+                <div class="invalid-feedback">
+
+                  @if (phone.errors?.['required']) {
+                    Phone number is required.
+                  }
+
+                  @else if (phone.errors?.['pattern']) {
+                    Please enter a valid 10-digit
+                    Indian mobile number.
+                  }
+
+                </div>
+
+              }
+
+            </div>
+
+
+            <!-- Password -->
+            <div class="mb-3">
+
+              <label
+                for="password"
+                class="form-label"
+              >
+                Password
+              </label>
+
+              <input
+                id="password"
+                type="password"
+                class="form-control"
+                formControlName="password"
+                placeholder="Create a password"
+                [class.is-invalid]="
+                  password.invalid &&
+                  password.touched
+                "
+              >
+
+              @if (
+                password.invalid &&
+                password.touched
+              ) {
+
+                <div class="invalid-feedback">
+
+                  @if (password.errors?.['required']) {
+                    Password is required.
+                  }
+
+                  @else if (
+                    password.errors?.['minlength']
+                  ) {
+                    Password must contain at least
+                    8 characters.
+                  }
+
+                </div>
+
+              }
+
+            </div>
+
+
+            <!-- Confirm Password -->
+            <div class="mb-4">
+
+              <label
+                for="confirmPassword"
+                class="form-label"
+              >
+                Confirm Password
+              </label>
+
+              <input
+                id="confirmPassword"
+                type="password"
+                class="form-control"
+                formControlName="confirmPassword"
+                placeholder="Confirm your password"
+                [class.is-invalid]="
+                  confirmPassword.touched &&
+                  (
+                    confirmPassword.invalid ||
+                    !passwordsMatch()
+                  )
+                "
+              >
+
+              @if (
+                confirmPassword.touched &&
+                !passwordsMatch()
+              ) {
+
+                <div class="invalid-feedback">
+                  Passwords do not match.
+                </div>
+
+              }
+
+            </div>
+
+
+            <!-- Submit -->
+            <button
+              type="submit"
+              class="btn btn-success w-100 register-button"
+              [disabled]="isSubmitting"
+            >
+
+              @if (isSubmitting) {
+
+                <span
+                  class="spinner-border spinner-border-sm me-2"
+                  aria-hidden="true"
+                ></span>
+
+                Creating Account...
+
+              }
+
+              @else {
+
+                Create Account
+
+              }
+
+            </button>
+
+          </form>
+
+
+          <!-- Login -->
+          <div class="login-link text-center">
+
+            Already have an account?
+
+            <a routerLink="/login">
+              Login
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

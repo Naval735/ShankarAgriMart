@@ -1,142 +1,288 @@
-<app-navbar></app-navbar>
-
 <main>
 
-  <!-- Hero Section -->
-  <section class="hero-section">
+  <!-- =========================================================
+       HERO CAROUSEL
+  ========================================================== -->
 
-    <div class="container">
+  <section
+    class="hero-carousel"
+    (mouseenter)="stopCarousel()"
+    (mouseleave)="startCarousel()"
+  >
 
-      <div class="row align-items-center g-5">
+    @for (slide of slides; track $index) {
 
-        <!-- Hero Content -->
-        <div class="col-lg-6">
+      @if (currentSlide === $index) {
 
-          <span class="hero-badge">
-            🌱 Trusted Agricultural Marketplace
-          </span>
+        <div class="hero-slide">
 
-          <h1 class="hero-title">
-            Everything You Need
-            <span>For Better Farming.</span>
-          </h1>
+          <!-- =========================
+               HERO CONTENT
+          ========================== -->
 
-          <p class="hero-description">
-            Discover quality pesticides, fertilizers and agricultural
-            products from trusted brands — all in one convenient place.
-          </p>
+          <div class="hero-content">
 
-          <div class="hero-actions">
+            <div class="hero-eyebrow">
+              🌱 {{ slide.eyebrow }}
+            </div>
 
-            <a
-              routerLink="/products"
-              class="btn btn-success hero-primary-btn"
-            >
-              Shop Products
-              <span>→</span>
-            </a>
+            <h1>
 
-            <a
-              routerLink="/products"
-              class="btn hero-secondary-btn"
-            >
-              Explore Categories
-            </a>
+              {{ slide.title }}
+
+              <span>
+                {{ slide.highlight }}
+              </span>
+
+            </h1>
+
+            <p>
+              {{ slide.description }}
+            </p>
+
+
+            <!-- CTA Buttons -->
+
+            <div class="hero-actions">
+
+              <a
+                [routerLink]="slide.buttonLink"
+                class="btn hero-primary-btn"
+              >
+
+                {{ slide.buttonText }}
+
+                <i class="bi bi-arrow-right ms-2"></i>
+
+              </a>
+
+
+              <a
+                routerLink="/products"
+                class="btn hero-secondary-btn"
+              >
+
+                Explore Categories
+
+              </a>
+
+            </div>
+
+
+            <!-- Trust Indicators -->
+
+            <div class="trust-indicators">
+
+              <div class="trust-item">
+
+                <strong>
+                  500+
+                </strong>
+
+                <span>
+                  Products
+                </span>
+
+              </div>
+
+
+              <div class="trust-divider"></div>
+
+
+              <div class="trust-item">
+
+                <strong>
+                  50+
+                </strong>
+
+                <span>
+                  Trusted Brands
+                </span>
+
+              </div>
+
+
+              <div class="trust-divider"></div>
+
+
+              <div class="trust-item">
+
+                <strong>
+                  100%
+                </strong>
+
+                <span>
+                  Quality Assured
+                </span>
+
+              </div>
+
+            </div>
 
           </div>
 
-          <!-- Trust Indicators -->
-          <div class="trust-indicators">
 
-            <div class="trust-item">
-              <strong>500+</strong>
-              <span>Products</span>
-            </div>
+          <!-- =========================
+               HERO IMAGE
+          ========================== -->
 
-            <div class="trust-divider"></div>
+          <div class="hero-image">
 
-            <div class="trust-item">
-              <strong>50+</strong>
-              <span>Trusted Brands</span>
-            </div>
+            <img
+              [src]="slide.image"
+              [alt]="slide.title"
+            />
 
-            <div class="trust-divider"></div>
-
-            <div class="trust-item">
-              <strong>100%</strong>
-              <span>Quality Assured</span>
-            </div>
-
-          </div>
-
-        </div>
+            <div class="image-overlay"></div>
 
 
-        <!-- Hero Visual -->
-        <div class="col-lg-6">
+            <!-- Floating Product Card -->
 
-          <div class="hero-visual">
+            <div class="hero-floating-card">
 
-            <div class="hero-circle"></div>
-
-            <div class="hero-card hero-card-main">
-
-              <div class="hero-product-icon">
+              <div class="floating-icon">
                 🌾
               </div>
 
               <div>
-                <small>Featured</small>
-                <strong>Crop Protection</strong>
+
+                <small>
+                  Featured
+                </small>
+
+                <strong>
+                  Agricultural Products
+                </strong>
+
               </div>
 
             </div>
 
-            <div class="floating-card floating-card-top">
 
-              <span>✓</span>
+            <!-- Quality Card -->
+
+            <div class="floating-card floating-card-quality">
+
+              <span class="floating-check">
+                ✓
+              </span>
 
               <div>
-                <strong>Quality Products</strong>
-                <small>Trusted brands</small>
+
+                <strong>
+                  Quality Products
+                </strong>
+
+                <small>
+                  Trusted brands
+                </small>
+
               </div>
 
             </div>
 
-            <div class="floating-card floating-card-bottom">
 
-              <span>🚚</span>
+            <!-- Delivery Card -->
+
+            <div class="floating-card floating-card-delivery">
+
+              <span>
+                🚚
+              </span>
 
               <div>
-                <strong>Fast Delivery</strong>
-                <small>To your doorstep</small>
+
+                <strong>
+                  Fast Delivery
+                </strong>
+
+                <small>
+                  To your doorstep
+                </small>
+
               </div>
 
-            </div>
-
-            <div class="hero-plant">
-              🌱
             </div>
 
           </div>
 
         </div>
 
-      </div>
+      }
+
+    }
+
+
+    <!-- =====================================================
+         PREVIOUS BUTTON
+    ====================================================== -->
+
+    <button
+      type="button"
+      class="carousel-arrow carousel-prev"
+      (click)="previousSlide()"
+      aria-label="Previous slide"
+    >
+
+      <i class="bi bi-chevron-left"></i>
+
+    </button>
+
+
+    <!-- =====================================================
+         NEXT BUTTON
+    ====================================================== -->
+
+    <button
+      type="button"
+      class="carousel-arrow carousel-next"
+      (click)="nextSlide()"
+      aria-label="Next slide"
+    >
+
+      <i class="bi bi-chevron-right"></i>
+
+    </button>
+
+
+    <!-- =====================================================
+         CAROUSEL INDICATORS
+    ====================================================== -->
+
+    <div class="carousel-indicators">
+
+      @for (slide of slides; track $index) {
+
+        <button
+          type="button"
+          class="indicator"
+          [class.active]="currentSlide === $index"
+          (click)="goToSlide($index)"
+          [attr.aria-label]="'Go to slide ' + ($index + 1)"
+        ></button>
+
+      }
 
     </div>
 
   </section>
 
 
-  <!-- Categories Section -->
+  <!-- =========================================================
+       CATEGORIES SECTION
+  ========================================================== -->
+
   <section class="categories-section">
 
     <div class="container">
 
+
+      <!-- Section Heading -->
+
       <div class="section-heading">
 
         <div>
+
           <span class="section-label">
             SHOP BY CATEGORY
           </span>
@@ -144,28 +290,38 @@
           <h2>
             Everything for your farm
           </h2>
+
         </div>
+
 
         <a
           routerLink="/products"
           class="view-all-link"
         >
-          View all →
+          View all
+          <span>→</span>
         </a>
 
       </div>
 
 
-      <!-- Loading -->
+      <!-- =====================================================
+           CATEGORY LOADING
+      ====================================================== -->
+
       @if (isCategoriesLoading) {
 
         <div class="row g-4">
 
           @for (item of [1, 2, 3, 4]; track item) {
 
-            <div class="col-6 col-md-4 col-lg-3">
+            <div
+              class="col-6 col-md-4 col-lg-3"
+            >
 
-              <div class="category-card category-skeleton">
+              <div
+                class="category-card category-skeleton"
+              >
 
                 <div class="placeholder-glow">
 
@@ -173,9 +329,13 @@
                     class="placeholder category-placeholder-icon"
                   ></div>
 
-                  <h3 class="placeholder col-8"></h3>
+                  <h3
+                    class="placeholder col-8"
+                  ></h3>
 
-                  <p class="placeholder col-10"></p>
+                  <p
+                    class="placeholder col-10"
+                  ></p>
 
                 </div>
 
@@ -190,45 +350,85 @@
       }
 
 
-      <!-- Error -->
+      <!-- =====================================================
+           CATEGORY ERROR
+      ====================================================== -->
+
       @else if (categoriesError) {
 
         <div
           class="alert alert-danger"
           role="alert"
         >
+
           {{ categoriesError }}
+
         </div>
 
       }
 
 
-      <!-- Categories -->
+      <!-- =====================================================
+           CATEGORIES
+      ====================================================== -->
+
       @else if (categories.length > 0) {
 
         <div class="row g-4">
 
-          @for (category of categories; track category.id) {
+          @for (
+            category of categories;
+            track category.id
+          ) {
 
-            <div class="col-6 col-md-4 col-lg-3">
+            <div
+              class="col-6 col-md-4 col-lg-3"
+            >
 
-             <a
-  [routerLink]="['/products']"
-  [queryParams]="{ categoryId: category.id }"
-  class="category-card text-decoration-none"
->
+              <a
+                [routerLink]="['/products']"
+                [queryParams]="{
+                  categoryId: category.id
+                }"
+                class="category-card text-decoration-none"
+              >
+
+                <!-- Category Icon -->
 
                 <div class="category-icon">
+
                   🌱
+
                 </div>
 
+
+                <!-- Category Name -->
+
                 <h3>
+
                   {{ category.name }}
+
                 </h3>
 
+
+                <!-- Category Description -->
+
                 <p>
+
                   {{ category.description }}
+
                 </p>
+
+
+                <!-- Explore -->
+
+                <span class="category-explore">
+
+                  Explore
+
+                  <i class="bi bi-arrow-right"></i>
+
+                </span>
 
               </a>
 
@@ -241,17 +441,172 @@
       }
 
 
-      <!-- No Categories -->
+      <!-- =====================================================
+           NO CATEGORIES
+      ====================================================== -->
+
       @else {
 
         <div
           class="alert alert-info"
           role="alert"
         >
+
           No categories are available at the moment.
+
         </div>
 
       }
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       WHY CHOOSE US
+  ========================================================== -->
+
+  <section class="why-section">
+
+    <div class="container">
+
+      <div class="section-heading text-center">
+
+        <div class="w-100">
+
+          <span class="section-label">
+            WHY SHANKARAGRIMART
+          </span>
+
+          <h2>
+            Everything you need to grow better
+          </h2>
+
+          <p class="section-description">
+            Simple, reliable and convenient agricultural
+            shopping for farmers and growers.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="row g-4">
+
+        <div class="col-md-4">
+
+          <div class="why-card">
+
+            <div class="why-icon">
+              <i class="bi bi-patch-check"></i>
+            </div>
+
+            <h3>
+              Quality Products
+            </h3>
+
+            <p>
+              Discover agricultural products from
+              trusted brands and reliable sources.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+          <div class="why-card">
+
+            <div class="why-icon">
+              <i class="bi bi-basket"></i>
+            </div>
+
+            <h3>
+              Easy Shopping
+            </h3>
+
+            <p>
+              Browse products, compare options and
+              place your order from one convenient platform.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+          <div class="why-card">
+
+            <div class="why-icon">
+              <i class="bi bi-truck"></i>
+            </div>
+
+            <h3>
+              Reliable Delivery
+            </h3>
+
+            <p>
+              Get your agricultural essentials delivered
+              conveniently to your doorstep.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       FINAL CTA
+  ========================================================== -->
+
+  <section class="home-cta">
+
+    <div class="container">
+
+      <div class="cta-content">
+
+        <div>
+
+          <span class="section-label">
+            READY TO GET STARTED?
+          </span>
+
+          <h2>
+            Grow better with ShankarAgriMart.
+          </h2>
+
+          <p>
+            Explore our agricultural products and
+            find what your farm needs.
+          </p>
+
+        </div>
+
+
+        <a
+          routerLink="/products"
+          class="btn cta-button"
+        >
+
+          Shop Products
+
+          <i class="bi bi-arrow-right ms-2"></i>
+
+        </a>
+
+      </div>
 
     </div>
 

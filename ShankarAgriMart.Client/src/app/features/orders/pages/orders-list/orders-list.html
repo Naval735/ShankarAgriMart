@@ -1,0 +1,275 @@
+<main class="orders-page">
+
+  <section class="py-5">
+
+    <div class="container">
+
+      <!-- Page Header -->
+      <div class="page-header mb-4">
+
+        <div>
+
+          <span class="text-success fw-semibold text-uppercase small">
+            Account
+          </span>
+
+          <h1 class="display-6 fw-bold mb-2">
+            My Orders
+          </h1>
+
+          <p class="text-muted mb-0">
+            Track and manage your recent orders.
+          </p>
+
+        </div>
+
+        <a
+          routerLink="/products"
+          class="btn btn-outline-success"
+        >
+          Continue Shopping
+        </a>
+
+      </div>
+
+
+      <!-- Loading -->
+      @if (isLoading) {
+
+        <div class="row g-4">
+
+          @for (item of [1, 2, 3]; track item) {
+
+            <div class="col-12">
+
+              <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4 placeholder-glow">
+
+                  <div class="row g-3">
+
+                    <div class="col-md-4">
+                      <span class="placeholder col-8"></span>
+                    </div>
+
+                    <div class="col-md-2">
+                      <span class="placeholder col-8"></span>
+                    </div>
+
+                    <div class="col-md-2">
+                      <span class="placeholder col-8"></span>
+                    </div>
+
+                    <div class="col-md-2">
+                      <span class="placeholder col-8"></span>
+                    </div>
+
+                    <div class="col-md-2">
+                      <span class="placeholder col-12"></span>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      }
+
+
+      <!-- Error -->
+      @else if (errorMessage) {
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{ errorMessage }}
+        </div>
+
+        <a
+          routerLink="/home"
+          class="btn btn-success"
+        >
+          Back to Home
+        </a>
+
+      }
+
+
+      <!-- Empty -->
+      @else if (orders.length === 0) {
+
+        <div class="card border-0 shadow-sm empty-orders">
+
+          <div class="card-body text-center p-5">
+
+            <div class="empty-icon mb-4">
+              🛒
+            </div>
+
+            <h3 class="fw-bold mb-2">
+              No Orders Yet
+            </h3>
+
+            <p class="text-muted mb-4">
+              You haven't placed any orders yet.
+              Start shopping to see your orders here.
+            </p>
+
+            <a
+              routerLink="/products"
+              class="btn btn-success px-4"
+            >
+              Start Shopping
+            </a>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      <!-- Orders -->
+      @else {
+
+        <div class="orders-list">
+
+          @for (order of orders; track order.id) {
+
+            <div class="card border-0 shadow-sm order-card">
+
+              <div class="card-body p-4">
+
+                <!-- Order Header -->
+                <div
+                  class="d-flex flex-column flex-md-row
+                         justify-content-between
+                         align-items-md-center
+                         gap-3 mb-4"
+                >
+
+                  <div>
+
+                    <small class="text-muted d-block mb-1">
+                      Order Number
+                    </small>
+
+                    <h5 class="fw-bold mb-1">
+                      {{ order.orderNumber }}
+                    </h5>
+
+                    <small class="text-muted">
+                      {{ order.orderDate | date:'dd MMM yyyy, hh:mm a' }}
+                    </small>
+
+                  </div>
+
+
+                  <span
+                    class="order-status"
+                    [class]="getOrderStatusClass(order.orderStatus)"
+                  >
+                    {{ getOrderStatus(order.orderStatus) }}
+                  </span>
+
+                </div>
+
+
+                <hr class="mb-4" />
+
+
+                <!-- Order Information -->
+                <div class="row g-4 align-items-center">
+
+                  <!-- Items -->
+                  <div class="col-6 col-md-3">
+
+                    <small class="text-muted d-block mb-1">
+                      Items
+                    </small>
+
+                    <div class="fw-semibold">
+                      {{ order.items.length }}
+                      {{ order.items.length === 1 ? 'Item' : 'Items' }}
+                    </div>
+
+                  </div>
+
+
+                  <!-- Payment -->
+                  <div class="col-6 col-md-3">
+
+                    <small class="text-muted d-block mb-1">
+                      Payment
+                    </small>
+
+                    <div class="fw-semibold">
+                      {{ getPaymentMethod(order.paymentMethod) }}
+                    </div>
+
+                    <span
+                      class="payment-status mt-1"
+                      [class]="
+                        getPaymentStatusClass(order.paymentStatus)
+                      "
+                    >
+                      {{ getPaymentStatus(order.paymentStatus) }}
+                    </span>
+
+                  </div>
+
+
+                  <!-- Total -->
+                  <div class="col-6 col-md-3">
+
+                    <small class="text-muted d-block mb-1">
+                      Total Amount
+                    </small>
+
+                    <div class="fw-bold fs-5 text-success">
+                      ₹{{ order.grandTotal }}
+                    </div>
+
+                  </div>
+
+
+                  <!-- Action -->
+                  <div class="col-6 col-md-3">
+
+                    <a
+                      [routerLink]="[
+                        '/orders',
+                        order.id
+                      ]"
+                      class="btn btn-outline-success w-100"
+                    >
+                      View Details
+                    </a>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+</main>

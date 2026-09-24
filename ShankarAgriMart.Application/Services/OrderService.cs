@@ -138,11 +138,9 @@ public class OrderService : IOrderService
             PaymentStatus = PaymentStatus.Pending,
             OrderStatus = OrderStatus.Placed,
 
-            // Store selected payment method
-            PaymentMethod = Enum.Parse<PaymentMethod>(
-    request.PaymentMethod,
-    true
-),
+            PaymentMethod = request.PaymentMethod == "COD"
+          ? PaymentMethod.CashOnDelivery
+          : PaymentMethod.Razorpay,
 
             OrderDate = DateTime.UtcNow,
 

@@ -22,7 +22,10 @@ export class ApiService {
   ): Observable<T> {
     return this.http.get<T>(
       `${this.baseUrl}/${endpoint}`,
-      { params }
+      {
+        params,
+        withCredentials: true
+      }
     );
   }
 
@@ -32,7 +35,10 @@ export class ApiService {
   ): Observable<T> {
     return this.http.post<T>(
       `${this.baseUrl}/${endpoint}`,
-      body
+      body,
+      {
+        withCredentials: true
+      }
     );
   }
 
@@ -42,7 +48,10 @@ export class ApiService {
   ): Observable<T> {
     return this.http.put<T>(
       `${this.baseUrl}/${endpoint}`,
-      body
+      body,
+      {
+        withCredentials: true
+      }
     );
   }
 
@@ -50,7 +59,10 @@ export class ApiService {
     endpoint: string
   ): Observable<T> {
     return this.http.delete<T>(
-      `${this.baseUrl}/${endpoint}`
+      `${this.baseUrl}/${endpoint}`,
+      {
+        withCredentials: true
+      }
     );
   }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShankarAgriMart.Application.Interfaces.Services;
 
 namespace ShankarAgriMart.API.Controllers;
 
@@ -8,12 +9,24 @@ namespace ShankarAgriMart.API.Controllers;
 [Authorize(Roles = "Admin")]
 public class AdminController : ControllerBase
 {
-    [HttpGet("dashboard")]
-    public IActionResult Dashboard()
+    private readonly IAdminDashboardService _dashboardService;
+
+    public AdminController(
+        IAdminDashboardService dashboardService)
     {
+        _dashboardService = dashboardService;
+    }
+
+    [HttpGet("dashboard")]
+    public async Task<IActionResult> Dashboard()
+    {
+        var dashboard =
+            await _dashboardService.GetDashboardAsync();
+
         return Ok(new
         {
-            Message = "Welcome to Admin Dashboard"
+            Success = true,
+            Data = dashboard
         });
     }
 }

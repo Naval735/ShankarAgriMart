@@ -1,0 +1,511 @@
+<div class="container-fluid py-4">
+
+  <!-- Loading -->
+  @if (isLoading) {
+
+    <div class="loading-state text-center py-5">
+
+      <div
+        class="spinner-border text-success"
+        role="status">
+      </div>
+
+      <p class="text-muted mt-3 mb-0">
+        Loading order details...
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- Error -->
+  @if (!isLoading && errorMessage) {
+
+    <div class="alert alert-danger">
+
+      <div class="d-flex justify-content-between align-items-center">
+
+        <span>
+          {{ errorMessage }}
+        </span>
+
+        <a
+          routerLink="/admin/orders"
+          class="btn btn-sm btn-outline-danger">
+
+          Back to Orders
+
+        </a>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  @if (!isLoading && !errorMessage && order) {
+
+    <!-- Header -->
+    <div class="page-header mb-4">
+
+      <div>
+
+        <a
+          routerLink="/admin/orders"
+          class="back-link">
+
+          <i class="bi bi-arrow-left me-2"></i>
+          Back to Orders
+
+        </a>
+
+        <h2 class="page-title mt-2 mb-1">
+          Order Details
+        </h2>
+
+        <p class="text-muted mb-0">
+          {{ order.orderNumber }}
+        </p>
+
+      </div>
+
+      <span
+        class="status-badge"
+        [ngClass]="getOrderStatusClass(order.orderStatus)">
+
+        {{ getOrderStatus(order.orderStatus) }}
+
+      </span>
+
+    </div>
+
+
+    <div class="row g-4">
+
+      <!-- Main Content -->
+      <div class="col-12 col-xl-8">
+
+        <!-- Order Information -->
+        <div class="details-card mb-4">
+
+          <div class="card-title-row">
+
+            <h5 class="card-title mb-0">
+              Order Information
+            </h5>
+
+          </div>
+
+          <div class="info-grid">
+
+            <div class="info-item">
+
+              <span class="info-label">
+                Order Number
+              </span>
+
+              <span class="info-value">
+                {{ order.orderNumber }}
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="info-label">
+                Order Date
+              </span>
+
+              <span class="info-value">
+                {{ order.orderDate | date:'dd MMM yyyy, hh:mm a' }}
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="info-label">
+                Customer ID
+              </span>
+
+              <span class="info-value">
+                #{{ order.userId }}
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="info-label">
+                Address ID
+              </span>
+
+              <span class="info-value">
+                #{{ order.addressId }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Products -->
+        <div class="details-card mb-4">
+
+          <div class="card-title-row">
+
+            <h5 class="card-title mb-0">
+              Ordered Products
+            </h5>
+
+            <span class="item-count">
+              {{ order.items.length }} items
+            </span>
+
+          </div>
+
+
+          <div class="table-responsive">
+
+            <table class="table align-middle mb-0">
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    Product
+                  </th>
+
+                  <th class="text-center">
+                    Qty
+                  </th>
+
+                  <th class="text-end">
+                    Unit Price
+                  </th>
+
+                  <th class="text-end">
+                    GST
+                  </th>
+
+                  <th class="text-end">
+                    Total
+                  </th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody>
+
+                @for (item of order.items; track item.id) {
+
+                  <tr>
+
+                    <td>
+
+                      <div class="product-name">
+                        {{ item.productName }}
+                      </div>
+
+                      <small class="text-muted">
+                        Product #{{ item.productId }}
+                      </small>
+
+                    </td>
+
+                    <td class="text-center">
+                      {{ item.quantity }}
+                    </td>
+
+                    <td class="text-end">
+                      ₹{{ item.unitPrice | number:'1.2-2' }}
+                    </td>
+
+                    <td class="text-end">
+                      ₹{{ item.gst | number:'1.2-2' }}
+                    </td>
+
+                    <td class="text-end fw-semibold">
+                      ₹{{ item.total | number:'1.2-2' }}
+                    </td>
+
+                  </tr>
+
+                }
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Sidebar -->
+      <div class="col-12 col-xl-4">
+
+
+        <!-- Order Status Management -->
+        <div class="details-card mb-4">
+
+          <h5 class="card-title mb-3">
+            Order Status
+          </h5>
+
+
+          <!-- Current Status -->
+          <div class="current-status mb-3">
+
+            <span class="text-muted">
+              Current Status
+            </span>
+
+            <span
+              class="status-badge"
+              [ngClass]="getOrderStatusClass(order.orderStatus)">
+
+              {{ getOrderStatus(order.orderStatus) }}
+
+            </span>
+
+          </div>
+
+
+          <!-- Status Select -->
+          <label
+            for="orderStatus"
+            class="form-label fw-semibold">
+
+            Update Status
+
+          </label>
+
+
+          <select
+            id="orderStatus"
+            class="form-select"
+            [(ngModel)]="selectedStatus"
+            [disabled]="isUpdatingStatus">
+
+            <option [ngValue]="1">
+              Pending
+            </option>
+
+            <option [ngValue]="2">
+              Confirmed
+            </option>
+
+            <option [ngValue]="3">
+              Shipped
+            </option>
+
+            <option [ngValue]="4">
+              Delivered
+            </option>
+
+            <option [ngValue]="5">
+              Cancelled
+            </option>
+
+          </select>
+
+
+          <!-- Update Button -->
+          <button
+            type="button"
+            class="btn btn-success w-100 mt-3"
+            (click)="updateStatus()"
+            [disabled]="
+              isUpdatingStatus ||
+              selectedStatus === order.orderStatus
+            ">
+
+            @if (isUpdatingStatus) {
+
+              <span
+                class="spinner-border spinner-border-sm me-2"
+                role="status">
+              </span>
+
+              Updating...
+
+            } @else {
+
+              <i class="bi bi-check2-circle me-2"></i>
+
+              Update Status
+
+            }
+
+          </button>
+
+
+          <!-- Success Message -->
+          @if (statusMessage) {
+
+            <div
+              class="alert alert-success mt-3 mb-0 py-2">
+
+              <i class="bi bi-check-circle me-2"></i>
+
+              {{ statusMessage }}
+
+            </div>
+
+          }
+
+
+          <!-- Error Message -->
+          @if (errorMessage) {
+
+            <div
+              class="alert alert-danger mt-3 mb-0 py-2">
+
+              <i class="bi bi-exclamation-triangle me-2"></i>
+
+              {{ errorMessage }}
+
+            </div>
+
+          }
+
+        </div>
+
+
+        <!-- Payment -->
+        <div class="details-card mb-4">
+
+          <h5 class="card-title">
+            Payment
+          </h5>
+
+
+          <div class="payment-detail">
+
+            <span>
+              Payment Method
+            </span>
+
+            <strong>
+              {{ getPaymentMethod(order.paymentMethod) }}
+            </strong>
+
+          </div>
+
+
+          <div class="payment-detail">
+
+            <span>
+              Payment Status
+            </span>
+
+            <span
+              class="payment-badge"
+              [ngClass]="getPaymentStatusClass(order.paymentStatus)">
+
+              {{ getPaymentStatus(order.paymentStatus) }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- Order Summary -->
+        <div class="details-card">
+
+          <h5 class="card-title">
+            Order Summary
+          </h5>
+
+
+          <div class="summary-row">
+
+            <span>
+              Subtotal
+            </span>
+
+            <span>
+              ₹{{ order.subTotal | number:'1.2-2' }}
+            </span>
+
+          </div>
+
+
+          <div class="summary-row">
+
+            <span>
+              GST
+            </span>
+
+            <span>
+              ₹{{ order.gst | number:'1.2-2' }}
+            </span>
+
+          </div>
+
+
+          <div class="summary-row">
+
+            <span>
+              Delivery Charge
+            </span>
+
+            <span>
+              ₹{{ order.deliveryCharge | number:'1.2-2' }}
+            </span>
+
+          </div>
+
+
+          <div class="summary-row">
+
+            <span>
+              Discount
+            </span>
+
+            <span>
+              - ₹{{ order.discount | number:'1.2-2' }}
+            </span>
+
+          </div>
+
+
+          <hr>
+
+
+          <div class="grand-total">
+
+            <span>
+              Grand Total
+            </span>
+
+            <strong>
+              ₹{{ order.grandTotal | number:'1.2-2' }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

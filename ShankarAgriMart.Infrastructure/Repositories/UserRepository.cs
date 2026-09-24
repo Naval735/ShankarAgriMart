@@ -36,6 +36,13 @@ public class UserRepository : IUserRepository
                 u.Id == id
                 && !u.IsDeleted);
     }
+    public async Task<List<User>> GetAllAsync()
+    {
+        return await _context.Users
+            .Include(x => x.Role)
+            .Where(x => !x.IsDeleted)
+            .ToListAsync();
+    }
 
     public async Task<bool> EmailExistsAsync(string email)
     {

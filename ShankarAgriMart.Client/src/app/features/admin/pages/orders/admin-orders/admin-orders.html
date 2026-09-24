@@ -1,0 +1,313 @@
+<div class="container-fluid py-4">
+
+  <!-- Page Header -->
+  <div class="d-flex flex-column flex-md-row
+              justify-content-between align-items-md-center
+              gap-3 mb-4">
+
+    <div>
+      <h2 class="page-title mb-1">
+        Orders
+      </h2>
+
+      <p class="text-muted mb-0">
+        Manage and monitor customer orders
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-outline-success"
+      (click)="loadOrders()"
+      [disabled]="isLoading">
+
+      <i class="bi bi-arrow-clockwise me-2"></i>
+
+      Refresh
+    </button>
+
+  </div>
+
+
+  <!-- Status Filters -->
+  <div class="status-filter-card mb-4">
+
+    <div class="d-flex flex-wrap gap-2">
+
+      <button
+        type="button"
+        class="btn filter-btn"
+        [class.active]="selectedStatus === 0"
+        (click)="setStatusFilter(0)">
+        All
+      </button>
+
+      <button
+        type="button"
+        class="btn filter-btn"
+        [class.active]="selectedStatus === 1"
+        (click)="setStatusFilter(1)">
+        Pending
+      </button>
+
+      <button
+        type="button"
+        class="btn filter-btn"
+        [class.active]="selectedStatus === 2"
+        (click)="setStatusFilter(2)">
+        Confirmed
+      </button>
+
+      <button
+        type="button"
+        class="btn filter-btn"
+        [class.active]="selectedStatus === 3"
+        (click)="setStatusFilter(3)">
+        Shipped
+      </button>
+
+      <button
+        type="button"
+        class="btn filter-btn"
+        [class.active]="selectedStatus === 4"
+        (click)="setStatusFilter(4)">
+        Delivered
+      </button>
+
+      <button
+        type="button"
+        class="btn filter-btn"
+        [class.active]="selectedStatus === 5"
+        (click)="setStatusFilter(5)">
+        Cancelled
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- Loading -->
+  @if (isLoading) {
+
+    <div class="orders-grid">
+
+      @for (item of [1, 2, 3, 4]; track item) {
+
+        <div class="order-card skeleton-card">
+
+          <div class="skeleton skeleton-title"></div>
+
+          <div class="skeleton skeleton-line"></div>
+
+          <div class="skeleton skeleton-line short"></div>
+
+          <div class="skeleton skeleton-total"></div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+
+  <!-- Error -->
+  @if (!isLoading && errorMessage) {
+
+    <div class="alert alert-danger d-flex
+                justify-content-between align-items-center">
+
+      <span>
+        {{ errorMessage }}
+      </span>
+
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-danger"
+        (click)="loadOrders()">
+
+        Try Again
+
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- Empty -->
+  @if (!isLoading && !errorMessage && filteredOrders.length === 0) {
+
+    <div class="empty-state text-center">
+
+      <div class="empty-icon">
+        <i class="bi bi-bag-x"></i>
+      </div>
+
+      <h5 class="mt-3">
+        No orders found
+      </h5>
+
+      <p class="text-muted mb-0">
+        There are no orders matching the selected filter.
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- Orders -->
+  @if (!isLoading && !errorMessage && filteredOrders.length > 0) {
+
+    <div class="row g-4">
+
+      @for (order of filteredOrders; track order.id) {
+
+        <div class="col-12 col-xl-6">
+
+          <div class="order-card h-100">
+
+            <!-- Order Header -->
+            <div class="order-header">
+
+              <div>
+
+                <span class="small text-muted">
+                  Order
+                </span>
+
+                <h5 class="order-number mb-0">
+                  {{ order.orderNumber }}
+                </h5>
+
+              </div>
+
+              <span
+                class="status-badge"
+                [ngClass]="getOrderStatusClass(order.orderStatus)">
+
+                {{ getOrderStatus(order.orderStatus) }}
+
+              </span>
+
+            </div>
+
+
+            <!-- Order Info -->
+            <div class="order-info">
+
+              <div class="info-item">
+
+                <span class="info-label">
+                  Order Date
+                </span>
+
+                <span class="info-value">
+                  {{ order.orderDate | date:'dd MMM yyyy, hh:mm a' }}
+                </span>
+
+              </div>
+
+
+              <div class="info-item">
+
+                <span class="info-label">
+                  Customer ID
+                </span>
+
+                <span class="info-value">
+                  #{{ order.userId }}
+                </span>
+
+              </div>
+
+
+              <div class="info-item">
+
+                <span class="info-label">
+                  Items
+                </span>
+
+                <span class="info-value">
+                  {{ order.items.length }}
+                </span>
+
+              </div>
+
+
+              <div class="info-item">
+
+                <span class="info-label">
+                  Payment
+                </span>
+
+                <span class="info-value">
+                  {{ getPaymentMethod(order.paymentMethod) }}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- Payment Status -->
+            <div class="payment-row">
+
+              <span>
+                Payment Status
+              </span>
+
+              <span
+                class="payment-badge"
+                [ngClass]="getPaymentStatusClass(order.paymentStatus)">
+
+                {{ getPaymentStatus(order.paymentStatus) }}
+
+              </span>
+
+            </div>
+
+
+            <!-- Total -->
+            <div class="order-total">
+
+              <span>
+                Grand Total
+              </span>
+
+              <strong>
+                ₹{{ order.grandTotal | number:'1.2-2' }}
+              </strong>
+
+            </div>
+
+
+            <!-- Footer -->
+            <div class="order-footer">
+
+              <a
+                class="btn btn-success btn-sm"
+                [routerLink]="['/admin/orders', order.id]">
+
+                <i class="bi bi-eye me-2"></i>
+
+                View Details
+
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

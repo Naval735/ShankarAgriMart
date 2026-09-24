@@ -15,4 +15,6 @@ public interface IUserRepository
     Task<User> AddAsync(User user);
 
     Task UpdateAsync(User user);
+
+    Task<List<User>> GetAllAsync();
 }

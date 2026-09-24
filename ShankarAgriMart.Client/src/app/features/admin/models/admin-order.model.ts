@@ -1,9 +1,4 @@
-export interface CreateOrderRequest {
-  addressId: number;
-  paymentMethod: 'ONLINE' | 'COD';
-}
-
-export interface OrderItem {
+export interface AdminOrderItem {
   id: number;
   productId: number;
   productName: string;
@@ -13,19 +8,29 @@ export interface OrderItem {
   total: number;
 }
 
-export interface Order {
+export interface AdminOrder {
   id: number;
   orderNumber: string;
   userId: number;
   addressId: number;
+
   subTotal: number;
   gst: number;
   deliveryCharge: number;
   discount: number;
   grandTotal: number;
+
   paymentStatus: number;
   orderStatus: number;
   paymentMethod: number | string | null;
+
   orderDate: string;
-  items: OrderItem[];
+
+  items: AdminOrderItem[];
+}
+
+export interface AdminOrderApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
 }

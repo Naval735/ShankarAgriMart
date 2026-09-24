@@ -1,0 +1,192 @@
+<div class="container-fluid py-4 dashboard-page">
+
+  <!-- Header -->
+  <div class="dashboard-header mb-4">
+    <div>
+      <h2 class="fw-bold mb-1">Admin Dashboard</h2>
+      <p class="text-muted mb-0">
+        Monitor your AgriMart business at a glance.
+      </p>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="dashboard-loading text-center py-5">
+    <div
+      class="spinner-border"
+      role="status"
+      aria-hidden="true">
+    </div>
+
+    <p class="text-muted mt-3 mb-0">
+      Loading dashboard...
+    </p>
+  </div>
+
+  <!-- Error -->
+  <div
+    *ngIf="!isLoading && errorMessage"
+    class="alert alert-danger"
+    role="alert">
+
+    {{ errorMessage }}
+
+  </div>
+
+  <!-- Dashboard -->
+  <ng-container *ngIf="!isLoading && dashboard">
+
+    <!-- Main Statistics -->
+    <div class="row g-4 mb-4">
+
+      <!-- Products -->
+      <div class="col-12 col-sm-6 col-xl-3">
+        <div class="dashboard-card">
+          <div class="card-icon products-icon">
+            <i class="bi bi-box-seam"></i>
+          </div>
+
+          <div>
+            <p class="card-label">Total Products</p>
+            <h3 class="card-value">
+              {{ dashboard.totalProducts }}
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customers -->
+      <div class="col-12 col-sm-6 col-xl-3">
+        <div class="dashboard-card">
+          <div class="card-icon customers-icon">
+            <i class="bi bi-people"></i>
+          </div>
+
+          <div>
+            <p class="card-label">Total Customers</p>
+            <h3 class="card-value">
+              {{ dashboard.totalCustomers }}
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders -->
+      <div class="col-12 col-sm-6 col-xl-3">
+        <div class="dashboard-card">
+          <div class="card-icon orders-icon">
+            <i class="bi bi-cart-check"></i>
+          </div>
+
+          <div>
+            <p class="card-label">Total Orders</p>
+            <h3 class="card-value">
+              {{ dashboard.totalOrders }}
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Revenue -->
+      <div class="col-12 col-sm-6 col-xl-3">
+        <div class="dashboard-card">
+          <div class="card-icon revenue-icon">
+            <i class="bi bi-currency-rupee"></i>
+          </div>
+
+          <div>
+            <p class="card-label">Total Revenue</p>
+            <h3 class="card-value">
+              {{ dashboard.totalRevenue | currency:'INR':'symbol':'1.0-0' }}
+            </h3>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Order Status -->
+    <div class="section-title mb-3">
+      <h4 class="fw-bold mb-1">Order Overview</h4>
+      <p class="text-muted mb-0">
+        Current order status across your store.
+      </p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Pending -->
+      <div class="col-12 col-sm-6 col-lg">
+        <div class="status-card">
+          <div class="status-icon pending">
+            <i class="bi bi-clock-history"></i>
+          </div>
+
+          <div>
+            <span class="status-label">Pending</span>
+            <h4>{{ dashboard.pendingOrders }}</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirmed -->
+      <div class="col-12 col-sm-6 col-lg">
+        <div class="status-card">
+          <div class="status-icon confirmed">
+            <i class="bi bi-check-circle"></i>
+          </div>
+
+          <div>
+            <span class="status-label">Confirmed</span>
+            <h4>{{ dashboard.confirmedOrders }}</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipped -->
+      <div class="col-12 col-sm-6 col-lg">
+        <div class="status-card">
+          <div class="status-icon shipped">
+            <i class="bi bi-truck"></i>
+          </div>
+
+          <div>
+            <span class="status-label">Shipped</span>
+            <h4>{{ dashboard.shippedOrders }}</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivered -->
+      <div class="col-12 col-sm-6 col-lg">
+        <div class="status-card">
+          <div class="status-icon delivered">
+            <i class="bi bi-bag-check"></i>
+          </div>
+
+          <div>
+            <span class="status-label">Delivered</span>
+            <h4>{{ dashboard.deliveredOrders }}</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cancelled -->
+      <div class="col-12 col-sm-6 col-lg">
+        <div class="status-card">
+          <div class="status-icon cancelled">
+            <i class="bi bi-x-circle"></i>
+          </div>
+
+          <div>
+            <span class="status-label">Cancelled</span>
+            <h4>{{ dashboard.cancelledOrders }}</h4>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</div>
