@@ -1,175 +1,132 @@
-<nav class="site-navbar">
+<nav class="main-navbar">
 
-  <!-- =========================
-       TOP NAVBAR
-  ========================== -->
-  <div class="navbar-main">
-    <div class="container">
+  <!-- ================================
+       TOP NAVIGATION
+  ================================= -->
 
-      <div class="navbar-top">
+  <div class="navbar-top">
 
-        <!-- Brand -->
-        <a
-          class="brand"
-          routerLink="/home"
-          (click)="closeMenu()"
-        >
-          <span class="brand-icon">
-            🌾
-          </span>
+    <div class="container-fluid navbar-container">
 
-          <span class="brand-text">
-            ShankarAgriMart
-          </span>
-        </a>
+      <!-- Brand -->
+      <a
+        routerLink="/home"
+        class="brand"
+        (click)="closeMenu()"
+      >
 
+        <span class="brand-icon">
+          🌱
+        </span>
 
-        <!-- Search -->
-        <form
-          class="search-wrapper"
-          (submit)="searchProducts($event)"
-        >
-          <input
-            type="search"
-            class="search-input"
-            placeholder="Search products, pesticides, fertilizers..."
-            [(ngModel)]="searchTerm"
-            name="search"
-          />
+        <span class="brand-name">
+          ShankarAgriMart
+        </span>
 
-          <button
-            type="submit"
-            class="search-button"
-            aria-label="Search"
-          >
-            <i class="bi bi-search"></i>
-          </button>
-        </form>
+      </a>
 
 
-        <!-- Right Actions -->
-        <div class="navbar-actions">
+      <!-- Search -->
+      <div class="navbar-search">
 
-          <!-- Language -->
-          <button
-            type="button"
-            class="language-button"
-          >
-            <i class="bi bi-globe2"></i>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search products, pesticides, fertilizers..."
+        />
 
-            <span>
-              English
-            </span>
-
-            <i class="bi bi-chevron-down small"></i>
-          </button>
-
-
-          <!-- Login -->
-          @if (isAuthChecked && !isAuthenticated) {
-
-            <a
-              routerLink="/login"
-              class="account-link"
-            >
-              <i class="bi bi-person"></i>
-
-              <span>
-                Login
-              </span>
-            </a>
-
-          }
-
-
-          <!-- Logged-in user -->
-          @if (isAuthChecked && isAuthenticated) {
-
-            <a
-              routerLink="/orders"
-              class="account-link"
-            >
-              <i class="bi bi-person-circle"></i>
-
-              <span>
-                My Account
-              </span>
-            </a>
-
-          }
-
-
-          <!-- Cart -->
-          @if (isAuthChecked && isAuthenticated) {
-
-            <a
-              routerLink="/cart"
-              class="cart-link"
-              aria-label="Shopping cart"
-            >
-              <span class="cart-icon-wrapper">
-                <i class="bi bi-cart3"></i>
-
-                <span class="cart-badge">
-                  0
-                </span>
-              </span>
-
-              <span class="cart-label">
-                Cart
-              </span>
-            </a>
-
-          }
-
-        </div>
-
-
-        <!-- Mobile Toggle -->
         <button
           type="button"
-          class="mobile-toggle"
-          [class.open]="isMenuOpen"
-          (click)="toggleMenu()"
-          aria-label="Toggle navigation"
+          class="search-button"
+          aria-label="Search"
         >
-          <i
-            class="bi"
-            [class.bi-list]="!isMenuOpen"
-            [class.bi-x-lg]="isMenuOpen"
-          ></i>
+          <i class="bi bi-search"></i>
         </button>
 
       </div>
 
+
+      <!-- Language -->
+      <button
+        type="button"
+        class="language-button"
+      >
+        English
+      </button>
+
+
+      <!-- Mobile toggle -->
+      <button
+        type="button"
+        class="mobile-toggle"
+        aria-label="Toggle navigation"
+        [attr.aria-expanded]="isMenuOpen"
+        (click)="toggleMenu()"
+      >
+
+        @if (!isMenuOpen) {
+          <i class="bi bi-list"></i>
+        } @else {
+          <i class="bi bi-x-lg"></i>
+        }
+
+      </button>
+
     </div>
+
   </div>
 
 
-  <!-- =========================
-       CATEGORY NAVIGATION
-  ========================== -->
+  <!-- ================================
+       NAVIGATION
+  ================================= -->
+
   <div
-    class="category-navbar"
+    class="navbar-navigation"
     [class.mobile-open]="isMenuOpen"
   >
 
-    <div class="container">
+    <div class="container-fluid navbar-container">
 
-      <div class="category-nav">
+      <div class="navigation-links">
 
+        <!-- Home -->
+        <a
+          routerLink="/home"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="navigation-link"
+          (click)="closeMenu()"
+        >
+          Home
+        </a>
+
+
+        <!-- Products -->
         <a
           routerLink="/products"
-          class="category-link"
+          routerLinkActive="active"
+          class="navigation-link"
+          (click)="closeMenu()"
+        >
+          All Products
+        </a>
+
+
+        <!-- Categories -->
+        <a
+          routerLink="/products"
+          [queryParams]="{ categoryId: 1 }"
+          class="navigation-link"
           (click)="closeMenu()"
         >
           Seeds
-          <i class="bi bi-chevron-down"></i>
         </a>
 
         <a
           routerLink="/products"
-          class="category-link"
+          [queryParams]="{ categoryId: 2 }"
+          class="navigation-link"
           (click)="closeMenu()"
         >
           Fertilizers
@@ -177,7 +134,8 @@
 
         <a
           routerLink="/products"
-          class="category-link"
+          [queryParams]="{ categoryId: 3 }"
+          class="navigation-link"
           (click)="closeMenu()"
         >
           Pesticides
@@ -185,7 +143,8 @@
 
         <a
           routerLink="/products"
-          class="category-link"
+          [queryParams]="{ categoryId: 4 }"
+          class="navigation-link"
           (click)="closeMenu()"
         >
           Crop Protection
@@ -193,7 +152,8 @@
 
         <a
           routerLink="/products"
-          class="category-link"
+          [queryParams]="{ categoryId: 5 }"
+          class="navigation-link"
           (click)="closeMenu()"
         >
           Plant Nutrition
@@ -201,7 +161,8 @@
 
         <a
           routerLink="/products"
-          class="category-link"
+          [queryParams]="{ categoryId: 6 }"
+          class="navigation-link"
           (click)="closeMenu()"
         >
           Farm Accessories
@@ -209,58 +170,118 @@
 
         <a
           routerLink="/products"
-          class="category-link"
+          [queryParams]="{ categoryId: 7 }"
+          class="navigation-link"
           (click)="closeMenu()"
         >
           Gardening
         </a>
 
-        <a
-          routerLink="/products"
-          class="category-link"
-          (click)="closeMenu()"
-        >
-          All Products
-        </a>
 
-        @if (isAuthChecked && isAuthenticated && isAdmin) {
+        <!-- ================================
+             AUTHENTICATED USER
+        ================================= -->
+
+       @if (isAuthenticated) {
+
+  <div class="navigation-divider"></div>
+
+
+  <!-- ================================
+       CUSTOMER ONLY
+  ================================= -->
+
+  @if (!isAdmin) {
+
+    <a
+      routerLink="/orders"
+      routerLinkActive="active"
+      class="navigation-link account-link"
+      (click)="closeMenu()"
+    >
+      <i class="bi bi-box-seam me-1"></i>
+      My Orders
+    </a>
+
+
+    <a
+      routerLink="/cart"
+      routerLinkActive="active"
+      class="navigation-link account-link"
+      (click)="closeMenu()"
+    >
+      <i class="bi bi-cart3 me-1"></i>
+      Cart
+    </a>
+
+  }
+
+
+  <!-- ================================
+       ADMIN ONLY
+  ================================= -->
+
+  @if (isAdmin) {
+
+    <a
+      routerLink="/admin/dashboard"
+      routerLinkActive="active"
+      class="admin-panel-link"
+      (click)="closeMenu()"
+    >
+      <i class="bi bi-speedometer2 me-1"></i>
+      Admin Panel
+    </a>
+
+  }
+
+
+  <!-- Logout -->
+  <button
+    type="button"
+    class="logout-link"
+    [disabled]="isLoggingOut"
+    (click)="logout()"
+  >
+
+    @if (isLoggingOut) {
+
+      <span
+        class="spinner-border spinner-border-sm me-1"
+      ></span>
+
+      Logging out...
+
+    } @else {
+
+      <i class="bi bi-box-arrow-right me-1"></i>
+      Logout
+
+    }
+
+  </button>
+
+}
+
+
+        <!-- ================================
+             GUEST
+        ================================= -->
+
+        @if (
+          isAuthChecked &&
+          !isAuthenticated
+        ) {
 
           <a
-            routerLink="/admin/dashboard"
-            class="admin-link"
+            routerLink="/login"
+            routerLinkActive="active"
+            class="login-link"
             (click)="closeMenu()"
           >
-            <i class="bi bi-speedometer2"></i>
-            Admin Panel
+            <i class="bi bi-person me-1"></i>
+            Login
           </a>
-
-        }
-
-        @if (isAuthChecked && isAuthenticated) {
-
-          <button
-            type="button"
-            class="logout-link"
-            [disabled]="isLoggingOut"
-            (click)="logout()"
-          >
-
-            @if (isLoggingOut) {
-
-              <span
-                class="spinner-border spinner-border-sm me-1"
-              ></span>
-
-              Logging out...
-
-            } @else {
-
-              <i class="bi bi-box-arrow-right"></i>
-              Logout
-
-            }
-
-          </button>
 
         }
 

@@ -1,24 +1,19 @@
 import {
   Component,
-  inject,
-  OnInit
+  OnInit,
+  inject
 } from '@angular/core';
 
 import {
-  FormsModule
-} from '@angular/forms';
-
-import {
   Router,
-  RouterLink
+  RouterLink,
+  RouterLinkActive
 } from '@angular/router';
 
 import { AuthService } from '../../../features/auth/services/auth.service';
 
-
 interface UserProfileResponse {
   success: boolean;
-
   data: {
     id: number;
     firstName: string;
@@ -30,15 +25,13 @@ interface UserProfileResponse {
   };
 }
 
-
 @Component({
   selector: 'app-navbar',
-
+  standalone: true,
   imports: [
     RouterLink,
-    FormsModule
+    RouterLinkActive
   ],
-
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
@@ -47,25 +40,16 @@ export class NavbarComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-
   isAuthenticated = false;
   isAdmin = false;
 
   isAuthChecked = false;
-
+  isMenuOpen = false;
   isLoggingOut = false;
 
-  isMenuOpen = false;
-
-  searchTerm = '';
-
-
   ngOnInit(): void {
-
     this.checkAuthentication();
-
   }
-
 
   private checkAuthentication(): void {
 
@@ -76,8 +60,8 @@ export class NavbarComponent implements OnInit {
         next: (response) => {
 
           if (
-            response.success &&
-            response.data
+            response?.success &&
+            response?.data
           ) {
 
             this.isAuthenticated = true;
@@ -85,8 +69,7 @@ export class NavbarComponent implements OnInit {
             this.isAdmin =
               response.data.role === 'Admin';
 
-          }
-          else {
+          } else {
 
             this.isAuthenticated = false;
             this.isAdmin = false;
@@ -94,68 +77,37 @@ export class NavbarComponent implements OnInit {
           }
 
           this.isAuthChecked = true;
-
         },
 
-        error: () => {
+        error: (error) => {
+
+          console.error(
+            'Navbar authentication check failed:',
+            error
+          );
 
           this.isAuthenticated = false;
           this.isAdmin = false;
 
           this.isAuthChecked = true;
-
         }
 
       });
-
   }
-
 
   toggleMenu(): void {
-
-    this.isMenuOpen =
-      !this.isMenuOpen;
-
+    this.isMenuOpen = !this.isMenuOpen;
   }
-
 
   closeMenu(): void {
-
     this.isMenuOpen = false;
-
   }
-
-
-  searchProducts(event: Event): void {
-
-    event.preventDefault();
-
-    const search =
-      this.searchTerm.trim();
-
-    this.closeMenu();
-
-    if (!search) {
-
-      this.router.navigate(['/products']);
-
-      return;
-
-    }
-
-    this.router.navigate(
-      ['/products'],
-      {
-        queryParams: {
-          search
-        }
-      }
-    );
-
-  }
-
 
   logout(): void {
+
+    if (this.isLoggingOut) {
+      return;
+    }
 
     this.isLoggingOut = true;
 
@@ -166,14 +118,12 @@ export class NavbarComponent implements OnInit {
         next: () => {
 
           this.isLoggingOut = false;
-
           this.isAuthenticated = false;
           this.isAdmin = false;
 
           this.closeMenu();
 
-          this.router.navigate(['/login']);
-
+          this.router.navigate(['/home']);
         },
 
         error: (error) => {
@@ -183,19 +133,19 @@ export class NavbarComponent implements OnInit {
             error
           );
 
+          /*
+           * Even if the server logout fails,
+           * clear the frontend authentication state.
+           */
           this.isLoggingOut = false;
-
           this.isAuthenticated = false;
           this.isAdmin = false;
 
           this.closeMenu();
 
-          this.router.navigate(['/login']);
-
+          this.router.navigate(['/home']);
         }
 
       });
-
   }
-
 }

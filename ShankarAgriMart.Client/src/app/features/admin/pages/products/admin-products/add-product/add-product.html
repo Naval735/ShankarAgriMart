@@ -1,0 +1,902 @@
+<div class="container-fluid py-4 px-3 px-lg-4">
+
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+    <div>
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <a
+          routerLink="/admin/products"
+          class="back-link"
+        >
+          <i class="bi bi-arrow-left"></i>
+          Products
+        </a>
+      </div>
+
+      <h2 class="fw-bold mb-1">
+        Add New Product
+      </h2>
+
+      <p class="text-muted mb-0">
+        Add product information, pricing and inventory details.
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/products"
+      class="btn btn-outline-secondary"
+    >
+      <i class="bi bi-x-lg me-2"></i>
+      Cancel
+    </a>
+
+  </div>
+
+  @if (isLoading) {
+
+    <div class="card border-0 shadow-sm">
+      <div class="card-body py-5 text-center">
+
+        <div
+          class="spinner-border text-success mb-3"
+          role="status"
+        >
+          <span class="visually-hidden">
+            Loading...
+          </span>
+        </div>
+
+        <p class="text-muted mb-0">
+          Loading product options...
+        </p>
+
+      </div>
+    </div>
+
+  }
+
+  @if (!isLoading) {
+
+    @if (errorMessage) {
+
+      <div
+        class="alert alert-danger d-flex align-items-center justify-content-between gap-3"
+        role="alert"
+      >
+
+        <div>
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          {{ errorMessage }}
+        </div>
+
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="errorMessage = ''"
+        ></button>
+
+      </div>
+
+    }
+
+    <form
+      [formGroup]="productForm"
+      (ngSubmit)="submitProduct()"
+      novalidate
+    >
+
+      <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white border-0 p-4">
+
+          <div class="section-heading">
+
+            <div class="section-icon">
+              <i class="bi bi-box-seam"></i>
+            </div>
+
+            <div>
+              <h5 class="fw-bold mb-1">
+                Basic Information
+              </h5>
+
+              <p class="text-muted small mb-0">
+                Enter the basic details of the product.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card-body p-4">
+
+          <div class="row g-4">
+
+            <div class="col-12">
+
+              <label
+                for="name"
+                class="form-label fw-semibold"
+              >
+                Product Name
+                <span class="text-danger">*</span>
+              </label>
+
+              <input
+                id="name"
+                type="text"
+                class="form-control"
+                [class.is-invalid]="isInvalid('name')"
+                formControlName="name"
+                placeholder="Enter product name"
+              />
+
+              @if (isInvalid('name')) {
+                <div class="invalid-feedback">
+                  {{ getErrorMessage('name') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6">
+
+              <label
+                for="categoryId"
+                class="form-label fw-semibold"
+              >
+                Category
+                <span class="text-danger">*</span>
+              </label>
+
+              <select
+                id="categoryId"
+                class="form-select"
+                [class.is-invalid]="isInvalid('categoryId')"
+                formControlName="categoryId"
+              >
+
+                <option value="">
+                  Select category
+                </option>
+
+                @for (category of categories; track category.id) {
+
+                  <option [value]="category.id">
+                    {{ category.name }}
+                  </option>
+
+                }
+
+              </select>
+
+              @if (isInvalid('categoryId')) {
+                <div class="invalid-feedback">
+                  {{ getErrorMessage('categoryId') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6">
+
+              <label
+                for="brandId"
+                class="form-label fw-semibold"
+              >
+                Brand
+                <span class="text-danger">*</span>
+              </label>
+
+              <select
+                id="brandId"
+                class="form-select"
+                [class.is-invalid]="isInvalid('brandId')"
+                formControlName="brandId"
+              >
+
+                <option value="">
+                  Select brand
+                </option>
+
+                @for (brand of brands; track brand.id) {
+
+                  <option [value]="brand.id">
+                    {{ brand.name }}
+                  </option>
+
+                }
+
+              </select>
+
+              @if (isInvalid('brandId')) {
+                <div class="invalid-feedback">
+                  {{ getErrorMessage('brandId') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-12">
+
+              <label
+                for="shortDescription"
+                class="form-label fw-semibold"
+              >
+                Short Description
+              </label>
+
+              <input
+                id="shortDescription"
+                type="text"
+                class="form-control"
+                [class.is-invalid]="isInvalid('shortDescription')"
+                formControlName="shortDescription"
+                placeholder="Brief description of the product"
+              />
+
+              @if (isInvalid('shortDescription')) {
+                <div class="invalid-feedback">
+                  {{ getErrorMessage('shortDescription') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-12">
+
+              <label
+                for="description"
+                class="form-label fw-semibold"
+              >
+                Description
+              </label>
+
+              <textarea
+                id="description"
+                rows="5"
+                class="form-control"
+                formControlName="description"
+                placeholder="Enter detailed product description"
+              ></textarea>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white border-0 p-4">
+
+          <div class="section-heading">
+
+            <div class="section-icon">
+              <i class="bi bi-currency-rupee"></i>
+            </div>
+
+            <div>
+              <h5 class="fw-bold mb-1">
+                Pricing & Inventory
+              </h5>
+
+              <p class="text-muted small mb-0">
+                Configure product pricing and available stock.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card-body p-4">
+
+          <div class="row g-4">
+
+            <div class="col-md-6 col-lg-3">
+
+              <label
+                for="mrp"
+                class="form-label fw-semibold"
+              >
+                MRP
+                <span class="text-danger">*</span>
+              </label>
+
+              <div class="input-group">
+
+                <span class="input-group-text">
+                  ₹
+                </span>
+
+                <input
+                  id="mrp"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  class="form-control"
+                  [class.is-invalid]="isInvalid('mrp')"
+                  formControlName="mrp"
+                  placeholder="0.00"
+                />
+
+              </div>
+
+              @if (isInvalid('mrp')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('mrp') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+
+              <label
+                for="sellingPrice"
+                class="form-label fw-semibold"
+              >
+                Selling Price
+                <span class="text-danger">*</span>
+              </label>
+
+              <div class="input-group">
+
+                <span class="input-group-text">
+                  ₹
+                </span>
+
+                <input
+                  id="sellingPrice"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  class="form-control"
+                  [class.is-invalid]="isInvalid('sellingPrice')"
+                  formControlName="sellingPrice"
+                  placeholder="0.00"
+                />
+
+              </div>
+
+              @if (isInvalid('sellingPrice')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('sellingPrice') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+
+              <label
+                for="gst"
+                class="form-label fw-semibold"
+              >
+                GST (%)
+                <span class="text-danger">*</span>
+              </label>
+
+              <div class="input-group">
+
+                <input
+                  id="gst"
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="0.01"
+                  class="form-control"
+                  [class.is-invalid]="isInvalid('gst')"
+                  formControlName="gst"
+                  placeholder="18"
+                />
+
+                <span class="input-group-text">
+                  %
+                </span>
+
+              </div>
+
+              @if (isInvalid('gst')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('gst') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+
+              <label
+                for="stock"
+                class="form-label fw-semibold"
+              >
+                Stock
+                <span class="text-danger">*</span>
+              </label>
+
+              <input
+                id="stock"
+                type="number"
+                min="0"
+                step="1"
+                class="form-control"
+                [class.is-invalid]="isInvalid('stock')"
+                formControlName="stock"
+                placeholder="0"
+              />
+
+              @if (isInvalid('stock')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('stock') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6">
+
+              <label
+                for="weight"
+                class="form-label fw-semibold"
+              >
+                Weight
+              </label>
+
+              <input
+                id="weight"
+                type="number"
+                min="0"
+                step="0.01"
+                class="form-control"
+                [class.is-invalid]="isInvalid('weight')"
+                formControlName="weight"
+                placeholder="e.g. 1"
+              />
+
+              @if (isInvalid('weight')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('weight') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6">
+
+              <label
+                for="unit"
+                class="form-label fw-semibold"
+              >
+                Unit
+              </label>
+
+              <input
+                id="unit"
+                type="text"
+                class="form-control"
+                [class.is-invalid]="isInvalid('unit')"
+                formControlName="unit"
+                placeholder="kg, litre, piece, etc."
+              />
+
+              @if (isInvalid('unit')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('unit') }}
+                </div>
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white border-0 p-4">
+
+          <div class="section-heading">
+
+            <div class="section-icon">
+              <i class="bi bi-flask"></i>
+            </div>
+
+            <div>
+              <h5 class="fw-bold mb-1">
+                Product Information
+              </h5>
+
+              <p class="text-muted small mb-0">
+                Add technical and application information.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card-body p-4">
+
+          <div class="row g-4">
+
+            <div class="col-12">
+
+              <label
+                for="activeIngredient"
+                class="form-label fw-semibold"
+              >
+                Active Ingredient
+              </label>
+
+              <input
+                id="activeIngredient"
+                type="text"
+                class="form-control"
+                [class.is-invalid]="isInvalid('activeIngredient')"
+                formControlName="activeIngredient"
+                placeholder="Enter active ingredient"
+              />
+
+              @if (isInvalid('activeIngredient')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('activeIngredient') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6">
+
+              <label
+                for="dosage"
+                class="form-label fw-semibold"
+              >
+                Dosage
+              </label>
+
+              <textarea
+                id="dosage"
+                rows="4"
+                class="form-control"
+                [class.is-invalid]="isInvalid('dosage')"
+                formControlName="dosage"
+                placeholder="Enter recommended dosage"
+              ></textarea>
+
+              @if (isInvalid('dosage')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('dosage') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6">
+
+              <label
+                for="applicationMethod"
+                class="form-label fw-semibold"
+              >
+                Application Method
+              </label>
+
+              <textarea
+                id="applicationMethod"
+                rows="4"
+                class="form-control"
+                [class.is-invalid]="isInvalid('applicationMethod')"
+                formControlName="applicationMethod"
+                placeholder="Explain how the product should be applied"
+              ></textarea>
+
+              @if (isInvalid('applicationMethod')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('applicationMethod') }}
+                </div>
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white border-0 p-4">
+
+          <div class="section-heading">
+
+            <div class="section-icon">
+              <i class="bi bi-info-circle"></i>
+            </div>
+
+            <div>
+              <h5 class="fw-bold mb-1">
+                Benefits & Usage
+              </h5>
+
+              <p class="text-muted small mb-0">
+                Provide useful information for customers.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card-body p-4">
+
+          <div class="row g-4">
+
+            <div class="col-12">
+
+              <label
+                for="benefits"
+                class="form-label fw-semibold"
+              >
+                Benefits
+              </label>
+
+              <textarea
+                id="benefits"
+                rows="5"
+                class="form-control"
+                [class.is-invalid]="isInvalid('benefits')"
+                formControlName="benefits"
+                placeholder="Describe the benefits of this product"
+              ></textarea>
+
+              @if (isInvalid('benefits')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('benefits') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6">
+
+              <label
+                for="usageInstructions"
+                class="form-label fw-semibold"
+              >
+                Usage Instructions
+              </label>
+
+              <textarea
+                id="usageInstructions"
+                rows="6"
+                class="form-control"
+                [class.is-invalid]="isInvalid('usageInstructions')"
+                formControlName="usageInstructions"
+                placeholder="Provide detailed usage instructions"
+              ></textarea>
+
+              @if (isInvalid('usageInstructions')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('usageInstructions') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6">
+
+              <label
+                for="safetyPrecautions"
+                class="form-label fw-semibold"
+              >
+                Safety Precautions
+              </label>
+
+              <textarea
+                id="safetyPrecautions"
+                rows="6"
+                class="form-control"
+                [class.is-invalid]="isInvalid('safetyPrecautions')"
+                formControlName="safetyPrecautions"
+                placeholder="Enter safety precautions and warnings"
+              ></textarea>
+
+              @if (isInvalid('safetyPrecautions')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('safetyPrecautions') }}
+                </div>
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white border-0 p-4">
+
+          <div class="section-heading">
+
+            <div class="section-icon">
+              <i class="bi bi-building"></i>
+            </div>
+
+            <div>
+              <h5 class="fw-bold mb-1">
+                Manufacturer Details
+              </h5>
+
+              <p class="text-muted small mb-0">
+                Add manufacturer and product origin information.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card-body p-4">
+
+          <div class="row g-4">
+
+            <div class="col-md-6">
+
+              <label
+                for="manufacturer"
+                class="form-label fw-semibold"
+              >
+                Manufacturer
+              </label>
+
+              <input
+                id="manufacturer"
+                type="text"
+                class="form-control"
+                [class.is-invalid]="isInvalid('manufacturer')"
+                formControlName="manufacturer"
+                placeholder="Manufacturer name"
+              />
+
+              @if (isInvalid('manufacturer')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('manufacturer') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6">
+
+              <label
+                for="countryOfOrigin"
+                class="form-label fw-semibold"
+              >
+                Country of Origin
+              </label>
+
+              <input
+                id="countryOfOrigin"
+                type="text"
+                class="form-control"
+                [class.is-invalid]="isInvalid('countryOfOrigin')"
+                formControlName="countryOfOrigin"
+                placeholder="e.g. India"
+              />
+
+              @if (isInvalid('countryOfOrigin')) {
+                <div class="text-danger small mt-1">
+                  {{ getErrorMessage('countryOfOrigin') }}
+                </div>
+              }
+
+            </div>
+
+            <div class="col-md-6">
+
+              <label
+                for="expiryDate"
+                class="form-label fw-semibold"
+              >
+                Expiry Date
+              </label>
+
+              <input
+                id="expiryDate"
+                type="date"
+                class="form-control"
+                formControlName="expiryDate"
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body p-4">
+
+          <div class="form-check form-switch">
+
+            <input
+              id="isFeatured"
+              type="checkbox"
+              class="form-check-input"
+              role="switch"
+              formControlName="isFeatured"
+            />
+
+            <label
+              for="isFeatured"
+              class="form-check-label fw-semibold"
+            >
+              Mark as Featured Product
+            </label>
+
+          </div>
+
+          <small class="text-muted d-block mt-2">
+            Featured products can be highlighted in customer-facing sections.
+          </small>
+
+        </div>
+
+      </div>
+
+      <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 pb-4">
+
+        <button
+          type="button"
+          class="btn btn-outline-secondary px-4"
+          [disabled]="isSubmitting"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-success px-4"
+          [disabled]="isSubmitting"
+        >
+
+          @if (isSubmitting) {
+
+            <span
+              class="spinner-border spinner-border-sm me-2"
+              aria-hidden="true"
+            ></span>
+
+            Creating...
+
+          } @else {
+
+            <i class="bi bi-check2-circle me-2"></i>
+            Create Product
+
+          }
+
+        </button>
+
+      </div>
+
+    </form>
+
+  }
+
+</div>

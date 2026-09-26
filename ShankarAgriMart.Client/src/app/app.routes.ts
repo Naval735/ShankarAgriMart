@@ -18,6 +18,8 @@ import { AboutComponent } from './features/about/pages/about/about';
 
 import { ServicesComponent } from './features/services/pages/services/services';
 
+import { AdminProductsComponent } from './features/admin/pages/products/admin-products/admin-products';
+
 export const routes: Routes = [
 
   // ==========================================
@@ -130,6 +132,20 @@ export const routes: Routes = [
     canActivate: [adminGuard]
   },
 
+ {
+  path: 'admin/products/add',
+  loadComponent: () =>
+    import('./features/admin/pages/products/admin-products/add-product/add-product')
+      .then(m => m.AddProductComponent),
+  canActivate: [adminGuard]
+},
+
+  {
+    path: 'admin/products',
+    component: AdminProductsComponent,
+    canActivate: [adminGuard]
+  },
+
 
   // ==========================================
   // DEFAULT ROUTE
@@ -140,6 +156,7 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+
 
   // ==========================================
   // INVALID ROUTES

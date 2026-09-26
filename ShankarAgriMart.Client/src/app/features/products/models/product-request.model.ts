@@ -1,23 +1,14 @@
-export interface Product {
-  id: number;
-
+export interface CreateProductRequest {
   categoryId: number;
-  categoryName: string;
-
   brandId: number;
-  brandName: string;
 
   name: string;
-  slug: string;
-  sku: string;
-
   shortDescription?: string | null;
   description?: string | null;
 
   mrp: number;
   sellingPrice: number;
   gst: number;
-
   stock: number;
 
   weight?: number | null;
@@ -26,6 +17,7 @@ export interface Product {
   activeIngredient?: string | null;
   dosage?: string | null;
   applicationMethod?: string | null;
+
   benefits?: string | null;
   usageInstructions?: string | null;
   safetyPrecautions?: string | null;
@@ -36,7 +28,4 @@ export interface Product {
   expiryDate?: string | null;
 
   isFeatured: boolean;
-  isActive: boolean;
-
-  images: string[];
 }

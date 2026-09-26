@@ -1,0 +1,443 @@
+<div class="admin-products-page">
+
+  <!-- Header -->
+  <section class="page-header">
+
+    <div class="container-fluid">
+
+      <div
+        class="d-flex flex-column flex-md-row
+               justify-content-between
+               align-items-md-center
+               gap-3"
+      >
+
+        <div>
+          <span class="page-eyebrow">
+            ADMIN PANEL
+          </span>
+
+          <h1 class="page-title">
+            Products
+          </h1>
+
+          <p class="page-subtitle mb-0">
+            Manage your product catalog, pricing and inventory.
+          </p>
+        </div>
+
+        <a
+          routerLink="/admin/products/add"
+          class="btn btn-success add-product-btn"
+        >
+          <i class="bi bi-plus-lg me-2"></i>
+          Add Product
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Content -->
+  <section class="products-section">
+
+    <div class="container-fluid">
+
+      <!-- Error -->
+      @if (errorMessage) {
+
+        <div
+          class="alert alert-danger
+                 d-flex align-items-center
+                 justify-content-between"
+          role="alert"
+        >
+
+          <span>
+            {{ errorMessage }}
+          </span>
+
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-danger"
+            (click)="loadProducts()"
+          >
+            Retry
+          </button>
+
+        </div>
+
+      }
+
+
+      <!-- Toolbar -->
+      <div class="products-toolbar">
+
+        <div class="search-wrapper">
+
+          <i class="bi bi-search search-icon"></i>
+
+          <input
+            type="text"
+            class="form-control search-input"
+            placeholder="Search by product, SKU, category or brand..."
+            [(ngModel)]="searchTerm"
+            (input)="onSearch()"
+          />
+
+          @if (searchTerm) {
+
+            <button
+              type="button"
+              class="clear-search"
+              (click)="clearSearch()"
+              aria-label="Clear search"
+            >
+              <i class="bi bi-x"></i>
+            </button>
+
+          }
+
+        </div>
+
+        <div class="product-count">
+
+          <span class="count-number">
+            {{ filteredProducts.length }}
+          </span>
+
+          <span class="count-label">
+            Products
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Loading -->
+      @if (isLoading) {
+
+        <div class="loading-card">
+
+          <div class="spinner-border text-success"></div>
+
+          <p class="mb-0 mt-3 text-muted">
+            Loading products...
+          </p>
+
+        </div>
+
+      }
+
+
+      <!-- Empty -->
+      @else if (filteredProducts.length === 0) {
+
+        <div class="empty-card">
+
+          <div class="empty-icon">
+            <i class="bi bi-box-seam"></i>
+          </div>
+
+          @if (searchTerm) {
+
+            <h5>
+              No products found
+            </h5>
+
+            <p class="text-muted">
+              Try changing your search keyword.
+            </p>
+
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              (click)="clearSearch()"
+            >
+              Clear Search
+            </button>
+
+          } @else {
+
+            <h5>
+              No products yet
+            </h5>
+
+            <p class="text-muted">
+              Start building your catalog by adding a product.
+            </p>
+
+            <a
+              routerLink="/admin/products/add"
+              class="btn btn-success"
+            >
+              Add First Product
+            </a>
+
+          }
+
+        </div>
+
+      }
+
+
+      <!-- Product Table -->
+      @else {
+
+        <div class="product-table-card">
+
+          <div class="table-responsive">
+
+            <table class="table product-table align-middle mb-0">
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    Product
+                  </th>
+
+                  <th>
+                    Category
+                  </th>
+
+                  <th>
+                    Brand
+                  </th>
+
+                  <th>
+                    Price
+                  </th>
+
+                  <th>
+                    Stock
+                  </th>
+
+                  <th>
+                    Status
+                  </th>
+
+                  <th class="text-end">
+                    Actions
+                  </th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody>
+
+                @for (
+                  product of filteredProducts;
+                  track product.id
+                ) {
+
+                  <tr>
+
+                    <!-- Product -->
+                    <td>
+
+                      <div class="product-info">
+
+                        <div class="product-image">
+
+                          @if (product.images.length > 0) {
+
+                            <img
+                              [src]="product.images[0]"
+                              [alt]="product.name"
+                            />
+
+                          } @else {
+
+                            <i class="bi bi-box-seam"></i>
+
+                          }
+
+                        </div>
+
+
+                        <div class="product-details">
+
+                          <div class="product-name">
+
+                            {{ product.name }}
+
+                            @if (product.isFeatured) {
+
+                              <span
+                                class="featured-badge"
+                                title="Featured product"
+                              >
+                                <i class="bi bi-star-fill"></i>
+                              </span>
+
+                            }
+
+                          </div>
+
+                          <div class="product-sku">
+                            SKU: {{ product.sku }}
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </td>
+
+
+                    <!-- Category -->
+                    <td>
+
+                      <span class="category-text">
+                        {{ product.categoryName || '—' }}
+                      </span>
+
+                    </td>
+
+
+                    <!-- Brand -->
+                    <td>
+
+                      <span class="brand-text">
+                        {{ product.brandName || '—' }}
+                      </span>
+
+                    </td>
+
+
+                    <!-- Price -->
+                    <td>
+
+                      <div class="price-block">
+
+                        <span class="selling-price">
+                          ₹{{ product.sellingPrice | number:'1.2-2' }}
+                        </span>
+
+                        @if (
+                          product.mrp >
+                          product.sellingPrice
+                        ) {
+
+                          <span class="mrp-price">
+                            ₹{{ product.mrp | number:'1.2-2' }}
+                          </span>
+
+                        }
+
+                      </div>
+
+                    </td>
+
+
+                    <!-- Stock -->
+                    <td>
+
+                      <span
+                        [class]="getStockClass(product.stock)"
+                        class="fw-semibold"
+                      >
+                        {{ product.stock }}
+                      </span>
+
+                      @if (
+                        product.stock <= 10 &&
+                        product.stock > 0
+                      ) {
+
+                        <small class="stock-warning">
+                          Low stock
+                        </small>
+
+                      }
+
+                      @if (product.stock === 0) {
+
+                        <small class="stock-danger">
+                          Out of stock
+                        </small>
+
+                      }
+
+                    </td>
+
+
+                    <!-- Status -->
+                    <td>
+
+                      @if (product.isActive) {
+
+                        <span class="status-badge active">
+                          Active
+                        </span>
+
+                      } @else {
+
+                        <span class="status-badge inactive">
+                          Inactive
+                        </span>
+
+                      }
+
+                    </td>
+
+
+                    <!-- Actions -->
+                    <td>
+
+                      <div
+                        class="action-buttons
+                               justify-content-end"
+                      >
+
+                        <button
+                          type="button"
+                          class="btn btn-sm action-btn edit-btn"
+                          title="Edit product"
+                          (click)="editProduct(product)"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </button>
+
+
+                        <button
+                          type="button"
+                          class="btn btn-sm action-btn delete-btn"
+                          title="Delete product"
+                          [disabled]="isDeleting"
+                          (click)="deleteProduct(product)"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+
+                      </div>
+
+                    </td>
+
+                  </tr>
+
+                }
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+</div>
