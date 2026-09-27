@@ -1,7 +1,11 @@
 .site-footer {
+
   background: #12351f;
+
   color: #dce9df;
+
   margin-top: 4rem;
+
 }
 
 
@@ -10,25 +14,41 @@
    ========================================= */
 
 .footer-brand {
+
   color: #ffffff;
+
   text-decoration: none;
+
   font-size: 1.15rem;
+
   font-weight: 700;
+
 }
 
 .footer-brand:hover {
+
   color: #b9e6c7;
+
 }
 
 .footer-brand .brand-icon {
+
   display: inline-flex;
+
   align-items: center;
+
   justify-content: center;
+
   width: 40px;
+
   height: 40px;
+
   border-radius: 10px;
+
   background: #e9f7ef;
+
   font-size: 1.3rem;
+
 }
 
 
@@ -37,10 +57,15 @@
    ========================================= */
 
 .footer-description {
+
   max-width: 420px;
+
   color: #b9cdbf;
+
   font-size: 0.92rem;
+
   line-height: 1.7;
+
 }
 
 
@@ -49,10 +74,15 @@
    ========================================= */
 
 .footer-title {
+
   color: #ffffff;
+
   font-size: 0.95rem;
+
   font-weight: 700;
+
   margin-bottom: 1.2rem;
+
 }
 
 
@@ -61,24 +91,37 @@
    ========================================= */
 
 .footer-links {
+
   list-style: none;
+
   padding: 0;
+
   margin: 0;
+
 }
 
 .footer-links li {
+
   margin-bottom: 0.65rem;
+
 }
 
 .footer-links a {
+
   color: #b9cdbf;
+
   text-decoration: none;
+
   font-size: 0.9rem;
+
   transition: color 0.2s ease;
+
 }
 
 .footer-links a:hover {
+
   color: #ffffff;
+
 }
 
 
@@ -87,23 +130,98 @@
    ========================================= */
 
 .contact-list {
+
   list-style: none;
+
   padding: 0;
+
   margin: 0;
+
 }
 
 .contact-list li {
+
   display: flex;
+
   align-items: flex-start;
+
   gap: 0.7rem;
+
   margin-bottom: 0.9rem;
+
   color: #b9cdbf;
+
   font-size: 0.9rem;
+
   line-height: 1.5;
+
 }
 
 .contact-icon {
+
   flex-shrink: 0;
+
+}
+
+
+/* =========================================
+   Contact Links
+   ========================================= */
+
+.contact-link {
+
+  color: #b9cdbf;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+
+}
+
+.contact-link:hover {
+
+  color: #ffffff;
+
+}
+
+
+/* Shop Name
+   ========================================= */
+
+.contact-link strong {
+
+  color: #ffffff;
+
+  font-weight: 600;
+
+}
+
+
+/* Google Maps Link
+   ========================================= */
+
+.map-link {
+
+  display: inline-block;
+
+  margin-top: 4px;
+
+  color: #7ed69b;
+
+  font-size: 0.82rem;
+
+  font-weight: 600;
+
+  transition: color 0.2s ease;
+
+}
+
+.contact-link:hover .map-link {
+
+  color: #b9e6c7;
+
 }
 
 
@@ -112,25 +230,39 @@
    ========================================= */
 
 .footer-bottom {
+
   border-top: 1px solid rgba(255, 255, 255, 0.12);
+
   padding: 1.2rem 0;
+
   color: #9fb5a5;
+
   font-size: 0.82rem;
+
 }
 
 .footer-bottom-links {
+
   display: flex;
+
   align-items: center;
+
   gap: 0.6rem;
+
 }
 
 .footer-bottom-links a {
+
   color: #9fb5a5;
+
   text-decoration: none;
+
 }
 
 .footer-bottom-links a:hover {
+
   color: #ffffff;
+
 }
 
 
@@ -141,16 +273,23 @@
 @media (max-width: 767.98px) {
 
   .site-footer {
+
     margin-top: 2.5rem;
+
   }
 
   .footer-description {
+
     max-width: none;
+
   }
 
   .footer-bottom-links {
+
     flex-wrap: wrap;
+
     justify-content: center;
+
   }
 
 }

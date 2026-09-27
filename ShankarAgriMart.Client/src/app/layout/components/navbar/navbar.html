@@ -1,38 +1,27 @@
 <nav class="main-navbar">
 
-  <!-- ================================
-       TOP NAVIGATION
-  ================================= -->
-
   <div class="navbar-top">
-
     <div class="container-fluid navbar-container">
 
-      <!-- Brand -->
       <a
         routerLink="/home"
         class="brand"
         (click)="closeMenu()"
+        aria-label="ShankarAgriMart Home"
       >
-
-        <span class="brand-icon">
-          🌱
-        </span>
-
-        <span class="brand-name">
-          ShankarAgriMart
-        </span>
-
+        <img
+          src="/images/image.png"
+          alt="ShankarAgriMart"
+          class="brand-logo"
+        />
       </a>
 
-
-      <!-- Search -->
       <div class="navbar-search">
-
         <input
           type="text"
           class="search-input"
           placeholder="Search products, pesticides, fertilizers..."
+          aria-label="Search products"
         />
 
         <button
@@ -42,11 +31,8 @@
         >
           <i class="bi bi-search"></i>
         </button>
-
       </div>
 
-
-      <!-- Language -->
       <button
         type="button"
         class="language-button"
@@ -54,8 +40,20 @@
         English
       </button>
 
+      <button
+        type="button"
+        class="mobile-search-button"
+        aria-label="Search products"
+        [attr.aria-expanded]="isMobileSearchOpen"
+        (click)="toggleMobileSearch()"
+      >
+        @if (!isMobileSearchOpen) {
+          <i class="bi bi-search"></i>
+        } @else {
+          <i class="bi bi-x-lg"></i>
+        }
+      </button>
 
-      <!-- Mobile toggle -->
       <button
         type="button"
         class="mobile-toggle"
@@ -63,34 +61,40 @@
         [attr.aria-expanded]="isMenuOpen"
         (click)="toggleMenu()"
       >
-
         @if (!isMenuOpen) {
           <i class="bi bi-list"></i>
         } @else {
           <i class="bi bi-x-lg"></i>
         }
-
       </button>
 
     </div>
-
   </div>
 
+  @if (isMobileSearchOpen) {
+    <div class="mobile-search-container">
+      <div class="mobile-search-wrapper">
+        <i class="bi bi-search mobile-search-icon"></i>
 
-  <!-- ================================
-       NAVIGATION
-  ================================= -->
+        <input
+          type="text"
+          class="mobile-search-input"
+          placeholder="Search products..."
+          aria-label="Search products"
+          autofocus
+        />
+      </div>
+    </div>
+  }
 
   <div
     class="navbar-navigation"
     [class.mobile-open]="isMenuOpen"
   >
-
     <div class="container-fluid navbar-container">
 
       <div class="navigation-links">
 
-        <!-- Home -->
         <a
           routerLink="/home"
           routerLinkActive="active"
@@ -101,8 +105,26 @@
           Home
         </a>
 
+        <a
+          routerLink="/services"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="navigation-link"
+          (click)="closeMenu()"
+        >
+          Services
+        </a>
 
-        <!-- Products -->
+        <a
+          routerLink="/about"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="navigation-link"
+          (click)="closeMenu()"
+        >
+          About
+        </a>
+
         <a
           routerLink="/products"
           routerLinkActive="active"
@@ -112,8 +134,6 @@
           All Products
         </a>
 
-
-        <!-- Categories -->
         <a
           routerLink="/products"
           [queryParams]="{ categoryId: 1 }"
@@ -177,101 +197,69 @@
           Gardening
         </a>
 
+        @if (isAuthenticated) {
 
-        <!-- ================================
-             AUTHENTICATED USER
-        ================================= -->
+          <div class="navigation-divider"></div>
 
-       @if (isAuthenticated) {
+          @if (!isAdmin) {
 
-  <div class="navigation-divider"></div>
+            <a
+              routerLink="/orders"
+              routerLinkActive="active"
+              class="navigation-link account-link"
+              (click)="closeMenu()"
+            >
+              <i class="bi bi-box-seam me-1"></i>
+              My Orders
+            </a>
 
+            <a
+              routerLink="/cart"
+              routerLinkActive="active"
+              class="navigation-link account-link"
+              (click)="closeMenu()"
+            >
+              <i class="bi bi-cart3 me-1"></i>
+              Cart
+            </a>
 
-  <!-- ================================
-       CUSTOMER ONLY
-  ================================= -->
+          }
 
-  @if (!isAdmin) {
+          @if (isAdmin) {
 
-    <a
-      routerLink="/orders"
-      routerLinkActive="active"
-      class="navigation-link account-link"
-      (click)="closeMenu()"
-    >
-      <i class="bi bi-box-seam me-1"></i>
-      My Orders
-    </a>
+            <a
+              routerLink="/admin/dashboard"
+              routerLinkActive="active"
+              class="admin-panel-link"
+              (click)="closeMenu()"
+            >
+              <i class="bi bi-speedometer2 me-1"></i>
+              Admin Panel
+            </a>
 
+          }
 
-    <a
-      routerLink="/cart"
-      routerLinkActive="active"
-      class="navigation-link account-link"
-      (click)="closeMenu()"
-    >
-      <i class="bi bi-cart3 me-1"></i>
-      Cart
-    </a>
+          <button
+            type="button"
+            class="logout-link"
+            [disabled]="isLoggingOut"
+            (click)="logout()"
+          >
+            @if (isLoggingOut) {
+              <span
+                class="spinner-border spinner-border-sm me-1"
+                aria-hidden="true"
+              ></span>
+              Logging out...
+            } @else {
+              <i class="bi bi-box-arrow-right me-1"></i>
+              Logout
+            }
+          </button>
 
-  }
+        }
 
-
-  <!-- ================================
-       ADMIN ONLY
-  ================================= -->
-
-  @if (isAdmin) {
-
-    <a
-      routerLink="/admin/dashboard"
-      routerLinkActive="active"
-      class="admin-panel-link"
-      (click)="closeMenu()"
-    >
-      <i class="bi bi-speedometer2 me-1"></i>
-      Admin Panel
-    </a>
-
-  }
-
-
-  <!-- Logout -->
-  <button
-    type="button"
-    class="logout-link"
-    [disabled]="isLoggingOut"
-    (click)="logout()"
-  >
-
-    @if (isLoggingOut) {
-
-      <span
-        class="spinner-border spinner-border-sm me-1"
-      ></span>
-
-      Logging out...
-
-    } @else {
-
-      <i class="bi bi-box-arrow-right me-1"></i>
-      Logout
-
-    }
-
-  </button>
-
-}
-
-
-        <!-- ================================
-             GUEST
-        ================================= -->
-
-        @if (
-          isAuthChecked &&
-          !isAuthenticated
-        ) {
+        @if (isAuthChecked && !isAuthenticated) {
 
           <a
             routerLink="/login"
@@ -288,7 +276,6 @@
       </div>
 
     </div>
-
   </div>
 
 </nav>

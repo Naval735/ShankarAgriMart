@@ -4,7 +4,9 @@ import { Observable, map } from 'rxjs';
 import { ApiService } from '../../../core/service/api.service';
 
 import { Product } from '../../products/models/product.model';
-
+import {
+  UpdateProductRequest
+} from '../../products/models/product-request.model';
 import { CreateProductRequest } from '../../products/models/product-request.model';
 
 interface ProductApiResponse {
@@ -55,7 +57,16 @@ export class AdminProductService {
       request
     );
   }
+ updateProduct(
+  id: number,
+  request: UpdateProductRequest
+): Observable<Product> {
 
+  return this.api.put<Product>(
+    `Product/${id}`,
+    request
+  );
+}
   deleteProduct(
     id: number
   ): Observable<void> {

@@ -1,192 +1,871 @@
-<div class="container-fluid py-4 dashboard-page">
+<div class="admin-dashboard-page">
 
-  <!-- Header -->
-  <div class="dashboard-header mb-4">
-    <div>
-      <h2 class="fw-bold mb-1">Admin Dashboard</h2>
-      <p class="text-muted mb-0">
-        Monitor your AgriMart business at a glance.
-      </p>
-    </div>
-  </div>
+  <!-- Dashboard Header -->
+  <section class="dashboard-header">
 
-  <!-- Loading -->
-  <div *ngIf="isLoading" class="dashboard-loading text-center py-5">
-    <div
-      class="spinner-border"
-      role="status"
-      aria-hidden="true">
-    </div>
+    <div class="container-fluid">
 
-    <p class="text-muted mt-3 mb-0">
-      Loading dashboard...
-    </p>
-  </div>
+      <div
+        class="d-flex flex-column flex-lg-row
+               justify-content-between
+               align-items-lg-center
+               gap-4"
+      >
 
-  <!-- Error -->
-  <div
-    *ngIf="!isLoading && errorMessage"
-    class="alert alert-danger"
-    role="alert">
+        <div>
 
-    {{ errorMessage }}
+          <span class="dashboard-eyebrow">
+            ADMIN CONTROL CENTER
+          </span>
 
-  </div>
+          <h1 class="dashboard-title">
+            Admin Dashboard
+          </h1>
 
-  <!-- Dashboard -->
-  <ng-container *ngIf="!isLoading && dashboard">
+          <p class="dashboard-subtitle mb-0">
+            Manage your products, orders, customers and store operations
+            from one place.
+          </p>
 
-    <!-- Main Statistics -->
-    <div class="row g-4 mb-4">
-
-      <!-- Products -->
-      <div class="col-12 col-sm-6 col-xl-3">
-        <div class="dashboard-card">
-          <div class="card-icon products-icon">
-            <i class="bi bi-box-seam"></i>
-          </div>
-
-          <div>
-            <p class="card-label">Total Products</p>
-            <h3 class="card-value">
-              {{ dashboard.totalProducts }}
-            </h3>
-          </div>
         </div>
-      </div>
 
-      <!-- Customers -->
-      <div class="col-12 col-sm-6 col-xl-3">
-        <div class="dashboard-card">
-          <div class="card-icon customers-icon">
-            <i class="bi bi-people"></i>
-          </div>
+        <div class="header-actions">
 
-          <div>
-            <p class="card-label">Total Customers</p>
-            <h3 class="card-value">
-              {{ dashboard.totalCustomers }}
-            </h3>
-          </div>
+          <a
+            routerLink="/admin/products/add"
+            class="btn btn-success dashboard-primary-btn"
+          >
+            <i class="bi bi-plus-lg me-2"></i>
+            Add Product
+          </a>
+
+          <a
+            routerLink="/admin/orders"
+            class="btn btn-outline-success dashboard-secondary-btn"
+          >
+            <i class="bi bi-receipt me-2"></i>
+            View Orders
+          </a>
+
         </div>
-      </div>
 
-      <!-- Orders -->
-      <div class="col-12 col-sm-6 col-xl-3">
-        <div class="dashboard-card">
-          <div class="card-icon orders-icon">
-            <i class="bi bi-cart-check"></i>
-          </div>
-
-          <div>
-            <p class="card-label">Total Orders</p>
-            <h3 class="card-value">
-              {{ dashboard.totalOrders }}
-            </h3>
-          </div>
-        </div>
-      </div>
-
-      <!-- Revenue -->
-      <div class="col-12 col-sm-6 col-xl-3">
-        <div class="dashboard-card">
-          <div class="card-icon revenue-icon">
-            <i class="bi bi-currency-rupee"></i>
-          </div>
-
-          <div>
-            <p class="card-label">Total Revenue</p>
-            <h3 class="card-value">
-              {{ dashboard.totalRevenue | currency:'INR':'symbol':'1.0-0' }}
-            </h3>
-          </div>
-        </div>
       </div>
 
     </div>
 
-    <!-- Order Status -->
-    <div class="section-title mb-3">
-      <h4 class="fw-bold mb-1">Order Overview</h4>
-      <p class="text-muted mb-0">
-        Current order status across your store.
-      </p>
+  </section>
+
+
+  <!-- Dashboard Content -->
+  <section class="dashboard-content">
+
+    <div class="container-fluid">
+
+
+      <!-- Loading -->
+      @if (isLoading) {
+
+        <div class="dashboard-loading">
+
+          <div
+            class="spinner-border text-success"
+            role="status"
+          ></div>
+
+          <p class="text-muted mt-3 mb-0">
+            Loading dashboard...
+          </p>
+
+        </div>
+
+      }
+
+
+      <!-- Error -->
+      @else if (errorMessage) {
+
+        <div class="alert alert-danger dashboard-alert">
+
+          <div class="d-flex align-items-center gap-2">
+
+            <i class="bi bi-exclamation-circle"></i>
+
+            <span>
+              {{ errorMessage }}
+            </span>
+
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-danger"
+            (click)="loadDashboard()"
+          >
+            Retry
+          </button>
+
+        </div>
+
+      }
+
+
+      @else if (dashboard) {
+
+
+        <!-- Overview -->
+        <section class="dashboard-section">
+
+          <div class="section-heading-row">
+
+            <div>
+              <span class="section-label">
+                OVERVIEW
+              </span>
+
+              <h2 class="section-title">
+                Store Performance
+              </h2>
+            </div>
+
+          </div>
+
+
+          <div class="row g-4">
+
+            <!-- Products -->
+            <div class="col-12 col-sm-6 col-xl-3">
+
+              <div class="stat-card products-card">
+
+                <div class="stat-card-top">
+
+                  <div class="stat-icon">
+                    <i class="bi bi-box-seam"></i>
+                  </div>
+
+                  <span class="stat-label">
+                    Total Products
+                  </span>
+
+                </div>
+
+                <div class="stat-value">
+                  {{ dashboard.totalProducts }}
+                </div>
+
+                <a
+                  routerLink="/admin/products"
+                  class="stat-link"
+                >
+                  Manage Products
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+
+              </div>
+
+            </div>
+
+
+            <!-- Customers -->
+            <div class="col-12 col-sm-6 col-xl-3">
+
+              <div class="stat-card customers-card">
+
+                <div class="stat-card-top">
+
+                  <div class="stat-icon">
+                    <i class="bi bi-people"></i>
+                  </div>
+
+                  <span class="stat-label">
+                    Total Customers
+                  </span>
+
+                </div>
+
+                <div class="stat-value">
+                  {{ dashboard.totalCustomers }}
+                </div>
+
+                <span class="stat-meta">
+                  Registered customers
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- Orders -->
+            <div class="col-12 col-sm-6 col-xl-3">
+
+              <div class="stat-card orders-card">
+
+                <div class="stat-card-top">
+
+                  <div class="stat-icon">
+                    <i class="bi bi-cart3"></i>
+                  </div>
+
+                  <span class="stat-label">
+                    Total Orders
+                  </span>
+
+                </div>
+
+                <div class="stat-value">
+                  {{ dashboard.totalOrders }}
+                </div>
+
+                <a
+                  routerLink="/admin/orders"
+                  class="stat-link"
+                >
+                  Manage Orders
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+
+              </div>
+
+            </div>
+
+
+            <!-- Revenue -->
+            <div class="col-12 col-sm-6 col-xl-3">
+
+              <div class="stat-card revenue-card">
+
+                <div class="stat-card-top">
+
+                  <div class="stat-icon">
+                    <i class="bi bi-currency-rupee"></i>
+                  </div>
+
+                  <span class="stat-label">
+                    Total Revenue
+                  </span>
+
+                </div>
+
+                <div class="stat-value revenue-value">
+                  ₹{{ dashboard.totalRevenue | number:'1.0-0' }}
+                </div>
+
+                <span class="stat-meta">
+                  Excluding cancelled orders
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- Quick Actions -->
+        <section class="dashboard-section">
+
+          <div class="section-heading-row">
+
+            <div>
+
+              <span class="section-label">
+                QUICK ACTIONS
+              </span>
+
+              <h2 class="section-title">
+                Manage Your Store
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="row g-4">
+
+            <!-- Add Product -->
+            <div class="col-12 col-md-4">
+
+              <a
+                routerLink="/admin/products/add"
+                class="management-card"
+              >
+
+                <div class="management-icon add-icon">
+                  <i class="bi bi-plus-lg"></i>
+                </div>
+
+                <div class="management-content">
+
+                  <h5>
+                    Add Product
+                  </h5>
+
+                  <p>
+                    Add a new product to your catalog.
+                  </p>
+
+                  <span>
+                    Create Product
+                    <i class="bi bi-arrow-right"></i>
+                  </span>
+
+                </div>
+
+              </a>
+
+            </div>
+
+
+            <!-- Manage Products -->
+            <div class="col-12 col-md-4">
+
+              <a
+                routerLink="/admin/products"
+                class="management-card"
+              >
+
+                <div class="management-icon product-icon">
+                  <i class="bi bi-box-seam"></i>
+                </div>
+
+                <div class="management-content">
+
+                  <h5>
+                    Product Management
+                  </h5>
+
+                  <p>
+                    View, edit, search and manage products.
+                  </p>
+
+                  <span>
+                    Manage Products
+                    <i class="bi bi-arrow-right"></i>
+                  </span>
+
+                </div>
+
+              </a>
+
+            </div>
+
+
+            <!-- Orders -->
+            <div class="col-12 col-md-4">
+
+              <a
+                routerLink="/admin/orders"
+                class="management-card"
+              >
+
+                <div class="management-icon order-icon">
+                  <i class="bi bi-receipt"></i>
+                </div>
+
+                <div class="management-content">
+
+                  <h5>
+                    Order Management
+                  </h5>
+
+                  <p>
+                    Review orders and update order status.
+                  </p>
+
+                  <span>
+                    Manage Orders
+                    <i class="bi bi-arrow-right"></i>
+                  </span>
+
+                </div>
+
+              </a>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- Product Management -->
+        <section class="dashboard-section">
+
+          <div class="section-heading-row">
+
+            <div>
+
+              <span class="section-label">
+                CATALOG
+              </span>
+
+              <h2 class="section-title">
+                Product Management
+              </h2>
+
+              <p class="section-description">
+                Manage everything related to your product catalog.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="catalog-panel">
+
+            <div class="row g-0">
+
+
+              <!-- Products -->
+              <div class="col-12 col-md-6 col-xl-3">
+
+                <a
+                  routerLink="/admin/products"
+                  class="catalog-item"
+                >
+
+                  <div class="catalog-icon">
+                    <i class="bi bi-box-seam"></i>
+                  </div>
+
+                  <div>
+
+                    <h6>
+                      Products
+                    </h6>
+
+                    <p>
+                      Manage catalog
+                    </p>
+
+                  </div>
+
+                  <i class="bi bi-chevron-right catalog-arrow"></i>
+
+                </a>
+
+              </div>
+
+
+              <!-- Add Product -->
+              <div class="col-12 col-md-6 col-xl-3">
+
+                <a
+                  routerLink="/admin/products/add"
+                  class="catalog-item"
+                >
+
+                  <div class="catalog-icon">
+                    <i class="bi bi-plus-circle"></i>
+                  </div>
+
+                  <div>
+
+                    <h6>
+                      Add Product
+                    </h6>
+
+                    <p>
+                      Create new product
+                    </p>
+
+                  </div>
+
+                  <i class="bi bi-chevron-right catalog-arrow"></i>
+
+                </a>
+
+              </div>
+
+
+              <!-- Categories -->
+              <div class="col-12 col-md-6 col-xl-3">
+
+                <div class="catalog-item catalog-disabled">
+
+                  <div class="catalog-icon">
+                    <i class="bi bi-grid"></i>
+                  </div>
+
+                  <div>
+
+                    <h6>
+                      Categories
+                    </h6>
+
+                    <p>
+                      Coming soon
+                    </p>
+
+                  </div>
+
+                  <span class="coming-badge">
+                    Soon
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <!-- Brands -->
+              <div class="col-12 col-md-6 col-xl-3">
+
+                <div class="catalog-item catalog-disabled">
+
+                  <div class="catalog-icon">
+                    <i class="bi bi-award"></i>
+                  </div>
+
+                  <div>
+
+                    <h6>
+                      Brands
+                    </h6>
+
+                    <p>
+                      Coming soon
+                    </p>
+
+                  </div>
+
+                  <span class="coming-badge">
+                    Soon
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- Order Overview -->
+        <section class="dashboard-section">
+
+          <div class="section-heading-row">
+
+            <div>
+
+              <span class="section-label">
+                ORDERS
+              </span>
+
+              <h2 class="section-title">
+                Order Overview
+              </h2>
+
+              <p class="section-description">
+                Current order status across your store.
+              </p>
+
+            </div>
+
+            <a
+              routerLink="/admin/orders"
+              class="section-action"
+            >
+              View All Orders
+              <i class="bi bi-arrow-right"></i>
+            </a>
+
+          </div>
+
+
+          <div class="row g-3">
+
+
+            <!-- Pending -->
+            <div class="col-6 col-md">
+
+              <div class="order-status-card pending">
+
+                <div class="order-status-icon">
+                  <i class="bi bi-clock"></i>
+                </div>
+
+                <div>
+
+                  <span>
+                    Pending
+                  </span>
+
+                  <strong>
+                    {{ dashboard.pendingOrders }}
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- Confirmed -->
+            <div class="col-6 col-md">
+
+              <div class="order-status-card confirmed">
+
+                <div class="order-status-icon">
+                  <i class="bi bi-check-circle"></i>
+                </div>
+
+                <div>
+
+                  <span>
+                    Confirmed
+                  </span>
+
+                  <strong>
+                    {{ dashboard.confirmedOrders }}
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- Shipped -->
+            <div class="col-6 col-md">
+
+              <div class="order-status-card shipped">
+
+                <div class="order-status-icon">
+                  <i class="bi bi-truck"></i>
+                </div>
+
+                <div>
+
+                  <span>
+                    Shipped
+                  </span>
+
+                  <strong>
+                    {{ dashboard.shippedOrders }}
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- Delivered -->
+            <div class="col-6 col-md">
+
+              <div class="order-status-card delivered">
+
+                <div class="order-status-icon">
+                  <i class="bi bi-bag-check"></i>
+                </div>
+
+                <div>
+
+                  <span>
+                    Delivered
+                  </span>
+
+                  <strong>
+                    {{ dashboard.deliveredOrders }}
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- Cancelled -->
+            <div class="col-6 col-md">
+
+              <div class="order-status-card cancelled">
+
+                <div class="order-status-icon">
+                  <i class="bi bi-x-circle"></i>
+                </div>
+
+                <div>
+
+                  <span>
+                    Cancelled
+                  </span>
+
+                  <strong>
+                    {{ dashboard.cancelledOrders }}
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- Admin Modules -->
+        <section class="dashboard-section dashboard-last-section">
+
+          <div class="section-heading-row">
+
+            <div>
+
+              <span class="section-label">
+                ADMINISTRATION
+              </span>
+
+              <h2 class="section-title">
+                Store Modules
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="row g-3">
+
+
+            <!-- Products -->
+            <div class="col-6 col-md-4 col-xl-2">
+
+              <a
+                routerLink="/admin/products"
+                class="module-card"
+              >
+
+                <i class="bi bi-box-seam"></i>
+
+                <span>
+                  Products
+                </span>
+
+              </a>
+
+            </div>
+
+
+            <!-- Orders -->
+            <div class="col-6 col-md-4 col-xl-2">
+
+              <a
+                routerLink="/admin/orders"
+                class="module-card"
+              >
+
+                <i class="bi bi-receipt"></i>
+
+                <span>
+                  Orders
+                </span>
+
+              </a>
+
+            </div>
+
+
+            <!-- Customers -->
+            <div class="col-6 col-md-4 col-xl-2">
+
+              <div class="module-card module-disabled">
+
+                <i class="bi bi-people"></i>
+
+                <span>
+                  Customers
+                </span>
+
+                <small>
+                  Soon
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <!-- Categories -->
+            <div class="col-6 col-md-4 col-xl-2">
+
+              <div class="module-card module-disabled">
+
+                <i class="bi bi-grid"></i>
+
+                <span>
+                  Categories
+                </span>
+
+                <small>
+                  Soon
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <!-- Brands -->
+            <div class="col-6 col-md-4 col-xl-2">
+
+              <div class="module-card module-disabled">
+
+                <i class="bi bi-award"></i>
+
+                <span>
+                  Brands
+                </span>
+
+                <small>
+                  Soon
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <!-- Inventory -->
+            <div class="col-6 col-md-4 col-xl-2">
+
+              <div class="module-card module-disabled">
+
+                <i class="bi bi-boxes"></i>
+
+                <span>
+                  Inventory
+                </span>
+
+                <small>
+                  Soon
+                </small>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      }
+
     </div>
 
-    <div class="row g-4">
-
-      <!-- Pending -->
-      <div class="col-12 col-sm-6 col-lg">
-        <div class="status-card">
-          <div class="status-icon pending">
-            <i class="bi bi-clock-history"></i>
-          </div>
-
-          <div>
-            <span class="status-label">Pending</span>
-            <h4>{{ dashboard.pendingOrders }}</h4>
-          </div>
-        </div>
-      </div>
-
-      <!-- Confirmed -->
-      <div class="col-12 col-sm-6 col-lg">
-        <div class="status-card">
-          <div class="status-icon confirmed">
-            <i class="bi bi-check-circle"></i>
-          </div>
-
-          <div>
-            <span class="status-label">Confirmed</span>
-            <h4>{{ dashboard.confirmedOrders }}</h4>
-          </div>
-        </div>
-      </div>
-
-      <!-- Shipped -->
-      <div class="col-12 col-sm-6 col-lg">
-        <div class="status-card">
-          <div class="status-icon shipped">
-            <i class="bi bi-truck"></i>
-          </div>
-
-          <div>
-            <span class="status-label">Shipped</span>
-            <h4>{{ dashboard.shippedOrders }}</h4>
-          </div>
-        </div>
-      </div>
-
-      <!-- Delivered -->
-      <div class="col-12 col-sm-6 col-lg">
-        <div class="status-card">
-          <div class="status-icon delivered">
-            <i class="bi bi-bag-check"></i>
-          </div>
-
-          <div>
-            <span class="status-label">Delivered</span>
-            <h4>{{ dashboard.deliveredOrders }}</h4>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cancelled -->
-      <div class="col-12 col-sm-6 col-lg">
-        <div class="status-card">
-          <div class="status-icon cancelled">
-            <i class="bi bi-x-circle"></i>
-          </div>
-
-          <div>
-            <span class="status-label">Cancelled</span>
-            <h4>{{ dashboard.cancelledOrders }}</h4>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </ng-container>
+  </section>
 
 </div>

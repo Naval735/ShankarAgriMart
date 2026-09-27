@@ -1,7 +1,3 @@
-/* =========================================
-   MAIN NAVBAR
-========================================= */
-
 .main-navbar {
   position: relative;
   z-index: 1000;
@@ -9,11 +5,6 @@
   background: #ffffff;
   border-bottom: 1px solid #e9eeeb;
 }
-
-
-/* =========================================
-   TOP AREA
-========================================= */
 
 .navbar-top {
   background: #ffffff;
@@ -29,62 +20,30 @@
 
 .navbar-top .navbar-container {
   min-height: 82px;
-
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
 
-
-/* =========================================
-   BRAND
-========================================= */
-
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-
   flex-shrink: 0;
-
   color: #17351f;
   text-decoration: none;
 }
 
-.brand-icon {
-  width: 40px;
-  height: 40px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 10px;
-
-  background: #eaf7ef;
-
-  font-size: 1.25rem;
+.brand-logo {
+  display: block;
+  width: 155px;
+  height: 68px;
+  object-fit: contain;
+  object-position: center;
 }
-
-.brand-name {
-  color: #17351f;
-
-  font-size: 1.05rem;
-  font-weight: 750;
-
-  white-space: nowrap;
-}
-
-
-/* =========================================
-   SEARCH
-========================================= */
 
 .navbar-search {
   position: relative;
-
   flex: 1;
-
   max-width: 590px;
   margin-left: 0.5rem;
 }
@@ -92,19 +51,13 @@
 .search-input {
   width: 100%;
   height: 40px;
-
   padding: 0 55px 0 14px;
-
   border: 1px solid #dfe6e1;
   border-radius: 8px;
-
   outline: none;
-
   color: #27352e;
   font-size: 0.82rem;
-
   background: #ffffff;
-
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
@@ -116,30 +69,22 @@
 
 .search-input:focus {
   border-color: #198754;
-
-  box-shadow:
-    0 0 0 3px rgba(25, 135, 84, 0.08);
+  box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.08);
 }
 
 .search-button {
   position: absolute;
-
   top: 0;
   right: 0;
-
   width: 47px;
   height: 40px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border: 0;
   border-radius: 0 8px 8px 0;
-
   background: #198754;
   color: #ffffff;
-
   cursor: pointer;
 }
 
@@ -147,31 +92,16 @@
   background: #157347;
 }
 
-
-/* =========================================
-   LANGUAGE
-========================================= */
-
 .language-button {
   flex-shrink: 0;
-
   padding: 0.55rem 0.9rem;
-
   border: 1px solid #dfe6e1;
   border-radius: 8px;
-
   background: #ffffff;
-
   color: #37443d;
-
   font-size: 0.78rem;
   font-weight: 500;
 }
-
-
-/* =========================================
-   NAVIGATION BAR
-========================================= */
 
 .navbar-navigation {
   border-top: 1px solid #f0f2f1;
@@ -180,22 +110,17 @@
 
 .navbar-navigation .navbar-container {
   min-height: 46px;
-
   display: flex;
   align-items: center;
 }
 
 .navigation-links {
   width: 100%;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 0.15rem;
-
   overflow-x: auto;
-
   scrollbar-width: none;
 }
 
@@ -203,28 +128,16 @@
   display: none;
 }
 
-
-/* =========================================
-   NAV LINKS
-========================================= */
-
 .navigation-link {
   display: inline-flex;
   align-items: center;
-
   padding: 0.72rem 0.72rem;
-
   color: #27342d;
-
   font-size: 0.76rem;
   font-weight: 500;
-
   text-decoration: none;
-
   white-space: nowrap;
-
   border-bottom: 2px solid transparent;
-
   transition:
     color 0.2s ease,
     background 0.2s ease,
@@ -240,17 +153,10 @@
   border-bottom-color: #198754;
 }
 
-
-/* =========================================
-   AUTH SECTION
-========================================= */
-
 .navigation-divider {
   width: 1px;
   height: 22px;
-
   margin: 0 0.45rem;
-
   background: #e3e8e5;
 }
 
@@ -258,31 +164,18 @@
   font-weight: 600;
 }
 
-
-/* =========================================
-   ADMIN PANEL
-========================================= */
-
 .admin-panel-link {
   display: inline-flex;
   align-items: center;
-
   margin-left: 0.25rem;
-
   padding: 0.48rem 0.8rem;
-
   border-radius: 7px;
-
   background: #17351f;
   color: #ffffff;
-
   font-size: 0.75rem;
   font-weight: 600;
-
   text-decoration: none;
-
   white-space: nowrap;
-
   transition:
     background 0.2s ease,
     transform 0.2s ease;
@@ -297,29 +190,17 @@
   background: #198754;
 }
 
-
-/* =========================================
-   LOGIN
-========================================= */
-
 .login-link {
   display: inline-flex;
   align-items: center;
-
   margin-left: 0.4rem;
-
   padding: 0.48rem 0.85rem;
-
   border: 1px solid #198754;
   border-radius: 7px;
-
   color: #198754;
-
   font-size: 0.75rem;
   font-weight: 600;
-
   text-decoration: none;
-
   white-space: nowrap;
 }
 
@@ -328,31 +209,18 @@
   color: #ffffff;
 }
 
-
-/* =========================================
-   LOGOUT
-========================================= */
-
 .logout-link {
   display: inline-flex;
   align-items: center;
-
   margin-left: 0.2rem;
-
   padding: 0.48rem 0.7rem;
-
   border: 0;
   border-radius: 7px;
-
   background: transparent;
-
   color: #59655f;
-
   font-size: 0.75rem;
   font-weight: 600;
-
   white-space: nowrap;
-
   cursor: pointer;
 }
 
@@ -366,37 +234,91 @@
   cursor: not-allowed;
 }
 
+.mobile-search-button {
+  display: none;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid #c9e2d2;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #17351f;
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
 
-/* =========================================
-   MOBILE TOGGLE
-========================================= */
+.mobile-search-button:hover {
+  background: #e5f4ea;
+  border-color: #198754;
+  color: #198754;
+}
 
 .mobile-toggle {
   display: none;
-
   width: 40px;
   height: 40px;
-
   align-items: center;
   justify-content: center;
-
+  flex-shrink: 0;
   border: 1px solid #dfe6e1;
   border-radius: 8px;
-
   background: #ffffff;
-
   color: #17351f;
-
   font-size: 1.15rem;
+  cursor: pointer;
 }
 
+.mobile-search-container {
+  display: none;
+  background: #f0f8f3;
+  padding: 0 1rem 0.75rem;
+}
 
-/* =========================================
-   TABLET
-========================================= */
+.mobile-search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.mobile-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #198754;
+  pointer-events: none;
+}
+
+.mobile-search-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 14px 0 42px;
+  border: 1px solid #c9e2d2;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  color: #27352e;
+  font-size: 0.85rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.mobile-search-input::placeholder {
+  color: #929d97;
+}
+
+.mobile-search-input:focus {
+  border-color: #198754;
+  box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.08);
+}
 
 @media (max-width: 1199.98px) {
-
   .navbar-container {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
@@ -406,19 +328,11 @@
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
-
 }
 
-
-/* =========================================
-   MOBILE
-========================================= */
-
 @media (max-width: 991.98px) {
-
   .navbar-top .navbar-container {
     min-height: 68px;
-
     gap: 0.75rem;
   }
 
@@ -427,14 +341,14 @@
     padding-right: 1rem;
   }
 
-  .brand-name {
-    font-size: 0.98rem;
+  .brand-logo {
+    width: 125px;
+    height: 52px;
   }
 
   .navbar-search {
     max-width: none;
     margin-left: 0;
-
     display: none;
   }
 
@@ -442,16 +356,20 @@
     margin-left: auto;
   }
 
+  .mobile-search-button {
+    display: inline-flex;
+  }
+
   .mobile-toggle {
     display: inline-flex;
   }
 
-
-  /* Mobile navigation */
+  .mobile-search-container {
+    display: block;
+  }
 
   .navbar-navigation {
     display: none;
-
     border-top: 1px solid #edf0ee;
   }
 
@@ -465,22 +383,16 @@
 
   .navigation-links {
     display: flex;
-
     align-items: stretch;
     flex-direction: column;
-
     gap: 0;
-
     padding: 0.65rem 0;
-
     overflow: visible;
   }
 
   .navigation-link {
     width: 100%;
-
     padding: 0.75rem;
-
     border-bottom: 0;
     border-radius: 7px;
   }
@@ -493,62 +405,121 @@
   .navigation-divider {
     width: 100%;
     height: 1px;
-
     margin: 0.5rem 0;
-
     background: #edf0ee;
   }
 
   .admin-panel-link {
     width: 100%;
-
     justify-content: center;
-
     margin: 0.35rem 0;
-
     padding: 0.7rem;
   }
 
   .login-link {
     width: 100%;
-
     justify-content: center;
-
     margin: 0.35rem 0;
-
     padding: 0.7rem;
   }
 
   .logout-link {
     width: 100%;
-
     justify-content: center;
-
     margin: 0.35rem 0;
-
     padding: 0.7rem;
   }
-
 }
 
-
-/* =========================================
-   SMALL MOBILE
-========================================= */
-
 @media (max-width: 575.98px) {
-
-  .brand-icon {
-    width: 36px;
-    height: 36px;
+  .main-navbar,
+  .navbar-top {
+    background: white;
   }
 
-  .brand-name {
-    font-size: 0.92rem;
+  .navbar-top {
+    border-bottom: 1px solid #dcefe3;
+  }
+
+  .navbar-top .navbar-container {
+    min-height: 68px;
+  }
+
+  .brand-logo {
+    width: 110px;
+    height: 48px;
   }
 
   .language-button {
-    display: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    height: 38px;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid #c9e2d2;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #17351f;
+    font-size: 0.72rem;
+    font-weight: 600;
   }
 
+  .language-button:hover {
+    background: #e5f4ea;
+    border-color: #198754;
+  }
+
+  .mobile-search-container {
+    display: block;
+    padding: 0 1rem 0.75rem;
+    background: #f0f8f3;
+  }
+
+  .mobile-search-button {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid #c9e2d2;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #17351f;
+  }
+
+  .mobile-search-button:hover {
+    background: #e5f4ea;
+    border-color: #198754;
+    color: #198754;
+  }
+
+  .mobile-toggle {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 0.15rem;
+    border: 1px solid #c9e2d2;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #17351f;
+  }
+
+  .mobile-toggle:hover {
+    background: #e5f4ea;
+    border-color: #198754;
+  }
+
+  .navbar-navigation {
+    background: #f0f8f3;
+    border-top: 1px solid #dcefe3;
+  }
+
+  .navbar-navigation.mobile-open {
+    background: #f0f8f3;
+  }
 }

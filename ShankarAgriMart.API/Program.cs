@@ -25,7 +25,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
-builder.Services.AddScoped<IAdminDashboardService,AdminDashboardService>();
+builder.Services.AddScoped<IAdminDashboardService, AdminDashboardService>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -119,7 +119,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AngularClient", policy =>
     {
         policy
-            .WithOrigins("http://localhost:4200")
+            .WithOrigins(
+                "http://localhost:4200",
+                "https://crimson-snow-7aec.2004naval.workers.dev"
+            )
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -201,13 +204,8 @@ using (var scope = app.Services.CreateScope())
 // HTTP Request Pipeline
 // =====================================================
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors("AngularClient");
 

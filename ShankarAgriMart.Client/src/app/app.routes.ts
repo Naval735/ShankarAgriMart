@@ -49,6 +49,18 @@ export const routes: Routes = [
       import('./features/home/pages/home/home/home')
         .then(m => m.HomeComponent)
   },
+  {
+    path: 'services',
+    loadComponent: () =>
+      import('./features/services/pages/services/services')
+        .then(m => m.ServicesComponent)
+  },
+   {
+    path: 'about',
+    loadComponent: () =>
+      import('./features/about/pages/about/about')
+        .then(m => m.AboutComponent)
+  },
 
   {
     path: 'products',
@@ -64,15 +76,7 @@ export const routes: Routes = [
         .then(m => m.ProductDetailsComponent)
   },
 
-  {
-    path: 'about',
-    component: AboutComponent
-  },
 
-  {
-    path: 'services',
-    component: ServicesComponent
-  },
 
 
   // ==========================================
@@ -145,7 +149,13 @@ export const routes: Routes = [
     component: AdminProductsComponent,
     canActivate: [adminGuard]
   },
-
+  {
+  path: 'admin/products/edit/:id',
+  loadComponent: () =>
+    import('./features/admin/pages/products/admin-products/edit-product/edit-product')
+      .then(m => m.EditProductComponent),
+  canActivate: [adminGuard]
+},
 
   // ==========================================
   // DEFAULT ROUTE

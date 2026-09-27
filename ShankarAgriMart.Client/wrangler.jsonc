@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "crimson-snow-7aec",
+  "compatibility_date": "2026-09-26",
+  "main": "./worker.js",
+
+  "assets": {
+    "directory": "./dist/ShankarAgriMart.Client/browser",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/*"]
+  }
+}
