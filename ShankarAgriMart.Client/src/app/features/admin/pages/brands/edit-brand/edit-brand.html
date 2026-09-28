@@ -1,0 +1,296 @@
+
+<div class="brand-form-page container-fluid py-4">
+  <!-- Page Header -->
+  <div class="brand-form-header d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div class="brand-form-heading">
+      <div class="brand-form-eyebrow">
+        <i class="bi bi-tags me-2"></i>
+        Brand Management
+      </div>
+      <h2 class="fw-bold mb-1">Edit Brand</h2>
+      <p class="text-muted mb-0">
+        Update your brand information and store visibility.
+      </p>
+    </div>
+
+    <a routerLink="/admin/brands" class="btn-back-brands">
+      <i class="bi bi-arrow-left me-2"></i>
+      Back to Brands
+    </a>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="brand-loading-state text-center py-5">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="text-muted mt-3 mb-0">Loading brand details...</p>
+  </div>
+
+  <!-- Load Error -->
+  <div
+    *ngIf="!isLoading && errorMessage && !brandLoaded"
+    class="brand-error-alert alert alert-danger"
+    role="alert">
+    <div class="d-flex flex-wrap align-items-center gap-3">
+      <div class="brand-error-icon">
+        <i class="bi bi-exclamation-triangle"></i>
+      </div>
+
+      <div class="flex-grow-1">
+        <div class="fw-semibold mb-1">Unable to load brand</div>
+        <div>{{ errorMessage }}</div>
+      </div>
+
+      <button
+        *ngIf="brandId > 0"
+        type="button"
+        class="btn btn-sm btn-outline-danger brand-retry-btn"
+        (click)="loadBrand()">
+        <i class="bi bi-arrow-clockwise me-1"></i>
+        Try Again
+      </button>
+    </div>
+  </div>
+
+  <!-- Edit Form -->
+  <div *ngIf="!isLoading && brandLoaded" class="row g-4">
+    <div class="col-12 col-xl-8">
+      <div class="brand-form-card card">
+        <!-- Card Header -->
+        <div class="brand-form-card-header card-header">
+          <div class="d-flex align-items-center gap-3">
+            <div class="brand-form-header-icon">
+              <i class="bi bi-pencil-square"></i>
+            </div>
+
+            <div>
+              <h5 class="fw-bold mb-1">Brand Details</h5>
+              <p class="text-muted small mb-0">
+                Modify the information below.
+              </p>
+            </div>
+          </div>
+
+          <span class="brand-edit-badge">
+            <i class="bi bi-pencil me-1"></i>
+            Editing
+          </span>
+        </div>
+
+        <!-- Card Body -->
+        <div class="brand-form-card-body card-body">
+          <!-- Update Error -->
+          <div
+            *ngIf="errorMessage && brandLoaded"
+            class="brand-error-alert alert alert-danger"
+            role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            {{ errorMessage }}
+          </div>
+
+          <form
+            [formGroup]="brandForm"
+            (ngSubmit)="onSubmit()"
+            novalidate>
+
+            <!-- Brand Name -->
+            <div class="brand-form-field mb-4">
+              <label for="name" class="form-label fw-semibold">
+                Brand Name <span class="text-danger">*</span>
+              </label>
+
+              <input
+                id="name"
+                type="text"
+                class="form-control brand-form-control"
+                formControlName="name"
+                maxlength="100"
+                placeholder="Enter brand name"
+                [class.is-invalid]="name.invalid && name.touched">
+
+              <div
+                *ngIf="name.hasError('required') && name.touched"
+                class="invalid-feedback">
+                Brand name is required.
+              </div>
+
+              <div
+                *ngIf="name.hasError('maxlength') && name.touched"
+                class="invalid-feedback">
+                Brand name cannot exceed 100 characters.
+              </div>
+            </div>
+
+            <!-- Logo URL -->
+            <div class="brand-form-field mb-4">
+              <label for="logoUrl" class="form-label fw-semibold">
+                Logo URL
+                <span class="brand-optional-label">Optional</span>
+              </label>
+
+              <div class="brand-input-with-icon">
+                <i class="bi bi-link-45deg"></i>
+                <input
+                  id="logoUrl"
+                  type="url"
+                  class="form-control brand-form-control"
+                  formControlName="logoUrl"
+                  placeholder="https://example.com/brand-logo.png">
+              </div>
+
+              <div class="form-text">
+                Enter a publicly accessible URL for the brand logo.
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="brand-form-field mb-4">
+              <label for="description" class="form-label fw-semibold">
+                Description
+                <span class="brand-optional-label">Optional</span>
+              </label>
+
+              <textarea
+                id="description"
+                rows="4"
+                maxlength="500"
+                class="form-control brand-form-control brand-description-control"
+                formControlName="description"
+                placeholder="Enter brand description"
+                [class.is-invalid]="description.invalid && description.touched">
+              </textarea>
+
+              <div
+                *ngIf="description.hasError('maxlength') && description.touched"
+                class="invalid-feedback">
+                Description cannot exceed 500 characters.
+              </div>
+
+              <div class="form-text">
+                Provide a short description of this brand.
+              </div>
+            </div>
+
+            <!-- Active Status -->
+            <div class="brand-status-panel mb-4">
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                <div class="brand-status-copy">
+                  <div class="fw-semibold mb-1">
+                    <i class="bi bi-toggle-on me-2"></i>
+                    Active Brand
+                  </div>
+                  <p class="text-muted small mb-0">
+                    Inactive brands can be excluded from active brand
+                    selections in the store.
+                  </p>
+                </div>
+
+                <div class="form-check form-switch brand-status-switch mb-0">
+                  <input
+                    id="isActive"
+                    type="checkbox"
+                    class="form-check-input"
+                    role="switch"
+                    formControlName="isActive">
+
+                  <label
+                    for="isActive"
+                    class="form-check-label visually-hidden">
+                    Active Brand
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="brand-form-actions d-flex flex-wrap justify-content-end gap-2">
+              <button
+                type="button"
+                class="btn-brand-cancel"
+                [disabled]="isSubmitting"
+                (click)="onCancel()">
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                class="btn-brand-submit"
+                [disabled]="isSubmitting || brandForm.invalid">
+                <span
+                  *ngIf="isSubmitting"
+                  class="spinner-border spinner-border-sm me-2"
+                  role="status"
+                  aria-hidden="true">
+                </span>
+
+                <i
+                  *ngIf="!isSubmitting"
+                  class="bi bi-check-lg me-2">
+                </i>
+
+                {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guidelines -->
+    <div class="col-12 col-xl-4">
+      <aside class="brand-guidelines-card">
+        <div class="guidelines-icon">
+          <i class="bi bi-info-circle"></i>
+        </div>
+
+        <h5 class="fw-bold mb-2">Brand Information</h5>
+        <p class="text-muted small mb-4">
+          Keep your brand details clear and consistent to help customers
+          identify products in your store.
+        </p>
+
+        <div class="brand-guideline-item">
+          <div class="guideline-item-icon">
+            <i class="bi bi-type"></i>
+          </div>
+          <div>
+            <div class="fw-semibold">Brand name</div>
+            <p class="text-muted small mb-0">
+              Use the official name customers recognize.
+            </p>
+          </div>
+        </div>
+
+        <div class="brand-guideline-item">
+          <div class="guideline-item-icon">
+            <i class="bi bi-image"></i>
+          </div>
+          <div>
+            <div class="fw-semibold">Logo URL</div>
+            <p class="text-muted small mb-0">
+              Use a direct, publicly accessible image URL.
+            </p>
+          </div>
+        </div>
+
+        <div class="brand-guideline-item">
+          <div class="guideline-item-icon">
+            <i class="bi bi-card-text"></i>
+          </div>
+          <div>
+            <div class="fw-semibold">Description</div>
+            <p class="text-muted small mb-0">
+              Keep the description brief and relevant.
+            </p>
+          </div>
+        </div>
+
+        <div class="brand-guidelines-note">
+          <i class="bi bi-lightbulb me-2"></i>
+          Changes will be applied after you save the brand.
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>

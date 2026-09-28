@@ -1,24 +1,19 @@
+
 import { Routes } from '@angular/router';
 
 import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 import { OrdersListComponent } from './features/orders/pages/orders-list/orders-list';
 
 import { AdminOrdersComponent } from './features/admin/pages/orders/admin-orders/admin-orders';
-
 import { AdminOrderDetailsComponent } from './features/admin/pages/orders/order-details/admin-order-details';
-
-import { adminGuard } from './core/guards/admin.guard';
-
 import { AdminDashboardComponent } from './features/admin/pages/dashboard/admin-dashboard';
+import { AdminProductsComponent } from './features/admin/pages/products/admin-products/admin-products';
 
 import { RegisterComponent } from './features/auth/pages/register/register';
-
 import { AboutComponent } from './features/about/pages/about/about';
-
 import { ServicesComponent } from './features/services/pages/services/services';
-
-import { AdminProductsComponent } from './features/admin/pages/products/admin-products/admin-products';
 
 export const routes: Routes = [
 
@@ -49,13 +44,15 @@ export const routes: Routes = [
       import('./features/home/pages/home/home/home')
         .then(m => m.HomeComponent)
   },
+
   {
     path: 'services',
     loadComponent: () =>
       import('./features/services/pages/services/services')
         .then(m => m.ServicesComponent)
   },
-   {
+
+  {
     path: 'about',
     loadComponent: () =>
       import('./features/about/pages/about/about')
@@ -75,8 +72,6 @@ export const routes: Routes = [
       import('./features/products/pages/product-details/product-details')
         .then(m => m.ProductDetailsComponent)
   },
-
-
 
 
   // ==========================================
@@ -136,27 +131,82 @@ export const routes: Routes = [
     canActivate: [adminGuard]
   },
 
- {
-  path: 'admin/products/add',
-  loadComponent: () =>
-    import('./features/admin/pages/products/admin-products/add-product/add-product')
-      .then(m => m.AddProductComponent),
-  canActivate: [adminGuard]
-},
+  // Admin Categories
+  {
+    path: 'admin/categories',
+    loadComponent: () =>
+      import('./features/admin/pages/categories/categories')
+        .then(m => m.CategoriesComponent),
+    canActivate: [adminGuard]
+  },
+
+  // Add Product
+  {
+    path: 'admin/products/add',
+    loadComponent: () =>
+      import('./features/admin/pages/products/admin-products/add-product/add-product')
+        .then(m => m.AddProductComponent),
+    canActivate: [adminGuard]
+  },
+
+  // Edit Product
+  {
+    path: 'admin/products/edit/:id',
+    loadComponent: () =>
+      import('./features/admin/pages/products/admin-products/edit-product/edit-product')
+        .then(m => m.EditProductComponent),
+    canActivate: [adminGuard]
+  },
 
   {
     path: 'admin/products',
     component: AdminProductsComponent,
     canActivate: [adminGuard]
   },
-  {
-  path: 'admin/products/edit/:id',
+
+// Add Category
+{
+  path: 'admin/categories/add',
   loadComponent: () =>
-    import('./features/admin/pages/products/admin-products/edit-product/edit-product')
-      .then(m => m.EditProductComponent),
+    import('./features/admin/pages/categories/add-category/add-category')
+      .then(m => m.AddCategoryComponent),
   canActivate: [adminGuard]
 },
 
+// Edit Category
+{
+  path: 'admin/categories/edit/:id',
+  loadComponent: () =>
+    import('./features/admin/pages/categories/edit-category/edit-category')
+      .then(m => m.EditCategoryComponent),
+  canActivate: [adminGuard]
+},
+// Admin Brands
+{
+  path: 'admin/brands',
+  loadComponent: () =>
+    import('./features/admin/pages/brands/brands')
+      .then(m => m.BrandsComponent),
+  canActivate: [adminGuard]
+},
+
+// Add Brand
+{
+  path: 'admin/brands/add',
+  loadComponent: () =>
+    import('./features/admin/pages/brands/add-brand/add-brand')
+      .then(m => m.AddBrandComponent),
+  canActivate: [adminGuard]
+},
+
+// Edit Brand
+{
+  path: 'admin/brands/edit/:id',
+  loadComponent: () =>
+    import('./features/admin/pages/brands/edit-brand/edit-brand')
+      .then(m => m.EditBrandComponent),
+  canActivate: [adminGuard]
+},
   // ==========================================
   // DEFAULT ROUTE
   // ==========================================

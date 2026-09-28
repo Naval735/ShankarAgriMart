@@ -1,0 +1,643 @@
+
+/* =========================================
+   ShankarAgriMart
+   Add Brand Page Styling
+========================================= */
+
+:host {
+  display: block;
+}
+
+/* =========================================
+   1. Main Page
+========================================= */
+
+.brand-form-page {
+  min-height: 100%;
+  padding: 1.5rem !important;
+  background: #f5f8f5;
+  color: #24352b;
+}
+
+/* =========================================
+   2. Page Header
+========================================= */
+
+.brand-form-header h2 {
+  color: #183c29;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+}
+
+.brand-form-header p {
+  color: #748178 !important;
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+/* Back to Brands Button */
+
+.btn-back-brands {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1rem;
+  border: 1px solid #dce6dd;
+  border-radius: 9px;
+  background: #fff;
+  color: #53665a;
+  font-size: 0.87rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-back-brands:hover {
+  border-color: #a9cbb1;
+  background: #edf7ef;
+  color: #176637;
+  transform: translateY(-1px);
+}
+
+.btn-back-brands:focus-visible {
+  outline: 3px solid rgba(35, 119, 68, 0.2);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   3. Main Form Card
+========================================= */
+
+.brand-form-card {
+  overflow: hidden;
+  border: 1px solid #e8eee8 !important;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 5px 22px rgba(30, 65, 42, 0.055) !important;
+  transition: box-shadow 0.25s ease;
+}
+
+.brand-form-card:hover {
+  box-shadow: 0 9px 28px rgba(30, 65, 42, 0.075) !important;
+}
+
+/* Form Card Header */
+
+.brand-form-card-header {
+  padding: 1.35rem 1.5rem !important;
+  border-bottom: 1px solid #edf1ed;
+  background: #fff !important;
+}
+
+.brand-form-card-header h5 {
+  margin-bottom: 0.3rem;
+  color: #203e2c;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.brand-form-card-header p {
+  color: #849087 !important;
+  font-size: 0.8rem;
+}
+
+/* Form Card Header Icon */
+
+.brand-form-card-header .guidelines-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  margin: 0 !important;
+  border: 1px solid #d5ead9;
+  border-radius: 12px;
+  background: #eaf7ed;
+  color: #218149;
+}
+
+.brand-form-card-header .guidelines-icon i {
+  font-size: 1.2rem;
+}
+
+/* Form Card Body */
+
+.brand-form-card-body {
+  padding: 1.5rem !important;
+}
+
+/* =========================================
+   4. Form Labels
+========================================= */
+
+.brand-form-page .form-label {
+  display: block;
+  margin-bottom: 0.55rem;
+  color: #344b3b;
+  font-size: 0.87rem;
+  font-weight: 600;
+}
+
+.brand-form-page .form-label .text-danger {
+  color: #dc5555 !important;
+  font-weight: 700;
+}
+
+/* =========================================
+   5. Input Fields
+========================================= */
+
+.brand-form-page .form-control {
+  width: 100%;
+  min-height: 45px;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #dfe8e0;
+  border-radius: 9px;
+  background-color: #fff;
+  color: #263c2d;
+  font-size: 0.88rem;
+  box-shadow: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Input Placeholder */
+
+.brand-form-page .form-control::placeholder {
+  color: #a1aaa3;
+  font-size: 0.85rem;
+  opacity: 1;
+}
+
+/* Input Hover */
+
+.brand-form-page .form-control:hover:not(:disabled) {
+  border-color: #b9cdbd;
+}
+
+/* Input Focus */
+
+.brand-form-page .form-control:focus {
+  border-color: #6fa982;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(35, 119, 68, 0.09);
+  outline: 0;
+}
+
+/* Textarea */
+
+.brand-form-page textarea.form-control {
+  min-height: 120px;
+  padding: 0.85rem;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Disabled Input */
+
+.brand-form-page .form-control:disabled {
+  background-color: #f3f6f3;
+  color: #87948a;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   6. Logo URL Input Group
+========================================= */
+
+.brand-form-page .input-group {
+  flex-wrap: nowrap;
+}
+
+.brand-form-page .input-group-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 45px;
+  border: 1px solid #dfe8e0;
+  border-right: 0;
+  border-radius: 9px 0 0 9px;
+  background: #f8fbf8 !important;
+  color: #218149;
+}
+
+.brand-form-page .input-group .form-control {
+  min-width: 0;
+  border-radius: 0 9px 9px 0;
+}
+
+/* Input Group Focus */
+
+.brand-form-page .input-group:focus-within .input-group-text {
+  border-color: #6fa982;
+  background: #f1f9f2 !important;
+}
+
+/* =========================================
+   7. Validation
+========================================= */
+
+.brand-form-page .form-control.is-invalid {
+  border-color: #dc5555;
+  background-image: none;
+}
+
+.brand-form-page .form-control.is-invalid:focus {
+  border-color: #dc5555;
+  box-shadow: 0 0 0 3px rgba(220, 85, 85, 0.09);
+}
+
+.brand-form-page .invalid-feedback {
+  display: block;
+  margin-top: 0.4rem;
+  color: #c44242;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+/* =========================================
+   8. Form Helper Text
+========================================= */
+
+.brand-form-page .form-text {
+  display: block;
+  margin-top: 0.5rem;
+  color: #849087;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+/* =========================================
+   9. Form Divider
+========================================= */
+
+.brand-form-page hr {
+  margin: 1.5rem 0;
+  border: 0;
+  border-top: 1px solid #e9efe9;
+  opacity: 1;
+}
+
+/* =========================================
+   10. Form Buttons
+========================================= */
+
+.brand-form-page .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 41px;
+  border-radius: 9px;
+  font-size: 0.87rem;
+  font-weight: 600;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Cancel Button */
+
+.brand-form-page .btn-light {
+  border: 1px solid #e0e7e1;
+  background: #f6f8f6;
+  color: #526458;
+}
+
+.brand-form-page .btn-light:hover:not(:disabled) {
+  border-color: #c9d7cb;
+  background: #edf2ed;
+  color: #304b38;
+}
+
+/* Create Brand Button */
+
+.btn-create-brand {
+  border: 1px solid #237744 !important;
+  background: linear-gradient(135deg, #238348, #176637) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(35, 119, 68, 0.14);
+}
+
+.btn-create-brand:hover:not(:disabled) {
+  border-color: #14552e !important;
+  background: #14552e !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 16px rgba(35, 119, 68, 0.2);
+}
+
+.btn-create-brand:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 7px rgba(35, 119, 68, 0.15);
+}
+
+/* Disabled Buttons */
+
+.brand-form-page .btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Button Focus */
+
+.brand-form-page .btn:focus-visible {
+  outline: 3px solid rgba(35, 119, 68, 0.2);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   11. Form Actions
+========================================= */
+
+.brand-form-actions {
+  align-items: center;
+}
+
+/* =========================================
+   12. Guidelines Information Card
+========================================= */
+
+.brand-guidelines-card {
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid #e5eee5 !important;
+  border-radius: 16px;
+  background: linear-gradient(
+    160deg,
+    #ffffff 0%,
+    #f7fbf7 100%
+  );
+  box-shadow: 0 5px 22px rgba(30, 65, 42, 0.045) !important;
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.brand-guidelines-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 25px rgba(30, 65, 42, 0.075) !important;
+}
+
+.brand-guidelines-card .card-body {
+  padding: 1.5rem !important;
+}
+
+/* Guidelines Icon */
+
+.guidelines-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 1.1rem !important;
+  border: 1px solid #d5ead9;
+  border-radius: 14px !important;
+  background: #eaf7ed !important;
+  color: #218149 !important;
+}
+
+.guidelines-icon i {
+  font-size: 1.4rem;
+}
+
+/* Guidelines Heading */
+
+.brand-guidelines-card h5 {
+  margin-bottom: 1rem;
+  color: #203e2c;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* Guidelines Paragraph */
+
+.brand-guidelines-card p {
+  color: #7b897e !important;
+  font-size: 0.83rem;
+  line-height: 1.65;
+}
+
+/* Guidelines List */
+
+.brand-guidelines-card ul {
+  padding-left: 1.1rem !important;
+  color: #718075 !important;
+  font-size: 0.84rem !important;
+  line-height: 1.7;
+}
+
+.brand-guidelines-card li {
+  padding-left: 0.2rem;
+}
+
+.brand-guidelines-card li::marker {
+  color: #37935a;
+  font-size: 0.95rem;
+}
+
+.brand-guidelines-card li strong {
+  display: inline-block;
+  margin-bottom: 0.15rem;
+  color: #344b3b !important;
+  font-size: 0.83rem;
+  font-weight: 650;
+}
+
+.brand-guidelines-card li div {
+  color: #7b897e;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+/* =========================================
+   13. Guidelines Note
+========================================= */
+
+.brand-guidelines-note {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.9rem;
+  border: 1px solid #dcefe0;
+  border-radius: 10px;
+  background: #edf8ef;
+  color: #34754a;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.brand-guidelines-note i {
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 1rem;
+}
+
+/* =========================================
+   14. Error Alert
+========================================= */
+
+.brand-form-page .alert-danger {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.85rem 1rem;
+  border: 1px solid #f5dada;
+  border-radius: 9px;
+  background: #fff1f0;
+  color: #b83c3c;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.brand-form-page .alert-danger i {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* =========================================
+   15. Loading Spinner
+========================================= */
+
+.brand-form-page .spinner-border {
+  color: #238348;
+}
+
+/* =========================================
+   16. Responsive Design
+========================================= */
+
+@media (max-width: 1199.98px) {
+  .brand-guidelines-card {
+    height: auto;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .brand-form-page {
+    padding: 1rem !important;
+  }
+
+  /* Header */
+
+  .brand-form-header {
+    align-items: flex-start !important;
+  }
+
+  .brand-form-header h2 {
+    font-size: 1.45rem;
+  }
+
+  .brand-form-header p {
+    font-size: 0.85rem;
+  }
+
+  .btn-back-brands {
+    width: 100%;
+    min-height: 42px;
+  }
+
+  /* Form Card */
+
+  .brand-form-card {
+    border-radius: 13px;
+  }
+
+  .brand-form-card-header,
+  .brand-form-card-body {
+    padding: 1rem !important;
+  }
+
+  .brand-form-card-header h5 {
+    font-size: 0.98rem;
+  }
+
+  /* Inputs */
+
+  .brand-form-page .form-control {
+    min-height: 43px;
+    font-size: 0.86rem;
+  }
+
+  .brand-form-page textarea.form-control {
+    min-height: 110px;
+  }
+
+  /* Guidelines */
+
+  .brand-guidelines-card {
+    border-radius: 13px;
+  }
+
+  .brand-guidelines-card .card-body {
+    padding: 1.2rem !important;
+  }
+
+  /* Form Actions */
+
+  .brand-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .brand-form-actions .btn {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand-form-page {
+    padding: 0.75rem !important;
+  }
+
+  .brand-form-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .brand-form-card-header,
+  .brand-form-card-body {
+    padding: 0.9rem !important;
+  }
+
+  .brand-form-card-header .guidelines-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+
+  .brand-form-card-header .guidelines-icon i {
+    font-size: 1.05rem;
+  }
+
+  .brand-guidelines-card .card-body {
+    padding: 1rem !important;
+  }
+}
+
+/* =========================================
+   17. Reduced Motion Accessibility
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-form-card,
+  .brand-guidelines-card,
+  .btn-back-brands,
+  .brand-form-page .btn,
+  .brand-form-page .form-control {
+    transition: none;
+  }
+
+  .brand-guidelines-card:hover,
+  .btn-back-brands:hover,
+  .btn-create-brand:hover:not(:disabled) {
+    transform: none;
+  }
+}

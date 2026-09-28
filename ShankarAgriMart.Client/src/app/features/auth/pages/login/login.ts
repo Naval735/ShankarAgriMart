@@ -6,18 +6,27 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
-import { AuthService } from '../../services/auth.service';
+import {
+  AuthService,
+  AuthUser
+} from '../../services/auth.service';
+
+interface UserProfileResponse {
+  success: boolean;
+  data: AuthUser;
+}
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule,
-    RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
 export class LoginComponent {
-
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
@@ -45,41 +54,46 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
+    this.errorMessage = '';
 
-  this.errorMessage = '';
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
 
-  if (this.loginForm.invalid) {
-    this.loginForm.markAllAsTouched();
-    return;
+    this.isLoading = true;
+
+    this.authService.login(this.loginForm.getRawValue())
+      .subscribe({
+        next: () => {
+          this.authService.getProfile<UserProfileResponse>()
+            .subscribe({
+              next: (response) => {
+                if (response?.success && response?.data) {
+                  this.authService.setCurrentUser(response.data);
+                  this.isLoading = false;
+                  this.router.navigate(['/home']);
+                } else {
+                  this.isLoading = false;
+                  this.errorMessage =
+                    'Login succeeded, but user details could not be loaded. Please try again.';
+                }
+              },
+              error: (error) => {
+                console.error('Profile loading failed:', error);
+                this.isLoading = false;
+                this.errorMessage =
+                  'Login succeeded, but user details could not be loaded. Please try again.';
+              }
+            });
+        },
+        error: (error) => {
+          console.error('Login failed:', error);
+          this.isLoading = false;
+          this.errorMessage =
+            error?.error?.message ??
+            'Unable to login. Please check your email and password.';
+        }
+      });
   }
-
-  this.isLoading = true;
-
-  this.authService.login(this.loginForm.getRawValue())
-    .subscribe({
-      next: (response) => {
-
-        console.log('Login successful:', response);
-
-        this.isLoading = false;
-
-        this.router.navigate(['/home']);
-      },
-
-      error: (error) => {
-
-        console.error('Login failed:', error);
-
-        this.isLoading = false;
-
-        this.errorMessage =
-          error?.error?.message ??
-          'Unable to login. Please check your email and password.';
-      },
-
-      complete: () => {
-        this.isLoading = false;
-      }
-    });
-}
 }

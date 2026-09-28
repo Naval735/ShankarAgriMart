@@ -1,0 +1,205 @@
+
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+      <h2 class="fw-bold mb-1">Add Category</h2>
+      <p class="text-muted mb-0">
+        Create a new category for your store.
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/categories"
+      class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left me-2"></i>
+      Back to Categories
+    </a>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-xl-8">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white p-3 p-md-4">
+          <h5 class="fw-bold mb-1">Category Details</h5>
+          <p class="text-muted small mb-0">
+            Enter the information for the new category.
+          </p>
+        </div>
+
+        <div class="card-body p-3 p-md-4">
+          <div
+            *ngIf="errorMessage"
+            class="alert alert-danger"
+            role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            {{ errorMessage }}
+          </div>
+
+          <form
+            [formGroup]="categoryForm"
+            (ngSubmit)="onSubmit()"
+            novalidate>
+
+            <!-- Category Name -->
+            <div class="mb-4">
+              <label for="name" class="form-label fw-semibold">
+                Category Name <span class="text-danger">*</span>
+              </label>
+
+              <input
+                id="name"
+                type="text"
+                class="form-control"
+                formControlName="name"
+                placeholder="e.g. Fertilizers"
+                [class.is-invalid]="name.invalid && name.touched">
+
+              <div
+                *ngIf="name.hasError('required') && name.touched"
+                class="invalid-feedback">
+                Category name is required.
+              </div>
+
+              <div
+                *ngIf="name.hasError('maxlength') && name.touched"
+                class="invalid-feedback">
+                Category name cannot exceed 100 characters.
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+              <label for="description" class="form-label fw-semibold">
+                Description
+              </label>
+
+              <textarea
+                id="description"
+                rows="4"
+                class="form-control"
+                formControlName="description"
+                placeholder="Enter a short category description..."
+                [class.is-invalid]="description.invalid && description.touched">
+              </textarea>
+
+              <div
+                *ngIf="description.hasError('maxlength') && description.touched"
+                class="invalid-feedback">
+                Description cannot exceed 500 characters.
+              </div>
+            </div>
+
+            <!-- Image URL -->
+            <div class="mb-4">
+              <label for="imageUrl" class="form-label fw-semibold">
+                Image URL
+              </label>
+
+              <input
+                id="imageUrl"
+                type="url"
+                class="form-control"
+                formControlName="imageUrl"
+                placeholder="https://example.com/category.jpg">
+
+              <div class="form-text">
+                Provide a publicly accessible image URL. This field is optional.
+              </div>
+            </div>
+
+            <!-- Display Order -->
+            <div class="mb-4">
+              <label for="displayOrder" class="form-label fw-semibold">
+                Display Order <span class="text-danger">*</span>
+              </label>
+
+              <input
+                id="displayOrder"
+                type="number"
+                min="0"
+                class="form-control"
+                formControlName="displayOrder"
+                [class.is-invalid]="displayOrder.invalid && displayOrder.touched">
+
+              <div
+                *ngIf="displayOrder.hasError('required') && displayOrder.touched"
+                class="invalid-feedback">
+                Display order is required.
+              </div>
+
+              <div
+                *ngIf="displayOrder.hasError('min') && displayOrder.touched"
+                class="invalid-feedback">
+                Display order cannot be negative.
+              </div>
+
+              <div class="form-text">
+                Lower values appear before higher values.
+              </div>
+            </div>
+
+            <hr>
+
+            <!-- Actions -->
+            <div class="d-flex flex-wrap justify-content-end gap-2">
+              <button
+                type="button"
+                class="btn btn-light px-4"
+                [disabled]="isSubmitting"
+                (click)="onCancel()">
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                class="btn btn-success px-4"
+                [disabled]="isSubmitting">
+                <span
+                  *ngIf="isSubmitting"
+                  class="spinner-border spinner-border-sm me-2"
+                  aria-hidden="true">
+                </span>
+
+                <i
+                  *ngIf="!isSubmitting"
+                  class="bi bi-plus-lg me-2">
+                </i>
+
+                {{ isSubmitting ? 'Creating...' : 'Create Category' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Information Panel -->
+    <div class="col-12 col-xl-4 mt-4 mt-xl-0">
+      <div class="card border-0 shadow-sm info-card">
+        <div class="card-body p-4">
+          <div class="info-icon mb-3">
+            <i class="bi bi-info-circle"></i>
+          </div>
+
+          <h5 class="fw-bold">Category Guidelines</h5>
+
+          <ul class="text-muted small ps-3 mb-0">
+            <li class="mb-2">
+              Use a clear and descriptive category name.
+            </li>
+            <li class="mb-2">
+              Keep the description concise and relevant.
+            </li>
+            <li class="mb-2">
+              Use a publicly accessible image URL.
+            </li>
+            <li>
+              Set the display order to control category sorting.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

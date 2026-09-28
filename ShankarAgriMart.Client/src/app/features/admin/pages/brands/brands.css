@@ -1,0 +1,442 @@
+
+
+:host {
+  display: block;
+}
+
+.brands-page {
+  min-height: 100%;
+  background: #f5f8f5;
+  color: #24352b;
+  padding: 1.5rem !important;
+}
+
+/* Header */
+
+.brands-header h2 {
+  color: #183c29;
+  font-size: 1.75rem;
+  letter-spacing: -0.6px;
+}
+
+.brands-header p {
+  font-size: 0.94rem;
+  color: #748178 !important;
+}
+
+.btn-add-brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid #237744;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #238348, #176637);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 5px 14px rgba(35, 119, 68, 0.16);
+  transition: all 0.25s ease;
+}
+
+.btn-add-brand:hover {
+  background: #14552e;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(35, 119, 68, 0.23);
+}
+
+/* Summary Cards */
+
+.brand-stat-card {
+  border: 1px solid #e9f0e9 !important;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(30, 65, 42, 0.045) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.brand-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(30, 65, 42, 0.09) !important;
+}
+
+.brand-stat-card .card-body {
+  padding: 1.35rem;
+}
+
+.brand-stat-card .small {
+  color: #78857c !important;
+  font-size: 0.83rem;
+  font-weight: 500;
+}
+
+.brand-stat-card .fs-4 {
+  color: #203e2c;
+  font-size: 1.65rem !important;
+  margin-top: 3px;
+}
+
+.stat-icon {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px !important;
+  flex-shrink: 0;
+}
+
+.stat-icon-total {
+  color: #2878c7 !important;
+  background: #eaf3ff !important;
+}
+
+.stat-icon-active {
+  color: #19834b !important;
+  background: #e7f7ed !important;
+}
+
+.stat-icon-inactive {
+  color: #78818b !important;
+  background: #eef0f2 !important;
+}
+
+/* Main Content Card */
+
+.brands-content-card {
+  overflow: hidden;
+  border: 1px solid #e8eee8 !important;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 5px 22px rgba(30, 65, 42, 0.055) !important;
+}
+
+.brands-content-card .card-header {
+  padding: 1.3rem 1.5rem !important;
+  border-bottom: 1px solid #edf1ed;
+  background: #fff !important;
+}
+
+.brands-content-card .card-header h5 {
+  color: #203e2c;
+  font-size: 1.05rem;
+}
+
+.brands-content-card .card-header p {
+  color: #849087 !important;
+}
+
+/* Refresh Button */
+
+.brands-content-card .btn-outline-secondary {
+  border-color: #dce5dd;
+  border-radius: 9px;
+  color: #526458;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.55rem 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.brands-content-card .btn-outline-secondary:hover {
+  border-color: #237744;
+  background: #edf7ef;
+  color: #176637;
+}
+
+/* Search and Filter */
+
+.brands-content-card .card-body.border-bottom {
+  padding: 1.15rem 1.5rem;
+  border-color: #edf1ed !important;
+}
+
+.brands-search .input-group-text {
+  border-color: #dfe8e0;
+  border-right: 0;
+  border-radius: 9px 0 0 9px;
+  color: #7b8c7e;
+  padding-left: 1rem;
+}
+
+.brands-search .form-control {
+  min-height: 43px;
+  border-color: #dfe8e0;
+  border-left: 0;
+  border-radius: 0 9px 9px 0;
+  color: #263c2d;
+  font-size: 0.88rem;
+  box-shadow: none;
+}
+
+.brands-search .form-control:focus {
+  border-color: #8cbea0;
+  box-shadow: 0 0 0 3px rgba(35, 119, 68, 0.09);
+}
+
+.brands-search:focus-within .input-group-text {
+  border-color: #8cbea0;
+}
+
+.brands-content-card .form-select {
+  min-height: 43px;
+  border-color: #dfe8e0;
+  border-radius: 9px;
+  color: #405346;
+  font-size: 0.88rem;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.brands-content-card .form-select:focus {
+  border-color: #8cbea0;
+  box-shadow: 0 0 0 3px rgba(35, 119, 68, 0.09);
+}
+
+/* Brand Table */
+
+.brands-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.brands-table thead th {
+  padding: 1rem 0.9rem;
+  border-bottom: 1px solid #e9efe9;
+  background: #f7faf7;
+  color: #6b7a6f;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.65px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.brands-table tbody td {
+  padding: 0.9rem;
+  border-bottom: 1px solid #eff3ef;
+  color: #425347;
+  font-size: 0.87rem;
+}
+
+.brands-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.brands-table.table-hover tbody tr:hover > * {
+  background: #f7fbf7;
+  color: inherit;
+}
+
+.brands-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Brand Logo */
+
+.brand-logo {
+  width: 54px;
+  height: 54px;
+  overflow: hidden;
+  border: 1px solid #e5eee5 !important;
+  border-radius: 12px !important;
+  background: #f6faf6 !important;
+  transition: all 0.2s ease;
+}
+
+.brands-table tbody tr:hover .brand-logo {
+  border-color: #b8d9c1 !important;
+  background: #eff8f0 !important;
+}
+
+.brand-logo img {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  object-fit: contain;
+}
+
+.brand-logo i {
+  color: #6f9b79 !important;
+}
+
+.brand-name {
+  color: #263e2e;
+  font-size: 0.91rem;
+  font-weight: 650;
+}
+
+.brands-table small {
+  display: inline-block;
+  margin-top: 3px;
+  color: #98a39a !important;
+  font-size: 0.73rem;
+}
+
+/* Description */
+
+.brands-table td:nth-child(2) {
+  max-width: 350px;
+  line-height: 1.6;
+}
+
+/* Status Badges */
+
+.brands-table .badge {
+  min-width: 78px;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.15px;
+}
+
+.brands-table .text-bg-success {
+  background: #e6f6eb !important;
+  color: #218149 !important;
+}
+
+.brands-table .text-bg-secondary {
+  background: #edf0f2 !important;
+  color: #68747d !important;
+}
+
+/* Action Buttons */
+
+.brands-table .btn {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.brands-table .btn-outline-primary {
+  border-color: #d5e5f9;
+  background: #f2f7ff;
+  color: #3979c5;
+}
+
+.brands-table .btn-outline-primary:hover {
+  border-color: #3979c5;
+  background: #3979c5;
+  color: #fff;
+}
+
+.brands-table .btn-outline-danger {
+  border-color: #f3d9d9;
+  background: #fff6f6;
+  color: #d34b4b;
+}
+
+.brands-table .btn-outline-danger:hover {
+  border-color: #d34b4b;
+  background: #d34b4b;
+  color: #fff;
+}
+
+.brands-table .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Loading and Empty State */
+
+.brands-content-card .spinner-border {
+  color: #238348 !important;
+}
+
+.brands-table tbody td[colspan="4"] {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.brands-table td[colspan="4"] > i {
+  color: #9dbba3 !important;
+}
+
+.brands-table td[colspan="4"] h6 {
+  color: #385441;
+}
+
+.brands-table td[colspan="4"] p {
+  color: #87948a !important;
+  font-size: 0.85rem;
+}
+
+/* Alerts */
+
+.brands-page .alert {
+  border: 0;
+  border-radius: 10px;
+  font-size: 0.88rem;
+}
+
+.brands-page .alert-success {
+  background: #eaf8ee;
+  color: #237444;
+}
+
+.brands-page .alert-danger {
+  background: #fff0ef;
+  color: #b83c3c;
+}
+
+/* Footer */
+
+.brands-footer {
+  padding: 0.9rem 1.5rem;
+  border-top: 1px solid #edf1ed;
+  background: #fbfdfb !important;
+  color: #849087 !important;
+}
+
+/* Responsive */
+
+@media (max-width: 767.98px) {
+  .brands-page {
+    padding: 1rem !important;
+  }
+
+  .brands-header {
+    align-items: flex-start !important;
+  }
+
+  .brands-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .btn-add-brand {
+    width: 100%;
+  }
+
+  .brand-stat-card .card-body {
+    padding: 1rem;
+  }
+
+  .brands-content-card .card-header,
+  .brands-content-card .card-body.border-bottom {
+    padding: 1rem !important;
+  }
+
+  .brands-table {
+    min-width: 680px;
+  }
+
+  .brands-footer {
+    padding: 0.85rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-stat-card,
+  .btn-add-brand,
+  .brands-table tbody tr,
+  .brands-table .btn,
+  .brand-logo {
+    transition: none;
+  }
+}

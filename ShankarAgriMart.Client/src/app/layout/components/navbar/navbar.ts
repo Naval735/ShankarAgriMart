@@ -1,3 +1,4 @@
+
 import {
   Component,
   OnInit,
@@ -10,7 +11,10 @@ import {
   RouterLinkActive
 } from '@angular/router';
 
-import { AuthService } from '../../../features/auth/services/auth.service';
+import {
+  AuthService,
+  AuthUser
+} from '../../../features/auth/services/auth.service';
 
 interface UserProfileResponse {
   success: boolean;
@@ -43,43 +47,46 @@ export class NavbarComponent implements OnInit {
   isAuthenticated = false;
   isAdmin = false;
 
-  isAuthChecked = false;
+  isAuthChecked = true;
   isMenuOpen = false;
   isLoggingOut = false;
   isMobileSearchOpen = false;
+  isProfileMenuOpen = false;
 
   ngOnInit(): void {
+    this.authService.currentUser$.subscribe((user) => {
+      this.updateAuthState(user);
+    });
+
     this.checkAuthentication();
   }
 
+  private updateAuthState(user: AuthUser | null): void {
+    this.isAuthenticated = !!user;
+    this.isAdmin = user?.role === 'Admin';
+
+    if (!this.isAuthenticated) {
+      this.closeProfileMenu();
+    }
+  }
+
   private checkAuthentication(): void {
-    this.authService
-      .getProfile<UserProfileResponse>()
-      .subscribe({
-        next: (response) => {
-          if (response?.success && response?.data) {
-            this.isAuthenticated = true;
-            this.isAdmin =
-              response.data.role === 'Admin';
-          } else {
-            this.isAuthenticated = false;
-            this.isAdmin = false;
-          }
-
-          this.isAuthChecked = true;
-        },
-
-        error: (error) => {
-          console.error(
-            'Navbar authentication check failed:',
-            error
-          );
-
-          this.isAuthenticated = false;
-          this.isAdmin = false;
-          this.isAuthChecked = true;
+    this.authService.getProfile<UserProfileResponse>().subscribe({
+      next: (response) => {
+        if (response?.success && response?.data) {
+          this.authService.setCurrentUser(response.data);
+        } else {
+          this.authService.setCurrentUser(null);
         }
-      });
+
+        this.isAuthChecked = true;
+      },
+      error: (error) => {
+        console.error('Navbar authentication check failed:', error);
+        this.authService.setCurrentUser(null);
+        this.isAuthChecked = true;
+      }
+    });
   }
 
   toggleMenu(): void {
@@ -87,6 +94,7 @@ export class NavbarComponent implements OnInit {
 
     if (this.isMenuOpen) {
       this.closeMobileSearch();
+      this.closeProfileMenu();
     }
   }
 
@@ -99,11 +107,20 @@ export class NavbarComponent implements OnInit {
 
     if (this.isMobileSearchOpen) {
       this.closeMenu();
+      this.closeProfileMenu();
     }
   }
 
   closeMobileSearch(): void {
     this.isMobileSearchOpen = false;
+  }
+
+  toggleProfileMenu(): void {
+    this.isProfileMenuOpen = !this.isProfileMenuOpen;
+  }
+
+  closeProfileMenu(): void {
+    this.isProfileMenuOpen = false;
   }
 
   logout(): void {
@@ -113,35 +130,30 @@ export class NavbarComponent implements OnInit {
 
     this.isLoggingOut = true;
 
-    this.authService
-      .logout()
-      .subscribe({
-        next: () => {
-          this.isLoggingOut = false;
-          this.isAuthenticated = false;
-          this.isAdmin = false;
+    this.authService.logout().subscribe({
+      next: () => {
+        this.authService.setCurrentUser(null);
+        this.isLoggingOut = false;
 
-          this.closeMenu();
-          this.closeMobileSearch();
+        this.closeMenu();
+        this.closeMobileSearch();
+        this.closeProfileMenu();
 
-          this.router.navigate(['/home']);
-        },
+        this.router.navigate(['/home']);
+      },
 
-        error: (error) => {
-          console.error(
-            'Logout failed:',
-            error
-          );
+      error: (error) => {
+        console.error('Logout failed:', error);
 
-          this.isLoggingOut = false;
-          this.isAuthenticated = false;
-          this.isAdmin = false;
+        this.authService.setCurrentUser(null);
+        this.isLoggingOut = false;
 
-          this.closeMenu();
-          this.closeMobileSearch();
+        this.closeMenu();
+        this.closeMobileSearch();
+        this.closeProfileMenu();
 
-          this.router.navigate(['/home']);
-        }
-      });
+        this.router.navigate(['/home']);
+      }
+    });
   }
 }

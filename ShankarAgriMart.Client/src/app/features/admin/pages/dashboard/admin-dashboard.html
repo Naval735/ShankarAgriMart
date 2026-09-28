@@ -1,19 +1,16 @@
+
 <div class="admin-dashboard-page">
 
   <!-- Dashboard Header -->
   <section class="dashboard-header">
-
     <div class="container-fluid">
-
       <div
         class="d-flex flex-column flex-lg-row
                justify-content-between
                align-items-lg-center
                gap-4"
       >
-
         <div>
-
           <span class="dashboard-eyebrow">
             ADMIN CONTROL CENTER
           </span>
@@ -26,11 +23,9 @@
             Manage your products, orders, customers and store operations
             from one place.
           </p>
-
         </div>
 
         <div class="header-actions">
-
           <a
             routerLink="/admin/products/add"
             class="btn btn-success dashboard-primary-btn"
@@ -46,27 +41,18 @@
             <i class="bi bi-receipt me-2"></i>
             View Orders
           </a>
-
         </div>
-
       </div>
-
     </div>
-
   </section>
-
 
   <!-- Dashboard Content -->
   <section class="dashboard-content">
-
     <div class="container-fluid">
-
 
       <!-- Loading -->
       @if (isLoading) {
-
         <div class="dashboard-loading">
-
           <div
             class="spinner-border text-success"
             role="status"
@@ -75,25 +61,18 @@
           <p class="text-muted mt-3 mb-0">
             Loading dashboard...
           </p>
-
         </div>
-
       }
-
 
       <!-- Error -->
       @else if (errorMessage) {
-
         <div class="alert alert-danger dashboard-alert">
-
           <div class="d-flex align-items-center gap-2">
-
             <i class="bi bi-exclamation-circle"></i>
 
             <span>
               {{ errorMessage }}
             </span>
-
           </div>
 
           <button
@@ -103,20 +82,14 @@
           >
             Retry
           </button>
-
         </div>
-
       }
-
 
       @else if (dashboard) {
 
-
         <!-- Overview -->
         <section class="dashboard-section">
-
           <div class="section-heading-row">
-
             <div>
               <span class="section-label">
                 OVERVIEW
@@ -126,19 +99,14 @@
                 Store Performance
               </h2>
             </div>
-
           </div>
-
 
           <div class="row g-4">
 
             <!-- Products -->
             <div class="col-12 col-sm-6 col-xl-3">
-
               <div class="stat-card products-card">
-
                 <div class="stat-card-top">
-
                   <div class="stat-icon">
                     <i class="bi bi-box-seam"></i>
                   </div>
@@ -146,7 +114,6 @@
                   <span class="stat-label">
                     Total Products
                   </span>
-
                 </div>
 
                 <div class="stat-value">
@@ -160,19 +127,13 @@
                   Manage Products
                   <i class="bi bi-arrow-right"></i>
                 </a>
-
               </div>
-
             </div>
-
 
             <!-- Customers -->
             <div class="col-12 col-sm-6 col-xl-3">
-
               <div class="stat-card customers-card">
-
                 <div class="stat-card-top">
-
                   <div class="stat-icon">
                     <i class="bi bi-people"></i>
                   </div>
@@ -180,7 +141,6 @@
                   <span class="stat-label">
                     Total Customers
                   </span>
-
                 </div>
 
                 <div class="stat-value">
@@ -190,19 +150,13 @@
                 <span class="stat-meta">
                   Registered customers
                 </span>
-
               </div>
-
             </div>
-
 
             <!-- Orders -->
             <div class="col-12 col-sm-6 col-xl-3">
-
               <div class="stat-card orders-card">
-
                 <div class="stat-card-top">
-
                   <div class="stat-icon">
                     <i class="bi bi-cart3"></i>
                   </div>
@@ -210,7 +164,6 @@
                   <span class="stat-label">
                     Total Orders
                   </span>
-
                 </div>
 
                 <div class="stat-value">
@@ -224,19 +177,13 @@
                   Manage Orders
                   <i class="bi bi-arrow-right"></i>
                 </a>
-
               </div>
-
             </div>
-
 
             <!-- Revenue -->
             <div class="col-12 col-sm-6 col-xl-3">
-
               <div class="stat-card revenue-card">
-
                 <div class="stat-card-top">
-
                   <div class="stat-icon">
                     <i class="bi bi-currency-rupee"></i>
                   </div>
@@ -244,7 +191,6 @@
                   <span class="stat-label">
                     Total Revenue
                   </span>
-
                 </div>
 
                 <div class="stat-value revenue-value">
@@ -254,23 +200,16 @@
                 <span class="stat-meta">
                   Excluding cancelled orders
                 </span>
-
               </div>
-
             </div>
 
           </div>
-
         </section>
-
 
         <!-- Quick Actions -->
         <section class="dashboard-section">
-
           <div class="section-heading-row">
-
             <div>
-
               <span class="section-label">
                 QUICK ACTIONS
               </span>
@@ -278,28 +217,22 @@
               <h2 class="section-title">
                 Manage Your Store
               </h2>
-
             </div>
-
           </div>
-
 
           <div class="row g-4">
 
             <!-- Add Product -->
             <div class="col-12 col-md-4">
-
               <a
                 routerLink="/admin/products/add"
                 class="management-card"
               >
-
                 <div class="management-icon add-icon">
                   <i class="bi bi-plus-lg"></i>
                 </div>
 
                 <div class="management-content">
-
                   <h5>
                     Add Product
                   </h5>
@@ -312,28 +245,21 @@
                     Create Product
                     <i class="bi bi-arrow-right"></i>
                   </span>
-
                 </div>
-
               </a>
-
             </div>
-
 
             <!-- Manage Products -->
             <div class="col-12 col-md-4">
-
               <a
                 routerLink="/admin/products"
                 class="management-card"
               >
-
                 <div class="management-icon product-icon">
                   <i class="bi bi-box-seam"></i>
                 </div>
 
                 <div class="management-content">
-
                   <h5>
                     Product Management
                   </h5>
@@ -346,28 +272,21 @@
                     Manage Products
                     <i class="bi bi-arrow-right"></i>
                   </span>
-
                 </div>
-
               </a>
-
             </div>
-
 
             <!-- Orders -->
             <div class="col-12 col-md-4">
-
               <a
                 routerLink="/admin/orders"
                 class="management-card"
               >
-
                 <div class="management-icon order-icon">
                   <i class="bi bi-receipt"></i>
                 </div>
 
                 <div class="management-content">
-
                   <h5>
                     Order Management
                   </h5>
@@ -380,25 +299,17 @@
                     Manage Orders
                     <i class="bi bi-arrow-right"></i>
                   </span>
-
                 </div>
-
               </a>
-
             </div>
 
           </div>
-
         </section>
-
 
         <!-- Product Management -->
         <section class="dashboard-section">
-
           <div class="section-heading-row">
-
             <div>
-
               <span class="section-label">
                 CATALOG
               </span>
@@ -410,31 +321,23 @@
               <p class="section-description">
                 Manage everything related to your product catalog.
               </p>
-
             </div>
-
           </div>
 
-
           <div class="catalog-panel">
-
             <div class="row g-0">
-
 
               <!-- Products -->
               <div class="col-12 col-md-6 col-xl-3">
-
                 <a
                   routerLink="/admin/products"
                   class="catalog-item"
                 >
-
                   <div class="catalog-icon">
                     <i class="bi bi-box-seam"></i>
                   </div>
 
                   <div>
-
                     <h6>
                       Products
                     </h6>
@@ -442,30 +345,23 @@
                     <p>
                       Manage catalog
                     </p>
-
                   </div>
 
                   <i class="bi bi-chevron-right catalog-arrow"></i>
-
                 </a>
-
               </div>
-
 
               <!-- Add Product -->
               <div class="col-12 col-md-6 col-xl-3">
-
                 <a
                   routerLink="/admin/products/add"
                   class="catalog-item"
                 >
-
                   <div class="catalog-icon">
                     <i class="bi bi-plus-circle"></i>
                   </div>
 
                   <div>
-
                     <h6>
                       Add Product
                     </h6>
@@ -473,89 +369,63 @@
                     <p>
                       Create new product
                     </p>
-
                   </div>
 
                   <i class="bi bi-chevron-right catalog-arrow"></i>
-
                 </a>
-
               </div>
-
 
               <!-- Categories -->
               <div class="col-12 col-md-6 col-xl-3">
-
-                <div class="catalog-item catalog-disabled">
-
+                <a
+                  routerLink="/admin/categories"
+                  class="catalog-item text-decoration-none"
+                >
                   <div class="catalog-icon">
                     <i class="bi bi-grid"></i>
                   </div>
 
                   <div>
-
-                    <h6>
-                      Categories
-                    </h6>
-
-                    <p>
-                      Coming soon
-                    </p>
-
+                    <h6>Categories</h6>
+                    <p>Manage product categories</p>
                   </div>
 
-                  <span class="coming-badge">
-                    Soon
-                  </span>
-
-                </div>
-
+                  <i class="bi bi-chevron-right catalog-arrow"></i>
+                </a>
               </div>
-
 
               <!-- Brands -->
               <div class="col-12 col-md-6 col-xl-3">
-
-                <div class="catalog-item catalog-disabled">
-
+                <a
+                  routerLink="/admin/brands"
+                  class="catalog-item text-decoration-none"
+                >
                   <div class="catalog-icon">
                     <i class="bi bi-award"></i>
                   </div>
 
                   <div>
-
                     <h6>
                       Brands
                     </h6>
 
                     <p>
-                      Coming soon
+                      Manage product brands
                     </p>
-
                   </div>
 
-                  <span class="coming-badge">
-                    Soon
-                  </span>
-
-                </div>
-
+                  <i class="bi bi-chevron-right catalog-arrow"></i>
+                </a>
               </div>
 
             </div>
-
           </div>
-
         </section>
-
 
         <!-- Order Overview -->
         <section class="dashboard-section">
-
           <div class="section-heading-row">
-
             <div>
-
               <span class="section-label">
                 ORDERS
               </span>
@@ -567,7 +437,6 @@
               <p class="section-description">
                 Current order status across your store.
               </p>
-
             </div>
 
             <a
@@ -577,24 +446,18 @@
               View All Orders
               <i class="bi bi-arrow-right"></i>
             </a>
-
           </div>
-
 
           <div class="row g-3">
 
-
             <!-- Pending -->
             <div class="col-6 col-md">
-
               <div class="order-status-card pending">
-
                 <div class="order-status-icon">
                   <i class="bi bi-clock"></i>
                 </div>
 
                 <div>
-
                   <span>
                     Pending
                   </span>
@@ -602,25 +465,18 @@
                   <strong>
                     {{ dashboard.pendingOrders }}
                   </strong>
-
                 </div>
-
               </div>
-
             </div>
-
 
             <!-- Confirmed -->
             <div class="col-6 col-md">
-
               <div class="order-status-card confirmed">
-
                 <div class="order-status-icon">
                   <i class="bi bi-check-circle"></i>
                 </div>
 
                 <div>
-
                   <span>
                     Confirmed
                   </span>
@@ -628,25 +484,18 @@
                   <strong>
                     {{ dashboard.confirmedOrders }}
                   </strong>
-
                 </div>
-
               </div>
-
             </div>
-
 
             <!-- Shipped -->
             <div class="col-6 col-md">
-
               <div class="order-status-card shipped">
-
                 <div class="order-status-icon">
                   <i class="bi bi-truck"></i>
                 </div>
 
                 <div>
-
                   <span>
                     Shipped
                   </span>
@@ -654,25 +503,18 @@
                   <strong>
                     {{ dashboard.shippedOrders }}
                   </strong>
-
                 </div>
-
               </div>
-
             </div>
-
 
             <!-- Delivered -->
             <div class="col-6 col-md">
-
               <div class="order-status-card delivered">
-
                 <div class="order-status-icon">
                   <i class="bi bi-bag-check"></i>
                 </div>
 
                 <div>
-
                   <span>
                     Delivered
                   </span>
@@ -680,25 +522,18 @@
                   <strong>
                     {{ dashboard.deliveredOrders }}
                   </strong>
-
                 </div>
-
               </div>
-
             </div>
-
 
             <!-- Cancelled -->
             <div class="col-6 col-md">
-
               <div class="order-status-card cancelled">
-
                 <div class="order-status-icon">
                   <i class="bi bi-x-circle"></i>
                 </div>
 
                 <div>
-
                   <span>
                     Cancelled
                   </span>
@@ -706,25 +541,17 @@
                   <strong>
                     {{ dashboard.cancelledOrders }}
                   </strong>
-
                 </div>
-
               </div>
-
             </div>
 
           </div>
-
         </section>
-
 
         <!-- Admin Modules -->
         <section class="dashboard-section dashboard-last-section">
-
           <div class="section-heading-row">
-
             <div>
-
               <span class="section-label">
                 ADMINISTRATION
               </span>
@@ -732,58 +559,42 @@
               <h2 class="section-title">
                 Store Modules
               </h2>
-
             </div>
-
           </div>
-
 
           <div class="row g-3">
 
-
             <!-- Products -->
             <div class="col-6 col-md-4 col-xl-2">
-
               <a
                 routerLink="/admin/products"
                 class="module-card"
               >
-
                 <i class="bi bi-box-seam"></i>
 
                 <span>
                   Products
                 </span>
-
               </a>
-
             </div>
-
 
             <!-- Orders -->
             <div class="col-6 col-md-4 col-xl-2">
-
               <a
                 routerLink="/admin/orders"
                 class="module-card"
               >
-
                 <i class="bi bi-receipt"></i>
 
                 <span>
                   Orders
                 </span>
-
               </a>
-
             </div>
-
 
             <!-- Customers -->
             <div class="col-6 col-md-4 col-xl-2">
-
               <div class="module-card module-disabled">
-
                 <i class="bi bi-people"></i>
 
                 <span>
@@ -793,57 +604,40 @@
                 <small>
                   Soon
                 </small>
-
               </div>
-
             </div>
-
 
             <!-- Categories -->
             <div class="col-6 col-md-4 col-xl-2">
-
-              <div class="module-card module-disabled">
-
+              <a
+                routerLink="/admin/categories"
+                class="module-card text-decoration-none"
+              >
                 <i class="bi bi-grid"></i>
 
                 <span>
                   Categories
                 </span>
-
-                <small>
-                  Soon
-                </small>
-
-              </div>
-
+              </a>
             </div>
-
 
             <!-- Brands -->
             <div class="col-6 col-md-4 col-xl-2">
-
-              <div class="module-card module-disabled">
-
+              <a
+                routerLink="/admin/brands"
+                class="module-card text-decoration-none"
+              >
                 <i class="bi bi-award"></i>
 
                 <span>
                   Brands
                 </span>
-
-                <small>
-                  Soon
-                </small>
-
-              </div>
-
+              </a>
             </div>
-
 
             <!-- Inventory -->
             <div class="col-6 col-md-4 col-xl-2">
-
               <div class="module-card module-disabled">
-
                 <i class="bi bi-boxes"></i>
 
                 <span>
@@ -853,19 +647,14 @@
                 <small>
                   Soon
                 </small>
-
               </div>
-
             </div>
 
           </div>
-
         </section>
 
       }
 
     </div>
-
   </section>
-
 </div>
