@@ -19,7 +19,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // =====================================================
-// Dependency Injection
+// Dependency Injections
 // =====================================================
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
