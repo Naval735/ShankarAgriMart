@@ -36,7 +36,7 @@ public class UserController : ControllerBase
         });
     }
 
-    // PUT: api/User/profile
+    // PUT: api/User/profiles
     [HttpPut("profile")]
     public async Task<IActionResult> UpdateProfile(
         [FromBody] UpdateUserProfileRequest request)
